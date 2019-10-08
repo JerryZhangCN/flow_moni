@@ -25,4 +25,9 @@ public class MoniStationServiceImpl implements MoniStationService {
     public List<MoniStation> findAll() {
         return moniStationDao.queryAll();
     }
+
+    @Override
+    public List<MoniStation> findByAddvcd(String addvcd) {
+        return moniStationDao.findByAddvcd(addvcd);
+    }
 }

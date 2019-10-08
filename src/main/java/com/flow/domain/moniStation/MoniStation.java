@@ -16,9 +16,11 @@
 package com.flow.domain.moniStation;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author jerry
@@ -27,7 +29,14 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class MoniStation {
+
+
+    /**
+     * ID(列表默认以ID升序)
+     */
+    private String id;
 
     /**
      * 经度
@@ -42,60 +51,89 @@ public class MoniStation {
      */
     private String stnm;
     /**
+     * 监测站编码
+     */
+    private String stcd;
+    /**
      * 是否启动图标
      */
-    private boolean EnableIco;
+    private String enableIco;
     /**
      * 图标文件位置
      */
-    private String IcoPosition;
+    private String icoPosition;
     /**
      * 是否启动闪烁图标
      */
-    private boolean EnableIcoFlicker;
+    private String enableIcoFlicker;
 
     /**
      * 闪烁图标位置
      */
-    private String FlickerIcoPosition;
+    private String flickerIcoPosition;
     /**
      * 闪烁频率模式
      */
-    private String FlickerRateMode;
+    private String flickerRateMode;
     /**
      * 闪烁重复次数
      */
-    private int FlickerNumber;
+    private String flickerNumber;
 
     /**
      * 闪烁截止时间
      */
-    private String FlickerToTime;
+    private String flickerToTime;
 
     /**
      * 是否启音频
      */
-    private boolean EnableAudio;
+    private String enableAudio;
     /**
      * 音频文件位置
      */
-    private String AudioPosition;
+    private String audioPosition;
     /**
      * 音频播放频率模式
      */
-    private String AudioPlayRateMode;
+    private String audioPlayRateMode;
     /**
      * 音频播放重复次数
      */
-    private String AudioPlayNumber;
+    private String audioPlayNumber;
     /**
      * 音频播放截止时间
      */
-    private String AudioPlayToTime;
+    private String audioPlayToTime;
     /**
      * 状态是否完成
      */
-    private String StateIFFinish;
+    private String stateIFFinish;
+
+    /**
+     * 监测站类型（"QJ"指取水计量，"SL"指生态流量）
+     */
+    private String sttp;
+
+    /**
+     * 监测站类型名称
+     */
+    private String sttpName;
+
+    /**
+     * 监测站类型详情
+     */
+    private String sonSttp;
+
+    /**
+     * 监测站类型详情名称
+     */
+    private String sonSttpName;
+
+    /**
+     * 监测站地址
+     */
+    private String stlc;
 
 
 }

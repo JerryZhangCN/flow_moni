@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flow.dao.mapper.MoniStationDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.flow.domain.moniStation.MoniStation" id="stationMap">
+        <result property="id" column="ID" jdbcType="VARCHAR"/>
+        <result property="lttd" column="LTTD" jdbcType="VARCHAR"/>
+        <result property="lgtd" column="LGTD" jdbcType="VARCHAR"/>
+        <result property="stnm" column="STNM" jdbcType="VARCHAR"/>
+        <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
+        <result property="enableIco" column="EnableIco" jdbcType="VARCHAR"/>
+        <result property="icoPosition" column="IcoPosition" jdbcType="VARCHAR"/>
+        <result property="enableIcoFlicker" column="EnableIcoFlicker" jdbcType="VARCHAR"/>
+        <result property="flickerIcoPosition" column="FlickerIcoPosition" jdbcType="VARCHAR"/>
+        <result property="flickerRateMode" column="FlickerRateMode" jdbcType="VARCHAR"/>
+        <result property="flickerNumber" column="FlickerNumber" jdbcType="VARCHAR"/>
+        <result property="flickerToTime" column="FlickerToTime" jdbcType="VARCHAR"/>
+        <result property="enableAudio" column="EnableAudio" jdbcType="VARCHAR"/>
+        <result property="audioPosition" column="AudioPosition" jdbcType="VARCHAR"/>
+        <result property="audioPlayRateMode" column="AudioPlayRateMode" jdbcType="VARCHAR"/>
+        <result property="audioPlayNumber" column="AudioPlayNumber" jdbcType="VARCHAR"/>
+        <result property="audioPlayToTime" column="AudioPlayToTime" jdbcType="VARCHAR"/>
+        <result property="stateIFFinish" column="StateIFFinish" jdbcType="VARCHAR"/>
+        <result property="sttp" column="STTP" jdbcType="VARCHAR"/>
+        <result property="sttpName" column="STTPNM" jdbcType="VARCHAR"/>
+        <result property="sonSttp" column="SonSTTP" jdbcType="VARCHAR"/>
+        <result property="sonSttpName" column="SonSTTPNM" jdbcType="VARCHAR"/>
+        <result property="stlc" column="STLC" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="queryAll" resultMap="stationMap">
+       EXEC [P_M_StationBasis] NULL,NULL,'ID',NULL,NULL,NULL
+    </select>
+
+
+    <select id="findByAddvcd" resultMap="stationMap">
+       EXEC [P_M_StationBasis] NULL,NULL,'ID',#{0},NULL,NULL
+    </select>
+</mapper>

@@ -1,12 +1,12 @@
 /**
  * Copyright © 2016-2019 The Thingsboard Authors
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,9 +33,9 @@ public abstract class BaseController {
 
     public static final String INCORRECT_TENANT_ID = "Incorrect tenantId ";
     public static final String YOU_DON_T_HAVE_PERMISSION_TO_PERFORM_THIS_OPERATION = "You don't have permission to perform this operation!";
+    public static final int RESPONSE_OK = 200;
 
     private static final ObjectMapper json = new ObjectMapper();
-
 
 
 //    @Autowired
@@ -44,7 +44,6 @@ public abstract class BaseController {
 //    @Value("${server.log_controller_error_stack_trace}")
 //    @Getter
 //    private boolean logControllerErrorStackTrace;
-
 
 
     protected String constructBaseUrl(HttpServletRequest request) {
@@ -79,8 +78,12 @@ public abstract class BaseController {
         return result;
     }
 
-    public BaseResponse returnOk(){
-        return new BaseResponse(200,"ok");
+    public BaseResponse returnOk() {
+        return new BaseResponse(200, "ok");
+    }
+
+    public BaseResponse returnError() {
+        return new BaseResponse(400, "服务器异常");
     }
 
 

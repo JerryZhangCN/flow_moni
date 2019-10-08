@@ -25,10 +25,10 @@ import java.time.Duration;
 /**
  * Created by ashvayka on 22.10.18.
  */
-public class TbRateLimits {
+public class RateLimits {
     private final LocalBucket bucket;
 
-    public TbRateLimits(String limitsConfiguration) {
+    public RateLimits(String limitsConfiguration) {
         LocalBucketBuilder builder = Bucket4j.builder();
         boolean initialized = false;
         for (String limitSrc : limitsConfiguration.split(",")) {

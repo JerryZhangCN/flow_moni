@@ -13,4 +13,5 @@ public interface MoniStationService {
 
     List<MoniStation> findAll();
 
+    List<MoniStation> findByAddvcd(String Addvcd);
 }

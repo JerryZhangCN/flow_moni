@@ -17,6 +17,7 @@ import java.util.List;
 @Repository
 public interface MoniStationDao {
 
-    @Select("EXEC [P_M_StationBasis] NULL,NULL,NULL,NULL,NULL,NULL")
     List<MoniStation> queryAll();
+
+    List<MoniStation> findByAddvcd(String Addvcd);
 }

@@ -67,7 +67,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public static final String TOKEN_BASED_AUTH_ENTRY_POINT = "/api/**";
     public static final String WS_TOKEN_BASED_AUTH_ENTRY_POINT = "/api/ws/**";
     public static final String ENERGY = "/api/energy/**";
-    public static final String ALARM = "/api/noAuthAlarm/**";
+    public static final String ALARM = "/api/moni_station/**";
     public static final String DATAMAINTENANCE = "/api/user/**";
     public static final String API_PLUGINS_RPC = "/api/plugins/rpc/**";
 //    public static final String RELATIONALL="/api/relations/all";
