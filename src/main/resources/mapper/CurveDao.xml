@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flow.dao.mapper.CurveDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.flow.domain.statistics.CurveData" id="curveMap">
+        <result property="time" column="TM" jdbcType="VARCHAR"/>
+        <result property="value" column="Q" jdbcType="VARCHAR"/>
+        <result property="alarmValue" column="OneLevelAlarmValue" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="findByStcdAndPara" resultMap="curveMap">
+      DECLARE @c_ControlFeatures1 NVARCHAR(200)
+      DECLARE @c_ControlFeatures2 NVARCHAR(200)
+      DECLARE @c_ControlFeatures3 NVARCHAR(200)
+      EXEC [SkyUni_DB_Moni].[dbo].[P_M_MonitorCurve] NULL,NULL,'TM',#{stcd},#{monitorPara},NULL ,NULL
+      ,@c_ControlFeatures1 OUT
+      ,@c_ControlFeatures2 OUT
+      ,@c_ControlFeatures3 OUT
+    </select>
+</mapper>

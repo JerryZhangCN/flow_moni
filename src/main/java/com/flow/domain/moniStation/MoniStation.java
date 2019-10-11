@@ -135,5 +135,10 @@ public class MoniStation {
      */
     private String stlc;
 
+    /**
+     * 监测指标
+     */
+    private String monitorPara;
+
 
 }

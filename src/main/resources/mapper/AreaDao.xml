@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flow.dao.mapper.AreaDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.flow.domain.area.Area" id="areaMap">
+        <result property="id" column="ID" jdbcType="VARCHAR"/>
+        <result property="addvcd" column="ADDVCD" jdbcType="VARCHAR"/>
+        <result property="pAddvcd" column="PADDVCD" jdbcType="VARCHAR"/>
+        <result property="name" column="ADDVNM" jdbcType="VARCHAR"/>
+        <result property="level" column="ADDVCDLevel" jdbcType="VARCHAR"/>
+        <result property="levelName" column="ADDVCDLevelNM" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="queryAll" resultMap="areaMap">
+      EXEC [SkyUni_DB_Busi].[dbo].[P_GetADDVCD] NULL,NULL,'ADDVCDLevel',4,2
+    </select>
+
+
+    <select id="findByAddvcd" resultMap="areaMap">
+       EXEC [SkyUni_DB_Busi].[dbo].[P_GetADDVCD] NULL,NULL,'ADDVCDLevel',4,2
+    </select>
+</mapper>

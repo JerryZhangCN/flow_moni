@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flow.dao.mapper.StatisticsDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.flow.domain.statistics.Statistics" id="areaMap">
+        <result property="monitorType" column="MonitorTypeNM" jdbcType="VARCHAR"/>
+        <result property="onlineNumber" column="OnlineNu" jdbcType="VARCHAR"/>
+        <result property="totalNumber" column="TotalNu" jdbcType="VARCHAR"/>
+        <result property="alarm" column="OneLevelAlarm" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <resultMap type="com.flow.domain.statistics.FlowData" id="flowMap">
+        <result property="address" column="ADDVNM" jdbcType="VARCHAR"/>
+        <result property="stationName" column="STNMShow" jdbcType="VARCHAR"/>
+        <result property="time" column="TMShow" jdbcType="VARCHAR"/>
+        <result property="waterLevel" column="Z" jdbcType="VARCHAR"/>
+        <result property="speed" column="Speed" jdbcType="VARCHAR"/>
+        <result property="leakFlow" column="Q" jdbcType="VARCHAR"/>
+        <result property="totalFlow" column="TotalQ" jdbcType="VARCHAR"/>
+        <result property="preValue" column="PreValue" jdbcType="VARCHAR"/>
+        <result property="contrast" column="WPTNNM" jdbcType="VARCHAR"/>
+        <result property="twoLevelAlarm" column="TwoLevelAlarmValue" jdbcType="VARCHAR"/>
+        <result property="oneLevelAlarm" column="OneLevelAlarmValue" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="java.lang.String" id="countMap">
+        <result property="count" column="totalCount" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="query" resultMap="areaMap">
+      EXEC [SkyUni_DB_Moni].[dbo].[P_M_RealMonitorCount]
+    </select>
+
+
+    <select id="getFlowData" resultMap="flowMap,countMap">
+      DECLARE @n_TotalCount INT
+      EXEC [SkyUni_DB_Moni].[dbo].[P_Q_Ecology] NULL,'TM',#{addvcd},#{scale},#{startTime},#{endTime},#{key},#{timeScale},#{alarmLevel},#{pageCount},#{pageIndex},@n_TotalCount OUTPUT
+      SELECT @n_TotalCount as totalCount
+</select>
+
+</mapper>

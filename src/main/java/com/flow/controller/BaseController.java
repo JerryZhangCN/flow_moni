@@ -18,7 +18,16 @@ package com.flow.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flow.domain.BaseResponse;
+import com.flow.domain.tools.DataConstants;
+import com.flow.service.alarm.AlarmService;
+import com.flow.service.area.AreaService;
+import com.flow.service.curve.CurveService;
+import com.flow.service.image.ImageService;
+import com.flow.service.moniStation.MoniStationService;
+import com.flow.service.scale.ScaleService;
+import com.flow.service.statistic.StatisticService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,13 +43,27 @@ public abstract class BaseController {
     public static final String INCORRECT_TENANT_ID = "Incorrect tenantId ";
     public static final String YOU_DON_T_HAVE_PERMISSION_TO_PERFORM_THIS_OPERATION = "You don't have permission to perform this operation!";
     public static final int RESPONSE_OK = 200;
+    public static final int RESPONSE_ERROR = 500;
 
     private static final ObjectMapper json = new ObjectMapper();
 
 
-//    @Autowired
-//    protected AttributesService attributesService;
-//
+    @Autowired
+    protected MoniStationService moniStationService;
+    @Autowired
+    protected AreaService areaService;
+    @Autowired
+    protected ScaleService scaleService;
+    @Autowired
+    protected AlarmService alarmService;
+    @Autowired
+    protected StatisticService statisticService;
+    @Autowired
+    protected CurveService curveService;
+    @Autowired
+    protected ImageService imageService;
+
+
 //    @Value("${server.log_controller_error_stack_trace}")
 //    @Getter
 //    private boolean logControllerErrorStackTrace;
@@ -78,12 +101,12 @@ public abstract class BaseController {
         return result;
     }
 
-    public BaseResponse returnOk() {
-        return new BaseResponse(200, "ok");
+    public BaseResponse returnOk(Object data) {
+        return new BaseResponse(RESPONSE_OK, data);
     }
 
-    public BaseResponse returnError() {
-        return new BaseResponse(400, "服务器异常");
+    public BaseResponse returnError(String error) {
+        return new BaseResponse(400, error);
     }
 
 

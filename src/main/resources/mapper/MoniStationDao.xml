@@ -28,14 +28,67 @@
         <result property="sonSttp" column="SonSTTP" jdbcType="VARCHAR"/>
         <result property="sonSttpName" column="SonSTTPNM" jdbcType="VARCHAR"/>
         <result property="stlc" column="STLC" jdbcType="VARCHAR"/>
+        <result property="monitorPara" column="MainMonitorPara"/>
+    </resultMap>
+
+
+    <resultMap type="com.flow.domain.moniStation.MoniOnline" id="moniOnline">
+        <result property="stationName" column="STNMShow" jdbcType="VARCHAR"/>
+        <result property="statioNameAll" column="STNM" jdbcType="VARCHAR"/>
+        <result property="showMonitorType" column="ShowMonitorTypeNM" jdbcType="VARCHAR"/>
+        <result property="value" column="Value" jdbcType="VARCHAR"/>
+        <result property="time" column="TMShow" jdbcType="VARCHAR"/>
+        <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
+        <result property="monitorPara" column="MonitorPara" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.flow.domain.moniStation.StationDetail" id="stationDetail">
+        <result property="stationName" column="STNM" jdbcType="VARCHAR"/>
+        <result property="stationAddress" column="STLC" jdbcType="VARCHAR"/>
+        <result property="stationType" column="STTPNM" jdbcType="VARCHAR"/>
+        <result property="monitorPara" column="MonitorParasNM" jdbcType="VARCHAR"/>
+        <result property="designFlow" column="OneLevel" jdbcType="VARCHAR"/>
+        <result property="designFlowValue" column="OneLevelAlarmValue" jdbcType="VARCHAR"/>
+        <result property="leakFlow" column="ShowMonitorTypeNM" jdbcType="VARCHAR"/>
+        <result property="leakFlowValue" column="Value" jdbcType="VARCHAR"/>
+        <result property="lttd" column="LTTD" jdbcType="VARCHAR"/>
+        <result property="lgtd" column="LGTD" jdbcType="VARCHAR"/>
+        <result property="createTime" column="ESSTYM" jdbcType="VARCHAR"/>
+        <result property="designDepart" column="ReportUnit" jdbcType="VARCHAR"/>
+        <result property="monitorTime" column="TM" jdbcType="VARCHAR"/>
+        <result property="projectName" column="PJNM" jdbcType="VARCHAR"/>
+        <result property="riverName" column="RVNM" jdbcType="VARCHAR"/>
+        <result property="scaleType" column="ScaleTPNM" jdbcType="VARCHAR"/>
+        <result property="contact" column="LinkMan" jdbcType="VARCHAR"/>
+        <result property="depart" column="ADMAUTH" jdbcType="VARCHAR"/>
+        <result property="scaleValue" column="ScaleValue" jdbcType="VARCHAR"/>
+        <result property="contactPhone" column="LinkPhoneCode" jdbcType="VARCHAR"/>
+        <result property="projectNote" column="PJNoter" jdbcType="VARCHAR"/>
+        <result property="qrCode" column="QRCodePosition" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.flow.domain.moniStation.StationType" id="stationType">
+        <result property="sttp" column="STTP" jdbcType="VARCHAR"/>
+        <result property="name" column="STTPNM" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="queryAll" resultMap="stationMap">
-       EXEC [P_M_StationBasis] NULL,NULL,'ID',NULL,NULL,NULL
+      EXEC [SkyUni_DB_Moni].[dbo].[P_M_StationBasis] NULL,NULL,NULL,NULL,NULL,NULL
     </select>
 
+    <select id="findByAddvcdAndScale" resultMap="stationMap">
+       EXEC [SkyUni_DB_Moni].[dbo].[P_M_StationBasis] NULL,NULL,'ID',#{addvcd},#{sttp},#{scale}
+    </select>
 
-    <select id="findByAddvcd" resultMap="stationMap">
-       EXEC [P_M_StationBasis] NULL,NULL,'ID',#{0},NULL,NULL
+    <select id="monitorOnline" resultMap="moniOnline">
+      EXEC [SkyUni_DB_Moni].[dbo].[P_M_RealMonitor] NULL,NULL,NULL,#{addvcd},#{sttp},#{scale},#{key}
+    </select>
+
+    <select id="getStationDetail" resultMap="stationDetail">
+      EXEC [SkyUni_DB_Moni].[dbo].[P_M_STTanChuDetail] NULL,NULL,NULL,#{stcd},#{monitorPara}
+    </select>
+
+    <select id="getMonitorType" resultMap="stationType">
+     EXEC [SkyUni_DB_Moni].[dbo].[P_GetSTType] NULL,NULL,NULL
     </select>
 </mapper>

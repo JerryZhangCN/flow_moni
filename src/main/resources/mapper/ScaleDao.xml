@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flow.dao.mapper.ScaleDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.flow.domain.scale.Scale" id="scaleMap">
+        <result property="sttp" column="STTP" jdbcType="VARCHAR"/>
+        <result property="scaleType" column="ScaleTP" jdbcType="VARCHAR"/>
+        <result property="name" column="ScaleTPNM" jdbcType="VARCHAR"/>
+        <result property="scaleName" column="ScaleNM" jdbcType="VARCHAR"/>
+        <result property="scaleMin" column="ScaleMin" jdbcType="VARCHAR"/>
+        <result property="scaleMax" column="ScaleMax" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="findByType" resultMap="scaleMap">
+      DECLARE @c_ControlFeatures1 NVARCHAR(200)
+EXEC [SkyUni_DB_Moni].[dbo].[P_GetSTScale] NULL,NULL,NULL,#{STTP},#{type}
+ ,@c_ControlFeatures1 OUT
+    </select>
+</mapper>

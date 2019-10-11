@@ -64,9 +64,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public static final String PUBLIC_LOGIN_ENTRY_POINT = "/api/auth/login/public";
     public static final String TOKEN_REFRESH_ENTRY_POINT = "/api/auth/token";
     protected static final String[] NON_TOKEN_BASED_AUTH_ENTRY_POINTS = new String[]{"/index.html", "/static/**", "/api/noauth/**", "/webjars/**"};
-    public static final String TOKEN_BASED_AUTH_ENTRY_POINT = "/api/**";
+    //public static final String TOKEN_BASED_AUTH_ENTRY_POINT = "/api/**";
     public static final String WS_TOKEN_BASED_AUTH_ENTRY_POINT = "/api/ws/**";
-    public static final String ENERGY = "/api/energy/**";
+    public static final String ENERGY = "/api/**";
     public static final String ALARM = "/api/moni_station/**";
     public static final String DATAMAINTENANCE = "/api/user/**";
     public static final String API_PLUGINS_RPC = "/api/plugins/rpc/**";
@@ -119,7 +119,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         List<String> pathsToSkip = new ArrayList(Arrays.asList(NON_TOKEN_BASED_AUTH_ENTRY_POINTS));
         pathsToSkip.addAll(Arrays.asList(WS_TOKEN_BASED_AUTH_ENTRY_POINT, TOKEN_REFRESH_ENTRY_POINT, FORM_BASED_LOGIN_ENTRY_POINT,
                 PUBLIC_LOGIN_ENTRY_POINT, DEVICE_API_ENTRY_POINT, WEBJARS_ENTRY_POINT, ENERGY, DATAMAINTENANCE, ALARM, API_PLUGINS_RPC));
-        SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, TOKEN_BASED_AUTH_ENTRY_POINT);
+        SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, "api/auth/**");
         JwtTokenAuthenticationProcessingFilter filter
                 = new JwtTokenAuthenticationProcessingFilter(failureHandler, jwtHeaderTokenExtractor, matcher);
         filter.setAuthenticationManager(this.authenticationManager);
@@ -208,7 +208,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()//满足下列api列表的必须要登录后才能访问
                 .antMatchers(WS_TOKEN_BASED_AUTH_ENTRY_POINT).authenticated() // Protected WebSocket API End-points
-                .antMatchers(TOKEN_BASED_AUTH_ENTRY_POINT).authenticated() // Protected API End-points
+                //+.antMatchers(TOKEN_BASED_AUTH_ENTRY_POINT).authenticated() // Protected API End-points
                 .and()
                 .exceptionHandling().accessDeniedHandler(restAccessDeniedHandler)//添加自定义访问异常处理
                 .and()
@@ -223,12 +223,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     @ConditionalOnMissingBean(CorsFilter.class)
     public CorsFilter corsFilter(@Autowired MvcCorsProperties mvcCorsProperties) {
-        if (mvcCorsProperties.getMappings().size() == 0) {
-            return new CorsFilter(new UrlBasedCorsConfigurationSource());
-        } else {
-            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-            source.setCorsConfigurations(mvcCorsProperties.getMappings());
-            return new CorsFilter(source);
-        }
+//        if (mvcCorsProperties.getMappings().size() == 0) {
+//            return new CorsFilter(new UrlBasedCorsConfigurationSource());
+//        } else {
+//            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//            source.setCorsConfigurations(mvcCorsProperties.getMappings());
+//            return new CorsFilter(source);
+//        }
+        return new CorsFilter(new UrlBasedCorsConfigurationSource());
     }
 }

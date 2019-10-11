@@ -32,18 +32,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/user")
 public class UserController extends BaseController {
 
-    @Autowired
-    private MoniStationService moniStationService;
-
-
-
-    @RequestMapping(value = "/welcome", method = RequestMethod.GET)
-    @ResponseBody
-    public BaseResponse checkUpdates() {
-        BaseResponse baseResponse = new BaseResponse();
-        baseResponse.setResultCode(200);
-        baseResponse.setData(moniStationService.findAll());
-        return baseResponse;
-    }
-
 }

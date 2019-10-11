@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flow.dao.mapper.ImageDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.flow.domain.image.Image" id="imageMap">
+        <result property="pictureTime" column="TM" jdbcType="VARCHAR"/>
+        <result property="position" column="POSITION" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.flow.domain.image.Image" id="imageMap2">
+        <result property="pictureTime" column="PictureTMShow" jdbcType="VARCHAR"/>
+        <result property="position" column="POSITION" jdbcType="VARCHAR"/>
+        <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
+        <result property="valueTime" column="ValueTMShow" jdbcType="VARCHAR"/>
+        <result property="value1Name" column="Value1NM" jdbcType="VARCHAR"/>
+        <result property="value1" column="Value1" jdbcType="VARCHAR"/>
+        <result property="value2Name" column="value2NM" jdbcType="VARCHAR"/>
+        <result property="value2" column="Value2" jdbcType="VARCHAR"/>
+        <result property="stationName" column="STNM" jdbcType="VARCHAR"/>
+        <result property="alarmLevel" column="OneLevel" jdbcType="VARCHAR"/>
+        <result property="alarmLevelValue" column="OneLevelAlarmValue" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getImage" resultMap="imageMap">
+     EXEC [SkyUni_DB_Moni].[dbo].[P_M_Picture] NULL,NULL,NULL,#{stcd}
+    </select>
+
+
+    <select id="getImages" resultMap="imageMap2">
+     EXEC [SkyUni_DB_Moni].[dbo].[P_Q_Picture] NULL,NULL,#{addvcd},#{sttp},#{endTime},#{key},#{pageCount},#{pageIndex}
+    </select>
+
+
+    <select id="getHistoryImage" resultMap="imageMap">
+     EXEC [SkyUni_DB_Moni].[dbo].[P_Q_PictureDetail] NULL,'TM',#{stcd},#{endTime}
+    </select>
+
+
+</mapper>
