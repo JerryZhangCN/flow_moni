@@ -29,4 +29,13 @@ public class Statistics {
      * 不达标数量
      */
     private String alarm;
+    /**
+     * 正常数量
+     */
+    private String correctNumber;
+    /**
+     * 离线数量
+     */
+    private String offlineNumber;
+
 }

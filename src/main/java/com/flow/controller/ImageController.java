@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.flow.domain.BaseResponse;
 import com.flow.domain.image.Image;
 import com.flow.domain.statistics.CurveData;
+import com.flow.domain.statistics.PageData;
 import com.flow.domain.tools.DataConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
@@ -59,8 +60,8 @@ public class ImageController extends BaseController {
                                   @Param(DataConstants.REQUEST_PARAMS_PAGE_COUNT) String count,
                                   @Param(DataConstants.REQUEST_PARAMS_PAGE_INDEX) String index) {
         try {
-            List<Image> images = imageService.getImages(addvcd, sttp, end, key, count, index);
-            for (Image image : images) {
+            PageData<List<Image>> images = imageService.getImages(addvcd, sttp, end, key, count, index);
+            for (Image image : images.getData()) {
                 StringBuffer stringBuffer = new StringBuffer(DataConstants.BASE_IMAGE_IP);
                 image.setPosition(stringBuffer.append(image.getPosition()).toString());
             }

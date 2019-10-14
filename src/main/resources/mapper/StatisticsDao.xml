@@ -5,10 +5,11 @@
 
     <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.flow.domain.statistics.Statistics" id="areaMap">
-        <result property="monitorType" column="MonitorTypeNM" jdbcType="VARCHAR"/>
-        <result property="onlineNumber" column="OnlineNu" jdbcType="VARCHAR"/>
+        <result property="monitorType" column="STTPNM" jdbcType="VARCHAR"/>
+        <result property="offlineNumber" column="OffLineNu" jdbcType="VARCHAR"/>
+        <result property="correctNumber" column="CorrectNu" jdbcType="VARCHAR"/>
         <result property="totalNumber" column="TotalNu" jdbcType="VARCHAR"/>
-        <result property="alarm" column="OneLevelAlarm" jdbcType="VARCHAR"/>
+        <result property="alarm" column="FaultNu" jdbcType="VARCHAR"/>
     </resultMap>
 
 
@@ -31,7 +32,7 @@
     </resultMap>
 
     <select id="query" resultMap="areaMap">
-      EXEC [SkyUni_DB_Moni].[dbo].[P_M_RealMonitorCount]
+      EXEC [SkyUni_DB_Moni].[dbo].[P_M_RealMonitorCount] NULL,NULL,#{sttp},#{groupId}
     </select>
 
 

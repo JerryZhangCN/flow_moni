@@ -13,9 +13,22 @@
         <result property="scaleMax" column="ScaleMax" jdbcType="VARCHAR"/>
     </resultMap>
 
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.flow.domain.scale.Group" id="groupMap">
+        <result property="groupName" column="GroupNM" jdbcType="VARCHAR"/>
+        <result property="groupCd" column="GroupCD" jdbcType="VARCHAR"/>
+        <result property="pGroupCd" column="PGroupCD" jdbcType="VARCHAR"/>
+        <result property="groupLevel" column="GroupLevel" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <select id="findByType" resultMap="scaleMap">
       DECLARE @c_ControlFeatures1 NVARCHAR(200)
 EXEC [SkyUni_DB_Moni].[dbo].[P_GetSTScale] NULL,NULL,NULL,#{STTP},#{type}
  ,@c_ControlFeatures1 OUT
+    </select>
+
+    <select id="getGroup" resultMap="groupMap">
+      EXEC [SkyUni_DB_Moni].[dbo].[P_GetGroup] NULL,NULL,NULL,#{sttp},2
     </select>
 </mapper>

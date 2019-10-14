@@ -16,7 +16,7 @@ import java.util.Map;
  * @date 2019-10-10 20:09
  */
 public interface StatisticService {
-    List<Statistics> query();
+    Statistics query(String sttp, String groupId);
 
     PageData getFlowData(String addvcd, String scale, String start, String end, String key, String count, String index, String level, String timeScale);
 }

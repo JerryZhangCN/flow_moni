@@ -24,6 +24,11 @@ public class ScaleServiceImpl implements ScaleService {
 
     @Override
     public List<Scale> findByType(String sttp, String type) {
-        return scaleDao.findByType(sttp,type);
+        return scaleDao.findByType(sttp, type);
+    }
+
+    @Override
+    public List<Scale> getGroup(String sttp) {
+        return scaleDao.getGroup(sttp);
     }
 }

@@ -2,6 +2,7 @@ package com.flow.service.image;
 
 import com.flow.dao.mapper.ImageDao;
 import com.flow.domain.image.Image;
+import com.flow.domain.statistics.PageData;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,9 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public List<Image> getImages(String addvcd, String sttp, String end, String key, String count, String index) {
-        return imageDao.getImages(addvcd, sttp, end, key, count, index);
+    public PageData getImages(String addvcd, String sttp, String end, String key, String count, String index) {
+        List<List<Object>> ob =imageDao.getImages(addvcd, sttp, end, key, count, index);
+        return new PageData(ob.get(0), ob.get(1).get(0).toString());
     }
 
     @Override

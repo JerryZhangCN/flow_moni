@@ -78,4 +78,9 @@ public class DataConstants {
      */
     public static final String REQUEST_PARAMS_PAGE_INDEX = "pageIndex";
 
+    /**
+     * 传递参数常量-分组ID
+     */
+    public static final String REQUEST_PARAMS_GROUP_ID = "groupId";
+
 }

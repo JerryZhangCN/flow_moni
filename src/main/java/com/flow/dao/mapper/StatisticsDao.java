@@ -21,15 +21,15 @@ import java.util.Map;
 @Repository
 public interface StatisticsDao {
 
-    List<Statistics> query();
+    Statistics query(@Param(DataConstants.STATION_STATUS_TYPE) String sttp,@Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId);
 
     List<List<Object>> getFlowData(@Param(DataConstants.MONI_STATION_ADDVCD) String addvcd,
-                         @Param(DataConstants.REQUEST_PARAMS_SCALE) String monitorPara,
-                         @Param(DataConstants.REQUEST_PARAMS_START) String start,
-                         @Param(DataConstants.REQUEST_PARAMS_END) String end,
-                         @Param(DataConstants.REQUEST_PARAMS_KEYS) String key,
-                         @Param(DataConstants.REQUEST_PARAMS_PAGE_COUNT) String count,
-                         @Param(DataConstants.REQUEST_PARAMS_PAGE_INDEX) String index,
-                         @Param(DataConstants.REQUEST_PARAMS_ALARM_LEVEL) String level,
-                         @Param(DataConstants.REQUEST_PARAMS_TIME_SCALE) String timeScale);
+                                   @Param(DataConstants.REQUEST_PARAMS_SCALE) String monitorPara,
+                                   @Param(DataConstants.REQUEST_PARAMS_START) String start,
+                                   @Param(DataConstants.REQUEST_PARAMS_END) String end,
+                                   @Param(DataConstants.REQUEST_PARAMS_KEYS) String key,
+                                   @Param(DataConstants.REQUEST_PARAMS_PAGE_COUNT) String count,
+                                   @Param(DataConstants.REQUEST_PARAMS_PAGE_INDEX) String index,
+                                   @Param(DataConstants.REQUEST_PARAMS_ALARM_LEVEL) String level,
+                                   @Param(DataConstants.REQUEST_PARAMS_TIME_SCALE) String timeScale);
 }

@@ -18,7 +18,7 @@ import java.util.List;
 public interface ImageDao {
     Image getImage(@Param(DataConstants.REQUEST_PARAMS_STCD) String stcd);
 
-    List<Image> getImages(@Param(DataConstants.MONI_STATION_ADDVCD) String addvcd,
+    List<List<Object>> getImages(@Param(DataConstants.MONI_STATION_ADDVCD) String addvcd,
                           @Param(DataConstants.STATION_STATUS_TYPE) String sttp,
                           @Param(DataConstants.REQUEST_PARAMS_END) String end,
                           @Param(DataConstants.REQUEST_PARAMS_KEYS) String key,

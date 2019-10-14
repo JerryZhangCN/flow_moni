@@ -12,5 +12,7 @@ import java.util.List;
  */
 public interface ScaleService {
 
-    List<Scale> findByType(String sttp,String type);
+    List<Scale> findByType(String sttp, String type);
+
+    List<Scale> getGroup(String sttp);
 }

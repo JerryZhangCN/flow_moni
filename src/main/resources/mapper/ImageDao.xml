@@ -23,13 +23,20 @@
         <result property="alarmLevelValue" column="OneLevelAlarmValue" jdbcType="VARCHAR"/>
     </resultMap>
 
+
+    <resultMap type="java.lang.String" id="totalMap">
+        <result property="number" column="total" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <select id="getImage" resultMap="imageMap">
      EXEC [SkyUni_DB_Moni].[dbo].[P_M_Picture] NULL,NULL,NULL,#{stcd}
     </select>
 
 
-    <select id="getImages" resultMap="imageMap2">
-     EXEC [SkyUni_DB_Moni].[dbo].[P_Q_Picture] NULL,NULL,#{addvcd},#{sttp},#{endTime},#{key},#{pageCount},#{pageIndex}
+    <select id="getImages" resultMap="imageMap2,totalMap">
+     DECLARE @n_TotalCount INT
+     EXEC [SkyUni_DB_Moni].[dbo].[P_Q_Picture] NULL,NULL,#{addvcd},#{sttp},#{endTime},#{key},#{pageCount},#{pageIndex},@n_TotalCount OUTPUT
+     SELECT @n_TotalCount as total
     </select>
 
 

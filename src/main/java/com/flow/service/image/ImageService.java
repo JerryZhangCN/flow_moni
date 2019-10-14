@@ -1,6 +1,7 @@
 package com.flow.service.image;
 
 import com.flow.domain.image.Image;
+import com.flow.domain.statistics.PageData;
 import com.flow.domain.tools.DataConstants;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public interface ImageService {
     Image getImage(String stcd);
 
-    List<Image> getImages(String addvcd, String sttp, String end, String key, String count, String index);
+    PageData getImages(String addvcd, String sttp, String end, String key, String count, String index);
 
     List<Image> historyImage(String stcd,String endTime);
 }

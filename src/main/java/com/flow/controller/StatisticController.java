@@ -40,10 +40,11 @@ public class StatisticController extends BaseController {
      */
     @RequestMapping(value = "/query", method = RequestMethod.GET)
     @ResponseBody
-    public BaseResponse getScale() {
+    public BaseResponse getScale(@Param(DataConstants.STATION_STATUS_TYPE) String sttp,
+                                 @Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId) {
         BaseResponse baseResponse = new BaseResponse();
         try {
-            baseResponse.setData(statisticService.query());
+            baseResponse.setData(statisticService.query(sttp, groupId));
             return baseResponse;
         } catch (Exception e) {
             return returnError(e.getMessage());
@@ -68,7 +69,7 @@ public class StatisticController extends BaseController {
                                     @Param(DataConstants.REQUEST_PARAMS_TIME_SCALE) String timeScale) {
         BaseResponse baseResponse = new BaseResponse();
         try {
-            baseResponse.setData(statisticService.getFlowData(addvcd, scale, start, end, key, count, index, level,timeScale));
+            baseResponse.setData(statisticService.getFlowData(addvcd, scale, start, end, key, count, index, level, timeScale));
             return baseResponse;
         } catch (Exception e) {
             return returnError(e.getMessage());

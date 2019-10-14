@@ -111,6 +111,34 @@ public class MoniStationController extends BaseController {
     }
 
 
+//    /**
+//     * 获取业务及分组
+//     *
+//     * @return
+//     */
+//    @RequestMapping(value = "/getMo", method = RequestMethod.GET)
+//    @ResponseBody
+//    public BaseResponse monitorGroup() {
+//        BaseResponse baseResponse = new BaseResponse();
+//        try {
+//            baseResponse.setResultCode(RESPONSE_OK);
+//            List<StationType> types = moniStationService.getStationType();
+//            List<Scale> scales = scaleService.findByType(null, null);
+//            for (StationType stationType : types) {
+//                for (Scale scale : scales) {
+//                    if (scale.getSttp().equalsIgnoreCase(stationType.getSttp())) {
+//                        stationType.getScales().add(scale);
+//                    }
+//                }
+//            }
+//            baseResponse.setData(types);
+//            return baseResponse;
+//        } catch (Exception e) {
+//            return returnError(e.getMessage());
+//        }
+//    }
+
+
     /**
      * 根据行政区划获取监测站点信息（若不传递，则默认获取所有站点信息）
      *

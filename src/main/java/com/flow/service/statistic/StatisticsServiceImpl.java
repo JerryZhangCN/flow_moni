@@ -21,8 +21,8 @@ public class StatisticsServiceImpl implements StatisticService {
     private StatisticsDao statisticsDao;
 
     @Override
-    public List<Statistics> query() {
-        return statisticsDao.query();
+    public Statistics query(String sttp, String groupId) {
+        return statisticsDao.query(sttp, groupId);
     }
 
     @Override

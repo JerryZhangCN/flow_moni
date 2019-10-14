@@ -16,19 +16,12 @@
 package com.flow.controller;
 
 import com.flow.domain.BaseResponse;
-import com.flow.domain.area.Area;
 import com.flow.domain.tools.DataConstants;
-import com.sun.istack.internal.Nullable;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 
 /**
  * @author jerry
@@ -51,6 +44,24 @@ public class ScaleController extends BaseController {
         BaseResponse baseResponse = new BaseResponse();
         try {
             baseResponse.setData(scaleService.findByType(sttp, type));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 获取规模列表
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getGroup", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse getScale(@Param(DataConstants.STATION_STATUS_TYPE) String sttp) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(scaleService.getGroup(sttp));
             return baseResponse;
         } catch (Exception e) {
             return returnError(e.getMessage());
