@@ -3,6 +3,7 @@ package com.flow.service.area;
 
 import com.flow.domain.area.Area;
 import com.flow.domain.moniStation.MoniStation;
+import com.flow.domain.scale.Group;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface AreaService {
     List<Area> findAll();
 
     List<Area> findByAddvcd(String Addvcd);
+
+    List<Group> findGroup(String group);
 }

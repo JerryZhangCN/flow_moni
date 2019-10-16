@@ -10,9 +10,15 @@
         <result property="value" column="Value" jdbcType="VARCHAR"/>
         <result property="alarmLevelValue" column="AlarmLevelValue" jdbcType="VARCHAR"/>
         <result property="orderLevel" column="OrderFieldAlarmLevel" jdbcType="VARCHAR"/>
+        <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
+        <result property="monitorPara" column="MonitorPara" jdbcType="VARCHAR"/>
+        <result property="stationName" column="STNM" jdbcType="VARCHAR"/>
     </resultMap>
-
     <select id="queryAlarm" resultMap="alarmMap">
       EXEC [SkyUni_DB_Moni].[dbo].[P_M_MonitorAlarm] NULL,NULL,NULL,#{addvcd},#{sttp},#{scale},#{key}
+    </select>
+
+    <select id="queryByGroupId" resultMap="alarmMap">
+      EXEC [SkyUni_DB_Moni].[dbo].[P_M_MonitorAlarm] NULL,NULL,NULL,#{addvcd},#{sttp},#{groupId},#{key},'V2.01'
     </select>
 </mapper>

@@ -30,4 +30,27 @@ public class StatisticsServiceImpl implements StatisticService {
         List<List<Object>> ob = statisticsDao.getFlowData(addvcd, monitorPara, start, end, key, count, index, level, timeScale);
         return new PageData(ob.get(0), ob.get(1).get(0).toString());
     }
+
+    @Override
+    public Statistics stationStatistics(String timeType, String stcd, String monitorPara) {
+        switch (timeType){
+            case "month":{
+                return statisticsDao.monthData(stcd,monitorPara);
+            }
+            case "season":{
+                return statisticsDao.seasonData(stcd,monitorPara);
+            }
+            case "year":{
+                return statisticsDao.yearData(stcd,monitorPara);
+            }
+            default:{
+                return statisticsDao.monthData(stcd,monitorPara);
+            }
+        }
+    }
+
+    @Override
+    public Statistics videoStatistics(String sttp, String groupId) {
+        return statisticsDao.videoData(sttp,groupId);
+    }
 }

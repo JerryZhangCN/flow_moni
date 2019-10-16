@@ -20,4 +20,9 @@ public class AlarmServiceImpl implements AlarmService {
     public List<Alarm> queryAlarm(String addvcd, String sttp, String scale, String key) {
         return alarmDao.queryAlarm(addvcd, sttp, scale, key);
     }
+
+    @Override
+    public List<Alarm> queryAlarmByGroupId(String addvcd, String http, String groupId, String key) {
+        return alarmDao.queryByGroupId(addvcd, http, groupId, key);
+    }
 }

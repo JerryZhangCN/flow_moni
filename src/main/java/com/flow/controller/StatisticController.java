@@ -75,4 +75,43 @@ public class StatisticController extends BaseController {
             return returnError(e.getMessage());
         }
     }
+
+    /**
+     * 获取单站月统计
+     *
+     * @return
+     */
+    @RequestMapping(value = "/stationData", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse monthData(@Param(DataConstants.REQUEST_PARAMS_STCD) String stcd,
+                                  @Param(DataConstants.REQUEST_PARAMS_MONITOR_PARA) String monitorPara,
+                                  @Param(DataConstants.REQUEST_PARAMS_TIME_TYPE) String timeType) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(statisticService.stationStatistics(timeType, stcd, monitorPara));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 获取单站月统计
+     *
+     * @return
+     */
+    @RequestMapping(value = "/videoData", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse video(@Param(DataConstants.STATION_STATUS_TYPE) String sttp,
+                                  @Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(statisticService.videoStatistics(sttp, groupId));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
 }

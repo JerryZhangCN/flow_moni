@@ -17,6 +17,7 @@ package com.flow.controller;
 
 import com.flow.domain.BaseResponse;
 import com.flow.domain.area.Area;
+import com.flow.domain.scale.Group;
 import com.flow.domain.tools.DataConstants;
 import com.flow.service.moniStation.MoniStationService;
 import org.apache.commons.lang3.StringUtils;
@@ -59,6 +60,33 @@ public class AreaController extends BaseController {
                     areaMap.get(a.getPAddvcd()).getChildren().add(a);
                 } else if (!a.getLevel().equalsIgnoreCase("4")) {
                     areaMap.put(a.getAddvcd(), a);
+                }
+            }
+            baseResponse.setData(areaMap.values());
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 获取行政区域
+     *
+     * @return
+     */
+    @RequestMapping(value = "/group", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse group(@Param(DataConstants.STATION_STATUS_TYPE) String sttp) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            List<Group> result = areaService.findGroup(sttp);
+            Map<String, Group> areaMap = new LinkedHashMap<>();
+            for (Group group : result) {
+                if (group.getPGroupId()==null||group.getPGroupId()==""||group.getPGroupId().length()==0){
+                    areaMap.put(group.getGroupId(), group);
+                }else if(areaMap.containsKey(group.getPGroupId())){
+                    areaMap.get(group.getPGroupId()).getGroups().add(group);
                 }
             }
             baseResponse.setData(areaMap.values());

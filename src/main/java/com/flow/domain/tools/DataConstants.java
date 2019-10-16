@@ -82,5 +82,9 @@ public class DataConstants {
      * 传递参数常量-分组ID
      */
     public static final String REQUEST_PARAMS_GROUP_ID = "groupId";
+    /**
+     * 传递参数常量
+     */
+    public static final String REQUEST_PARAMS_TIME_TYPE = "timeType";
 
 }

@@ -21,7 +21,7 @@ import java.util.Map;
 @Repository
 public interface StatisticsDao {
 
-    Statistics query(@Param(DataConstants.STATION_STATUS_TYPE) String sttp,@Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId);
+    Statistics query(@Param(DataConstants.STATION_STATUS_TYPE) String sttp, @Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId);
 
     List<List<Object>> getFlowData(@Param(DataConstants.MONI_STATION_ADDVCD) String addvcd,
                                    @Param(DataConstants.REQUEST_PARAMS_SCALE) String monitorPara,
@@ -32,4 +32,13 @@ public interface StatisticsDao {
                                    @Param(DataConstants.REQUEST_PARAMS_PAGE_INDEX) String index,
                                    @Param(DataConstants.REQUEST_PARAMS_ALARM_LEVEL) String level,
                                    @Param(DataConstants.REQUEST_PARAMS_TIME_SCALE) String timeScale);
+
+
+    Statistics monthData(@Param(DataConstants.REQUEST_PARAMS_STCD) String stcd, @Param(DataConstants.REQUEST_PARAMS_MONITOR_PARA) String monitorPara);
+
+    Statistics seasonData(@Param(DataConstants.REQUEST_PARAMS_STCD) String stcd, @Param(DataConstants.REQUEST_PARAMS_MONITOR_PARA) String monitorPara);
+
+    Statistics yearData(@Param(DataConstants.REQUEST_PARAMS_STCD) String stcd, @Param(DataConstants.REQUEST_PARAMS_MONITOR_PARA) String monitorPara);
+
+    Statistics videoData(@Param(DataConstants.STATION_STATUS_TYPE) String sttp, @Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId);
 }

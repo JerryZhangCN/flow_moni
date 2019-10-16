@@ -6,7 +6,6 @@ import com.flow.domain.moniStation.MoniOnline;
 import com.flow.domain.moniStation.MoniStation;
 import com.flow.domain.moniStation.StationDetail;
 import com.flow.domain.moniStation.StationType;
-import com.flow.service.moniStation.MoniStationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +28,14 @@ public class MoniStationServiceImpl implements MoniStationService {
     }
 
     @Override
-    public List<MoniOnline> monitorOnline(String addvcd, String sttp, String scale, String key) {
-        return moniStationDao.monitorOnline(addvcd,sttp,scale,key);
+    public List<MoniStation> findByGroupId(String sttp, String groupId) {
+        return moniStationDao.findByGroupId(groupId,sttp);
+
+    }
+
+    @Override
+    public List<MoniOnline> monitorOnline(String addvcd, String sttp, String groupId, String key) {
+        return moniStationDao.monitorOnline(addvcd,sttp,groupId,key);
     }
 
     @Override

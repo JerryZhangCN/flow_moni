@@ -19,4 +19,8 @@ public interface StatisticService {
     Statistics query(String sttp, String groupId);
 
     PageData getFlowData(String addvcd, String scale, String start, String end, String key, String count, String index, String level, String timeScale);
+
+    Statistics stationStatistics(String timeType, String stcd, String monitorPara);
+
+    Statistics videoStatistics( String sttp, String groupId);
 }

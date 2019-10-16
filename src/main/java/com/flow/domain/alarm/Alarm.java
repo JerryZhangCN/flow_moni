@@ -33,4 +33,17 @@ public class Alarm {
      * 报警级别
      */
     private String orderLevel;
+
+    /**
+     * 测站编码
+     */
+    private String stcd;
+    /**
+     * 监测指标
+     */
+    private String monitorPara;
+    /**
+     * 测站名称
+     */
+    private String stationName;
 }

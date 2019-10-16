@@ -13,6 +13,14 @@
         <result property="levelName" column="ADDVCDLevelNM" jdbcType="VARCHAR"/>
     </resultMap>
 
+
+    <resultMap type="com.flow.domain.scale.Group" id="groupMap">
+        <result property="groupId" column="GroupCD" jdbcType="VARCHAR"/>
+        <result property="pGroupId" column="PGroupCD" jdbcType="VARCHAR"/>
+        <result property="groupName" column="GroupNM" jdbcType="VARCHAR"/>
+        <result property="groupLevel" column="GroupLevel" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <select id="queryAll" resultMap="areaMap">
       EXEC [SkyUni_DB_Busi].[dbo].[P_GetADDVCD] NULL,NULL,'ADDVCDLevel',4,2
     </select>
@@ -20,5 +28,9 @@
 
     <select id="findByAddvcd" resultMap="areaMap">
        EXEC [SkyUni_DB_Busi].[dbo].[P_GetADDVCD] NULL,NULL,'ADDVCDLevel',4,2
+    </select>
+
+    <select id="getGroup" resultMap="groupMap">
+       EXEC [SkyUni_DB_Moni].[dbo].[P_GetGroup] NULL,NULL,'GroupLevel',#{sttp},2
     </select>
 </mapper>

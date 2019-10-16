@@ -72,6 +72,10 @@
         <result property="name" column="STTPNM" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap type="java.lang.String" id="paramResult">
+        <result property="sttp" column="field1" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <select id="queryAll" resultMap="stationMap">
       EXEC [SkyUni_DB_Moni].[dbo].[P_M_StationBasis] NULL,NULL,NULL,NULL,NULL,NULL
     </select>
@@ -81,7 +85,7 @@
     </select>
 
     <select id="monitorOnline" resultMap="moniOnline">
-      EXEC [SkyUni_DB_Moni].[dbo].[P_M_RealMonitor] NULL,NULL,NULL,#{addvcd},#{sttp},#{scale},#{key}
+      EXEC [SkyUni_DB_Moni].[dbo].[P_M_RealMonitor] NULL,NULL,NULL,#{addvcd},#{sttp},#{groupId},#{key},'V2.01'
     </select>
 
     <select id="getStationDetail" resultMap="stationDetail">
@@ -90,5 +94,9 @@
 
     <select id="getMonitorType" resultMap="stationType">
      EXEC [SkyUni_DB_Moni].[dbo].[P_GetSTType] NULL,NULL,NULL
+    </select>
+
+    <select id="findByGroupId" resultMap="stationMap">
+       EXEC [SkyUni_DB_Moni].[dbo].[P_M_StationBasis] NULL,NULL,NULL,NULL,#{sttp},#{groupId},'V2.01'
     </select>
 </mapper>

@@ -23,6 +23,12 @@ public interface MoniStationService {
      * @return
      */
     List<MoniStation> findByAddvcdAndScale(String Addvcd, String http, String scale);
+    /**
+     * 根据参数获取站点列表
+     *
+     * @return
+     */
+    List<MoniStation> findByGroupId(String sttp, String groupId);
 
     /**
      * 获取实时监测
@@ -33,7 +39,7 @@ public interface MoniStationService {
      * @param key
      * @return
      */
-    List<MoniOnline> monitorOnline(String Addvcd, String http, String scale, String key);
+    List<MoniOnline> monitorOnline(String Addvcd, String http, String groupId, String key);
 
     /**
      * 获取站点详细信息

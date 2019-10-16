@@ -18,10 +18,6 @@ public class Statistics {
      */
     private String monitorType;
     /**
-     * 在线数量
-     */
-    private String onlineNumber;
-    /**
      * 总数量
      */
     private String totalNumber;
@@ -37,5 +33,10 @@ public class Statistics {
      * 离线数量
      */
     private String offlineNumber;
+
+    /**
+     * 离线数量
+     */
+    private String onlineNumber;
 
 }

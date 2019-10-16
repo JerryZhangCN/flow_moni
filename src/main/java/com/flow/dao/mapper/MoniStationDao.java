@@ -28,11 +28,15 @@ public interface MoniStationDao {
 
     List<MoniOnline> monitorOnline(@Param(DataConstants.MONI_STATION_ADDVCD) String addvcd,
                                    @Param(DataConstants.STATION_STATUS_TYPE) String sttp,
-                                   @Param(DataConstants.REQUEST_PARAMS_SCALE) String scale,
+                                   @Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId,
                                    @Param(DataConstants.REQUEST_PARAMS_KEYS) String key);
 
     List<StationDetail> getStationDetail(@Param(DataConstants.REQUEST_PARAMS_STCD) String stcd,
                                          @Param(DataConstants.REQUEST_PARAMS_MONITOR_PARA) String monitorPara);
 
     List<StationType> getMonitorType();
+
+
+    List<MoniStation> findByGroupId(@Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String group,
+                                     @Param(DataConstants.STATION_STATUS_TYPE) String sttp);
 }

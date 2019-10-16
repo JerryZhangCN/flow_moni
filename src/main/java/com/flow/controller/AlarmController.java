@@ -39,7 +39,7 @@ public class AlarmController extends BaseController {
 
 
     /**
-     * 获取行政区域
+     * 获取报警信息
      *
      * @return
      */
@@ -47,15 +47,35 @@ public class AlarmController extends BaseController {
     @ResponseBody
     public BaseResponse checkUpdates(@Param(DataConstants.MONI_STATION_ADDVCD) String addvcd,
                                      @Param(DataConstants.STATION_STATUS_TYPE) String sttp,
-                                     @Param(DataConstants.REQUEST_PARAMS_SCALE) String scale,
+                                     @Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId,
                                      @Param(DataConstants.REQUEST_PARAMS_KEYS) String key) {
         BaseResponse baseResponse = new BaseResponse();
         try {
-            baseResponse.setData(alarmService.queryAlarm(addvcd,sttp,scale,key));
+            baseResponse.setData(alarmService.queryAlarmByGroupId(addvcd,sttp,groupId,key));
             return baseResponse;
         } catch (Exception e) {
             return returnError(e.getMessage());
         }
     }
+
+//    /**
+//     * 获取报警信息
+//     *
+//     * @return
+//     */
+//    @RequestMapping(value = "/query", method = RequestMethod.GET)
+//    @ResponseBody
+//    public BaseResponse checkUpdates(@Param(DataConstants.MONI_STATION_ADDVCD) String addvcd,
+//                                     @Param(DataConstants.STATION_STATUS_TYPE) String sttp,
+//                                     @Param(DataConstants.REQUEST_PARAMS_SCALE) String scale,
+//                                     @Param(DataConstants.REQUEST_PARAMS_KEYS) String key) {
+//        BaseResponse baseResponse = new BaseResponse();
+//        try {
+//            baseResponse.setData(alarmService.queryAlarm(addvcd,sttp,scale,key));
+//            return baseResponse;
+//        } catch (Exception e) {
+//            return returnError(e.getMessage());
+//        }
+//    }
 
 }

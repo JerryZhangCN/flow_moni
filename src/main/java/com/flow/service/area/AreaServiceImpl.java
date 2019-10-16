@@ -5,6 +5,7 @@ import com.flow.dao.mapper.AreaDao;
 import com.flow.dao.mapper.MoniStationDao;
 import com.flow.domain.area.Area;
 import com.flow.domain.moniStation.MoniStation;
+import com.flow.domain.scale.Group;
 import com.flow.service.moniStation.MoniStationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,5 +32,10 @@ public class AreaServiceImpl implements AreaService {
     @Override
     public List<Area> findByAddvcd(String addvcd) {
         return areaDao.findByAddvcd(addvcd);
+    }
+
+    @Override
+    public List<Group> findGroup(String group) {
+        return areaDao.getGroup(group);
     }
 }

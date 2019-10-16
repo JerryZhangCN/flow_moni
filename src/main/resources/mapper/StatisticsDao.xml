@@ -10,6 +10,7 @@
         <result property="correctNumber" column="CorrectNu" jdbcType="VARCHAR"/>
         <result property="totalNumber" column="TotalNu" jdbcType="VARCHAR"/>
         <result property="alarm" column="FaultNu" jdbcType="VARCHAR"/>
+        <result property="onlineNumber" column="OnLineNu" jdbcType="VARCHAR"/>
     </resultMap>
 
 
@@ -41,5 +42,18 @@
       EXEC [SkyUni_DB_Moni].[dbo].[P_Q_Ecology] NULL,'TM',#{addvcd},#{scale},#{startTime},#{endTime},#{key},#{timeScale},#{alarmLevel},#{pageCount},#{pageIndex},@n_TotalCount OUTPUT
       SELECT @n_TotalCount as totalCount
 </select>
+
+    <select id="monthData" resultMap="areaMap">
+     EXEC [SkyUni_DB_Moni].[dbo].[P_M_DZMonthCount]  NULL,NULL,#{stcd},#{monitorPara}
+    </select>
+    <select id="seasonData" resultMap="areaMap">
+      EXEC [SkyUni_DB_Moni].[dbo].[P_M_DZSeasonCount] NULL,NULL,#{stcd},#{monitorPara}
+    </select>
+    <select id="yearData" resultMap="areaMap">
+      EXEC [SkyUni_DB_Moni].[dbo].[P_M_DZYearCount] NULL,NULL,#{stcd},#{monitorPara}
+    </select>
+    <select id="videoData" resultMap="areaMap">
+      EXEC [SkyUni_DB_Moni].[dbo].[P_M_RealVideoCount] NULL,NULL,#{sttp},#{groupId}
+    </select>
 
 </mapper>
