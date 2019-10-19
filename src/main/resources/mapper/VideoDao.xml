@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flow.dao.mapper.VideoDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.flow.domain.video.Video" id="videoMap">
+        <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
+        <result property="ip" column="PT_IP" jdbcType="VARCHAR"/>
+        <result property="stationName" column="STNMShow" jdbcType="VARCHAR"/>
+        <result property="port" column="PT_Port" jdbcType="VARCHAR"/>
+        <result property="user" column="PT_User" jdbcType="VARCHAR"/>
+        <result property="password" column="PT_Password" jdbcType="VARCHAR"/>
+        <result property="channelId" column="PT_ChannelId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <resultMap type="java.lang.String" id="totalMap">
+        <result property="number" column="total" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="findAll" resultMap="videoMap">
+     EXEC [SkyUni_DB_Moni].[dbo].[P_M_Video] NULL,NULL,null,1
+    </select>
+
+
+</mapper>

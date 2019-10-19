@@ -8,10 +8,7 @@ import com.flow.domain.statistics.PageData;
 import com.flow.domain.tools.DataConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,7 +28,7 @@ public class ImageController extends BaseController {
      */
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     @ResponseBody
-    public BaseResponse image(@Param(DataConstants.REQUEST_PARAMS_STCD) String stcd) {
+    public BaseResponse image(@RequestParam(DataConstants.REQUEST_PARAMS_STCD) String stcd) {
         try {
             if (StringUtils.isBlank(stcd)) {
                 return returnError(DataConstants.RESPONSE_PARAM_ERROR);
@@ -53,12 +50,12 @@ public class ImageController extends BaseController {
      */
     @RequestMapping(value = "/getImages", method = RequestMethod.GET)
     @ResponseBody
-    public BaseResponse getImages(@Param(DataConstants.MONI_STATION_ADDVCD) String addvcd,
-                                  @Param(DataConstants.STATION_STATUS_TYPE) String sttp,
-                                  @Param(DataConstants.REQUEST_PARAMS_END) String end,
-                                  @Param(DataConstants.REQUEST_PARAMS_KEYS) String key,
-                                  @Param(DataConstants.REQUEST_PARAMS_PAGE_COUNT) String count,
-                                  @Param(DataConstants.REQUEST_PARAMS_PAGE_INDEX) String index) {
+    public BaseResponse getImages(@RequestParam(DataConstants.MONI_STATION_ADDVCD) String addvcd,
+                                  @RequestParam(DataConstants.STATION_STATUS_TYPE) String sttp,
+                                  @RequestParam(DataConstants.REQUEST_PARAMS_END) String end,
+                                  @RequestParam(DataConstants.REQUEST_PARAMS_KEYS) String key,
+                                  @RequestParam(DataConstants.REQUEST_PARAMS_PAGE_COUNT) String count,
+                                  @RequestParam(DataConstants.REQUEST_PARAMS_PAGE_INDEX) String index) {
         try {
             PageData<List<Image>> images = imageService.getImages(addvcd, sttp, end, key, count, index);
             for (Image image : images.getData()) {
@@ -78,8 +75,8 @@ public class ImageController extends BaseController {
      */
     @RequestMapping(value = "/historyImages", method = RequestMethod.GET)
     @ResponseBody
-    public BaseResponse getHistoryImages(@Param(DataConstants.REQUEST_PARAMS_STCD) String stcd,
-                                         @Param(DataConstants.REQUEST_PARAMS_END) String end) {
+    public BaseResponse getHistoryImages(@RequestParam(DataConstants.REQUEST_PARAMS_STCD) String stcd,
+                                         @RequestParam(DataConstants.REQUEST_PARAMS_END) String end) {
         try {
             List<Image> images = imageService.historyImage(stcd, end);
             for (Image image : images) {

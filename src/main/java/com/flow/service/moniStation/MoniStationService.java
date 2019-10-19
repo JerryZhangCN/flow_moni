@@ -17,9 +17,9 @@ public interface MoniStationService {
     /**
      * 根据参数获取站点列表
      *
-     * @param Addvcd
-     * @param http
-     * @param scale
+     * @RequestParam Addvcd
+     * @RequestParam http
+     * @RequestParam scale
      * @return
      */
     List<MoniStation> findByAddvcdAndScale(String Addvcd, String http, String scale);
@@ -33,10 +33,10 @@ public interface MoniStationService {
     /**
      * 获取实时监测
      *
-     * @param Addvcd
-     * @param http
-     * @param scale
-     * @param key
+     * @RequestParam Addvcd
+     * @RequestParam http
+     * @RequestParam scale
+     * @RequestParam key
      * @return
      */
     List<MoniOnline> monitorOnline(String Addvcd, String http, String groupId, String key);
@@ -44,8 +44,8 @@ public interface MoniStationService {
     /**
      * 获取站点详细信息
      *
-     * @param stcd
-     * @param monitorPara
+     * @RequestParam stcd
+     * @RequestParam monitorPara
      * @return
      */
     List<StationDetail> getStationDetail(String stcd, String monitorPara);

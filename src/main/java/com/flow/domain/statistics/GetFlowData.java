@@ -6,26 +6,30 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author jerry
- * @date 2019-10-11 14:38
+ * @date 2019-10-17 9:49
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FlowData {
+public class GetFlowData {
     /**
      * 测站编码
      */
     private String stcd;
     /**
-     * 所属地区
+     * 所属乡镇
      */
     private String address;
     /**
-     * 测站名称
+     * 取水类型
      */
-    private String stationName;
+    private String sonsName;
     /**
-     * 记录时间
+     * 取水用户
+     */
+    private String userName;
+    /**
+     * 时间
      */
     private String time;
     /**
@@ -37,27 +41,23 @@ public class FlowData {
      */
     private String speed;
     /**
-     * 下泄流量
+     * 实时流量
      */
     private String leakFlow;
+    /**
+     * 统计时段
+     */
+    private String countTime;
+    /**
+     * 统计流量
+     */
+    private String countFlow;
+    /**
+     * 年审批量
+     */
+    private String alarmValue;
     /**
      * 总流量
      */
     private String totalFlow;
-    /**
-     * 下泄比
-     */
-    private String preValue;
-    /**
-     * 同比
-     */
-    private String contrast;
-    /**
-     * 警戒阈值
-     */
-    private String twoLevelAlarm;
-    /**
-     * 保证阈值
-     */
-    private String oneLevelAlarm;
 }

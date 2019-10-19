@@ -51,9 +51,9 @@ public class RestAwareAuthenticationSuccessHandler implements AuthenticationSucc
 
     /**
      * 登录认证成功后处理
-     * @param request
-     * @param response
-     * @param authentication
+     * @RequestParam request
+     * @RequestParam response
+     * @RequestParam authentication
      * @throws IOException
      * @throws ServletException
      */

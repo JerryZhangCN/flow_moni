@@ -72,11 +72,11 @@ public class DataConstants {
     /**
      * 传递参数常量 - 每页数据量
      */
-    public static final String REQUEST_PARAMS_PAGE_COUNT = "pageCount";
+    public static final String REQUEST_PARAMS_PAGE_COUNT = "count";
     /**
      * 传递参数常量，- 获取页码
      */
-    public static final String REQUEST_PARAMS_PAGE_INDEX = "pageIndex";
+    public static final String REQUEST_PARAMS_PAGE_INDEX = "index";
 
     /**
      * 传递参数常量-分组ID
@@ -86,5 +86,14 @@ public class DataConstants {
      * 传递参数常量
      */
     public static final String REQUEST_PARAMS_TIME_TYPE = "timeType";
+    /**
+     * 水质等级
+     */
+    public static final String REQUEST_PARAMS_QUALITY_LEVEL="qualityLevel";
+    /**
+     * 监测方式
+     */
+    public static final String REQUEST_PARAMS_MONITOR_TYPE="monitorType";
+
 
 }

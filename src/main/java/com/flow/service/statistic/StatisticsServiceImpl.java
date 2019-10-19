@@ -1,9 +1,7 @@
 package com.flow.service.statistic;
 
 import com.flow.dao.mapper.StatisticsDao;
-import com.flow.domain.statistics.FlowData;
-import com.flow.domain.statistics.PageData;
-import com.flow.domain.statistics.Statistics;
+import com.flow.domain.statistics.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +30,18 @@ public class StatisticsServiceImpl implements StatisticService {
     }
 
     @Override
+    public PageData getUseFlowData(String addvcd, String sttp, String start, String end, String key, String count, String index, String level, String timeScale) {
+        List<List<Object>> ob = statisticsDao.getUseFlowData(addvcd, sttp, start, end, key, count, index, level, timeScale);
+        return new PageData(ob.get(0), ob.get(1).get(0).toString());
+    }
+
+    @Override
+    public PageData getWaterQuality(String addvcd, String qualityLevel, String start, String end, String key, String count, String index, String level, String monitorType) {
+        List<List<Object>> ob = statisticsDao.getWaterQualityData(addvcd, qualityLevel, start, end, key, count, index, level, monitorType);
+        return new PageData(ob.get(0), ob.get(1).get(0).toString());
+    }
+
+    @Override
     public Statistics stationStatistics(String timeType, String stcd, String monitorPara) {
         switch (timeType){
             case "month":{
@@ -52,5 +62,15 @@ public class StatisticsServiceImpl implements StatisticService {
     @Override
     public Statistics videoStatistics(String sttp, String groupId) {
         return statisticsDao.videoData(sttp,groupId);
+    }
+
+    @Override
+    public List<QualityLevel> getQualityLevel() {
+        return statisticsDao.qualityLevel();
+    }
+
+    @Override
+    public List<MonitorPara> getMotorPara(String sttp) {
+        return statisticsDao.monitorPara(sttp);
     }
 }

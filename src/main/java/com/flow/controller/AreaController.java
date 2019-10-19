@@ -23,10 +23,7 @@ import com.flow.service.moniStation.MoniStationService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -77,7 +74,7 @@ public class AreaController extends BaseController {
      */
     @RequestMapping(value = "/group", method = RequestMethod.GET)
     @ResponseBody
-    public BaseResponse group(@Param(DataConstants.STATION_STATUS_TYPE) String sttp) {
+    public BaseResponse group(@RequestParam(DataConstants.STATION_STATUS_TYPE) String sttp) {
         BaseResponse baseResponse = new BaseResponse();
         try {
             List<Group> result = areaService.findGroup(sttp);

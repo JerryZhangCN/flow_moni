@@ -19,10 +19,7 @@ import com.flow.domain.BaseResponse;
 import com.flow.domain.area.Area;
 import com.flow.domain.tools.DataConstants;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -45,10 +42,10 @@ public class AlarmController extends BaseController {
      */
     @RequestMapping(value = "/query", method = RequestMethod.GET)
     @ResponseBody
-    public BaseResponse checkUpdates(@Param(DataConstants.MONI_STATION_ADDVCD) String addvcd,
-                                     @Param(DataConstants.STATION_STATUS_TYPE) String sttp,
-                                     @Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId,
-                                     @Param(DataConstants.REQUEST_PARAMS_KEYS) String key) {
+    public BaseResponse checkUpdates(@RequestParam(DataConstants.MONI_STATION_ADDVCD) String addvcd,
+                                     @RequestParam(DataConstants.STATION_STATUS_TYPE) String sttp,
+                                     @RequestParam(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId,
+                                     @RequestParam(DataConstants.REQUEST_PARAMS_KEYS) String key) {
         BaseResponse baseResponse = new BaseResponse();
         try {
             baseResponse.setData(alarmService.queryAlarmByGroupId(addvcd,sttp,groupId,key));
@@ -65,10 +62,10 @@ public class AlarmController extends BaseController {
 //     */
 //    @RequestMapping(value = "/query", method = RequestMethod.GET)
 //    @ResponseBody
-//    public BaseResponse checkUpdates(@Param(DataConstants.MONI_STATION_ADDVCD) String addvcd,
-//                                     @Param(DataConstants.STATION_STATUS_TYPE) String sttp,
-//                                     @Param(DataConstants.REQUEST_PARAMS_SCALE) String scale,
-//                                     @Param(DataConstants.REQUEST_PARAMS_KEYS) String key) {
+//    public BaseResponse checkUpdates(@RequestParam(DataConstants.MONI_STATION_ADDVCD) String addvcd,
+//                                     @RequestParam(DataConstants.STATION_STATUS_TYPE) String sttp,
+//                                     @RequestParam(DataConstants.REQUEST_PARAMS_SCALE) String scale,
+//                                     @RequestParam(DataConstants.REQUEST_PARAMS_KEYS) String key) {
 //        BaseResponse baseResponse = new BaseResponse();
 //        try {
 //            baseResponse.setData(alarmService.queryAlarm(addvcd,sttp,scale,key));

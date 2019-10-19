@@ -150,7 +150,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     /**
      * 身份验证管理生成器，添加认证provider
-     * @param auth
+     * @RequestParam auth
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
@@ -167,7 +167,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     /**
      * web请求安全处理
-     * @param web
+     * @RequestParam web
      * @throws Exception
      */
     @Override
@@ -177,7 +177,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     /**
      * http请求安全处理
-     * @param http
+     * @RequestParam http
      * @throws Exception
      */
     @Override

@@ -17,6 +17,7 @@ package com.flow.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.flow.dao.mapper.VideoDao;
 import com.flow.domain.BaseResponse;
 import com.flow.domain.tools.DataConstants;
 import com.flow.service.alarm.AlarmService;
@@ -26,6 +27,7 @@ import com.flow.service.image.ImageService;
 import com.flow.service.moniStation.MoniStationService;
 import com.flow.service.scale.ScaleService;
 import com.flow.service.statistic.StatisticService;
+import com.flow.service.video.VideoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -62,11 +64,9 @@ public abstract class BaseController {
     protected CurveService curveService;
     @Autowired
     protected ImageService imageService;
+    @Autowired
+    protected VideoService videoService;
 
-
-//    @Value("${server.log_controller_error_stack_trace}")
-//    @Getter
-//    private boolean logControllerErrorStackTrace;
 
 
     protected String constructBaseUrl(HttpServletRequest request) {

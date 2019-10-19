@@ -18,10 +18,7 @@ package com.flow.controller;
 import com.flow.domain.BaseResponse;
 import com.flow.domain.tools.DataConstants;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author jerry
@@ -39,8 +36,8 @@ public class ScaleController extends BaseController {
      */
     @RequestMapping(value = "/query", method = RequestMethod.GET)
     @ResponseBody
-    public BaseResponse getScale(@Param(DataConstants.STATION_STATUS_TYPE) String sttp,
-                                 @Param(DataConstants.REQUEST_PARAMS_TYPE) String type) {
+    public BaseResponse getScale(@RequestParam(DataConstants.STATION_STATUS_TYPE) String sttp,
+                                 @RequestParam(DataConstants.REQUEST_PARAMS_TYPE) String type) {
         BaseResponse baseResponse = new BaseResponse();
         try {
             baseResponse.setData(scaleService.findByType(sttp, type));
@@ -58,7 +55,7 @@ public class ScaleController extends BaseController {
      */
     @RequestMapping(value = "/getGroup", method = RequestMethod.GET)
     @ResponseBody
-    public BaseResponse getScale(@Param(DataConstants.STATION_STATUS_TYPE) String sttp) {
+    public BaseResponse getScale(@RequestParam(DataConstants.STATION_STATUS_TYPE) String sttp) {
         BaseResponse baseResponse = new BaseResponse();
         try {
             baseResponse.setData(scaleService.getGroup(sttp));

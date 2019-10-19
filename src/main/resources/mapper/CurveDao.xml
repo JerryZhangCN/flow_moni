@@ -10,6 +10,47 @@
         <result property="alarmValue" column="OneLevelAlarmValue" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.flow.domain.statistics.CurveData" id="curveMap2">
+        <result property="time" column="TM" jdbcType="VARCHAR"/>
+        <result property="value" column="HourQ" jdbcType="VARCHAR"/>
+        <result property="alarmValue" column="OneLevelAlarmValue" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.flow.domain.scale.CurveProperty" id="curvePropertyMap">
+        <result property="landScape" column="landScape" jdbcType="VARCHAR"/>
+        <result property="portrait" column="portrait" jdbcType="VARCHAR"/>
+        <result property="unit" column="unit" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.flow.domain.statistics.CurveData" id="qualityCurveMap">
+        <result property="time" column="TM" jdbcType="VARCHAR"/>
+        <result property="value" column="CurveMonitorPara" jdbcType="VARCHAR"/>
+        <result property="alarmValue" column="DesignGBLevel" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--<resultMap type="com.flow.domain.scale.CurveProperty" id="curvePropertyMap">-->
+    <!--<result property="landScape" column="landScape" jdbcType="VARCHAR"/>-->
+    <!--<result property="portrait" column="portrait" jdbcType="VARCHAR"/>-->
+    <!--<result property="unit" column="unit" jdbcType="VARCHAR"/>-->
+    <!--</resultMap>-->
+
+    <resultMap type="com.flow.domain.statistics.FloatWindowData" id="floatWindowMap">
+        <result property="stationName" column="STNM" jdbcType="VARCHAR"/>
+        <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
+        <result property="calcMode" column="CalcmodeNM" jdbcType="VARCHAR"/>
+        <result property="maxValue" column="MaxValue" jdbcType="VARCHAR"/>
+        <result property="minValue" column="MinValue" jdbcType="VARCHAR"/>
+        <result property="yearApproval" column="YearApproval" jdbcType="VARCHAR"/>
+        <result property="flow" column="YearQ" jdbcType="VARCHAR"/>
+        <result property="bestValue" column="BestValue" jdbcType="VARCHAR"/>
+        <result property="worstValue" column="WorstValue" jdbcType="VARCHAR"/>
+        <result property="gb" column="GB" jdbcType="VARCHAR"/>
+        <result property="gbLevel" column="GBLevelNM" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--首页底部曲线数据 -->
     <select id="findByStcdAndPara" resultMap="curveMap">
       DECLARE @c_ControlFeatures1 NVARCHAR(200)
       DECLARE @c_ControlFeatures2 NVARCHAR(200)
@@ -18,5 +59,82 @@
       ,@c_ControlFeatures1 OUT
       ,@c_ControlFeatures2 OUT
       ,@c_ControlFeatures3 OUT
+    </select>
+
+    <!-- 生态流量底部曲线数据 -->
+    <select id="findFlowData" resultMap="curveMap,curvePropertyMap">
+      DECLARE @c_ControlFeatures1 NVARCHAR(MAX)
+      DECLARE @c_ControlFeatures2 NVARCHAR(MAX)
+      DECLARE @c_ControlFeatures3 NVARCHAR(MAX)
+      EXEC [SkyUni_DB_Moni].[dbo].[P_Q_EcologyCurve] NULL,NULL,'TM',#{stcd},#{startTime},#{endTime},#{monitorPara},'M_MonitorCurve',#{monitorPara} ,@c_ControlFeatures1 OUT
+ ,@c_ControlFeatures2 OUT
+ ,@c_ControlFeatures3 OUT
+      SELECT @c_ControlFeatures1 as landScape,@c_ControlFeatures2 as portrait,@c_ControlFeatures3 as unit
+    </select>
+
+    <!-- 取水计量底部曲线数据 -->
+    <select id="findWaterData" resultMap="curveMap2,curvePropertyMap">
+      DECLARE @c_controlfeatures1 NVARCHAR(max)
+      DECLARE @c_controlfeatures2 NVARCHAR(max)
+      DECLARE @c_controlfeatures3 NVARCHAR(max)
+      DECLARE @c_controlfeatures4 NVARCHAR(max)
+      DECLARE @c_controlfeatures5 NVARCHAR(max)
+      EXEC [SkyUni_DB_Moni].[dbo].[p_q_watermetercurve] null,null,'TM',#{stcd},#{startTime},#{endTime},#{monitorPara},'Q_QJMonitorCurve',#{monitorPara}
+      ,@c_controlfeatures1 OUT
+      ,@c_controlfeatures2 OUT
+      ,@c_controlfeatures3 OUT
+      ,@c_controlfeatures4 OUT
+      ,@c_controlfeatures5 OUT
+      SELECT @c_ControlFeatures1 as landScape,@c_ControlFeatures2 as portrait,@c_ControlFeatures3 as unit
+      ,@c_controlfeatures4
+      ,@c_controlfeatures5
+    </select>
+
+    <!-- 河湖水质底部曲线数据 -->
+    <select id="findQualityData" resultMap="qualityCurveMap,curvePropertyMap">
+     DECLARE @c_ControlFeatures1 NVARCHAR(MAX)
+     DECLARE @c_ControlFeatures2 NVARCHAR(MAX)
+     DECLARE @c_ControlFeatures3 NVARCHAR(MAX)
+     DECLARE @c_ControlFeatures4 NVARCHAR(MAX)
+     DECLARE @c_ControlFeatures5 NVARCHAR(MAX)
+     DECLARE @c_ControlFeatures6 NVARCHAR(MAX)
+     DECLARE @c_ControlFeatures7 NVARCHAR(MAX)
+     DECLARE @c_ControlFeatures8 DECIMAL(9,3)
+     DECLARE @c_ControlFeatures9 DECIMAL(9,3)
+     EXEC [SkyUni_DB_Moni].[dbo].[P_Q_WaterQualityCurve] NULL,NULL,'TM',#{stcd},#{startTime},#{endTime},#{monitorPara},'Q_WQMonitorCurve',#{monitorPara}
+     ,@c_ControlFeatures1 OUT
+     ,@c_ControlFeatures2 OUT
+     ,@c_ControlFeatures3 OUT
+     ,@c_ControlFeatures4 OUT
+     ,@c_ControlFeatures5 OUT
+     ,@c_ControlFeatures6 OUT
+     ,@c_ControlFeatures7 OUT
+     ,@c_ControlFeatures8 OUT
+     ,@c_ControlFeatures9 OUT
+    SELECT @c_ControlFeatures1 as landScape
+   ,@c_ControlFeatures2 as portrait
+   ,@c_ControlFeatures3 as unit
+   ,@c_ControlFeatures4
+   ,@c_ControlFeatures5
+   ,@c_ControlFeatures6
+   ,@c_ControlFeatures7
+   ,@c_ControlFeatures8
+   ,@c_ControlFeatures9
+    </select>
+
+
+    <!-- 生态流量底部数据 -->
+    <select id="flowFloatData" resultMap="floatWindowMap">
+      EXEC [SkyUni_DB_Moni].[dbo].[P_Q_EcologySingleStat]  #{stcd},#{startTime},#{endTime},#{monitorPara}
+    </select>
+
+    <!-- 取水计量底部数据 -->
+    <select id="waterFloatData" resultMap="floatWindowMap">
+      EXEC [SkyUni_DB_Moni].[dbo].[P_Q_WaterMeterSingleStat]  #{stcd},#{startTime},#{endTime},#{monitorPara}
+    </select>
+
+    <!-- 河湖水质底部数据 -->
+    <select id="qualityFloatData" resultMap="floatWindowMap">
+      EXEC [SkyUni_DB_Moni].[dbo].[P_Q_WaterQualitySingleStat]  #{stcd},#{startTime},#{endTime},#{monitorPara}
     </select>
 </mapper>

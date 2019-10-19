@@ -2,9 +2,7 @@ package com.flow.service.statistic;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.flow.domain.statistics.FlowData;
-import com.flow.domain.statistics.PageData;
-import com.flow.domain.statistics.Statistics;
+import com.flow.domain.statistics.*;
 import com.flow.domain.tools.DataConstants;
 import org.apache.ibatis.annotations.Param;
 
@@ -20,7 +18,15 @@ public interface StatisticService {
 
     PageData getFlowData(String addvcd, String scale, String start, String end, String key, String count, String index, String level, String timeScale);
 
+    PageData getUseFlowData(String addvcd, String sttp, String start, String end, String key, String count, String index, String level, String timeScale);
+
+    PageData getWaterQuality(String addvcd, String qualityLevel, String start, String end, String key, String count, String index, String level, String monitorType);
+
     Statistics stationStatistics(String timeType, String stcd, String monitorPara);
 
     Statistics videoStatistics( String sttp, String groupId);
+
+    List<QualityLevel> getQualityLevel();
+
+    List<MonitorPara> getMotorPara(String sttp);
 }

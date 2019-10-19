@@ -11,7 +11,7 @@ import com.google.common.util.concurrent.ListenableFuture;
 public interface UserService {
     /**
      * 根据ID查询用户
-     * @param userId
+     * @RequestParam userId
      * @return
      */
     ListenableFuture<User> findCustomerByIdAsync(String userId);

@@ -23,10 +23,7 @@ import com.flow.service.moniStation.MoniStationService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,9 +48,9 @@ public class MoniStationController extends BaseController {
 //     */
 //    @RequestMapping(value = "/query", method = RequestMethod.GET)
 //    @ResponseBody
-//    public BaseResponse getMoniStation(@Param(DataConstants.MONI_STATION_ADDVCD) String addvcd,
-//                                       @Param(DataConstants.STATION_STATUS_TYPE) String sttp,
-//                                       @Param(DataConstants.STATION_STATUS_TYPE) String scale) {
+//    public BaseResponse getMoniStation(@RequestParam(DataConstants.MONI_STATION_ADDVCD) String addvcd,
+//                                       @RequestParam(DataConstants.STATION_STATUS_TYPE) String sttp,
+//                                       @RequestParam(DataConstants.STATION_STATUS_TYPE) String scale) {
 //        BaseResponse baseResponse = new BaseResponse();
 //        try {
 //            baseResponse.setResultCode(RESPONSE_OK);
@@ -71,8 +68,8 @@ public class MoniStationController extends BaseController {
      */
     @RequestMapping(value = "/query", method = RequestMethod.GET)
     @ResponseBody
-    public BaseResponse getMoniStation(@Param(DataConstants.STATION_STATUS_TYPE) String sttp,
-                                       @Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId) {
+    public BaseResponse getMoniStation(@RequestParam(DataConstants.STATION_STATUS_TYPE) String sttp,
+                                       @RequestParam(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId) {
         BaseResponse baseResponse = new BaseResponse();
         try {
             baseResponse.setResultCode(RESPONSE_OK);
@@ -90,8 +87,8 @@ public class MoniStationController extends BaseController {
      */
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     @ResponseBody
-    public BaseResponse stationDetail(@Param(DataConstants.REQUEST_PARAMS_STCD) String stcd,
-                                      @Param(DataConstants.REQUEST_PARAMS_MONITOR_PARA) String monitorPara) {
+    public BaseResponse stationDetail(@RequestParam(DataConstants.REQUEST_PARAMS_STCD) String stcd,
+                                      @RequestParam(DataConstants.REQUEST_PARAMS_MONITOR_PARA) String monitorPara) {
         BaseResponse baseResponse = new BaseResponse();
         try {
             baseResponse.setResultCode(RESPONSE_OK);
@@ -137,10 +134,10 @@ public class MoniStationController extends BaseController {
      */
     @RequestMapping(value = "/moniOnline", method = RequestMethod.GET)
     @ResponseBody
-    public BaseResponse moniOnline(@Param(DataConstants.MONI_STATION_ADDVCD) String addvcd,
-                                   @Param(DataConstants.STATION_STATUS_TYPE) String sttp,
-                                   @Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId,
-                                   @Param(DataConstants.REQUEST_PARAMS_KEYS) String key) {
+    public BaseResponse moniOnline(@RequestParam(DataConstants.MONI_STATION_ADDVCD) String addvcd,
+                                   @RequestParam(DataConstants.STATION_STATUS_TYPE) String sttp,
+                                   @RequestParam(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId,
+                                   @RequestParam(DataConstants.REQUEST_PARAMS_KEYS) String key) {
         BaseResponse baseResponse = new BaseResponse();
         try {
             baseResponse.setResultCode(RESPONSE_OK);

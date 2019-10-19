@@ -535,7 +535,7 @@ var MC = {
 	}
 	$.fn.extend({
 		/**
-		 * @param {Object} op: {type:GET/POST, url:ajax请求地址, data:ajax请求参数列表, callback:回调函数 }
+		 * @RequestParam {Object} op: {type:GET/POST, url:ajax请求地址, data:ajax请求参数列表, callback:回调函数 }
 		 */
 		ajaxUrl: function(op){
 			var $this = $(this);
@@ -582,7 +582,7 @@ var MC = {
 		},
 		/**
 		 * adjust component inner reference box height
-		 * @param {Object} refBox: reference box jQuery Obj
+		 * @RequestParam {Object} refBox: reference box jQuery Obj
 		 */
 		layoutH: function($refBox){
 			return this.each(function(){
@@ -657,7 +657,7 @@ var MC = {
 		},
 		/**
 		 * 判断当前元素是否已经绑定某个事件
-		 * @param {Object} type
+		 * @RequestParam {Object} type
 		 */
 		isBind:function(type) {
 			var _events = $(this).data("events");

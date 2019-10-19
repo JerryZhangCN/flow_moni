@@ -53,8 +53,8 @@ public class RestLoginProcessingFilter extends AbstractAuthenticationProcessingF
 
     /**
      * 登录认证
-     * @param request
-     * @param response
+     * @RequestParam request
+     * @RequestParam response
      * @return
      * @throws AuthenticationException
      * @throws IOException

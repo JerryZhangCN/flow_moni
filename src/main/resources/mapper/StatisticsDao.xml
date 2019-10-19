@@ -13,7 +13,7 @@
         <result property="onlineNumber" column="OnLineNu" jdbcType="VARCHAR"/>
     </resultMap>
 
-
+    <!-- 生态流量-->
     <resultMap type="com.flow.domain.statistics.FlowData" id="flowMap">
         <result property="address" column="ADDVNM" jdbcType="VARCHAR"/>
         <result property="stationName" column="STNMShow" jdbcType="VARCHAR"/>
@@ -26,7 +26,59 @@
         <result property="contrast" column="WPTNNM" jdbcType="VARCHAR"/>
         <result property="twoLevelAlarm" column="TwoLevelAlarmValue" jdbcType="VARCHAR"/>
         <result property="oneLevelAlarm" column="OneLevelAlarmValue" jdbcType="VARCHAR"/>
+        <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
     </resultMap>
+
+    <!-- 取水计量-->
+    <resultMap type="com.flow.domain.statistics.GetFlowData" id="getFlowMap">
+        <result property="address" column="ADDVNM" jdbcType="VARCHAR"/>
+        <result property="sonsName" column="SonSTTPNM" jdbcType="VARCHAR"/>
+        <result property="userName" column="STNMShow" jdbcType="VARCHAR"/>
+        <result property="time" column="TMShow" jdbcType="VARCHAR"/>
+        <result property="waterLevel" column="Z" jdbcType="VARCHAR"/>
+        <result property="speed" column="Speed" jdbcType="VARCHAR"/>
+        <result property="leakFlow" column="Q" jdbcType="VARCHAR"/>
+        <result property="totalFlow" column="TotalQ" jdbcType="VARCHAR"/>
+        <result property="countTime" column="CountTM" jdbcType="VARCHAR"/>
+        <result property="countFlow" column="CountQ" jdbcType="VARCHAR"/>
+        <result property="alarmValue" column="OneLevelAlarmValue" jdbcType="VARCHAR"/>
+        <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 河湖水质-->
+    <resultMap type="com.flow.domain.statistics.WaterQuality" id="waterQualityMap">
+        <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
+        <result property="riverName" column="RVNM" jdbcType="VARCHAR"/>
+        <result property="qualityLevel" column="GBLevelNM" jdbcType="VARCHAR"/>
+        <result property="stationName" column="STNMShow" jdbcType="VARCHAR"/>
+        <result property="monitorType" column="AutoManMonitorTPNM" jdbcType="VARCHAR"/>
+        <result property="monitorUser" column="ResponsiblePerson" jdbcType="VARCHAR"/>
+        <result property="monitorTime" column="TMShow" jdbcType="VARCHAR"/>
+        <result property="cod" column="DO" jdbcType="VARCHAR"/>
+        <result property="an" column="AN" jdbcType="VARCHAR"/>
+        <result property="tp" column="TP" jdbcType="VARCHAR"/>
+        <result property="tn" column="TN" jdbcType="VARCHAR"/>
+        <result property="ph" column="PH" jdbcType="VARCHAR"/>
+        <result property="pg" column="PH" jdbcType="VARCHAR"/>
+        <result property="cc" column="CC" jdbcType="VARCHAR"/>
+        <result property="er" column="ER" jdbcType="VARCHAR"/>
+        <result property="tb" column="TB" jdbcType="VARCHAR"/>
+        <result property="wt" column="WT" jdbcType="VARCHAR"/>
+        <result property="pg" column="PH" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 监测级别-->
+    <resultMap type="com.flow.domain.statistics.QualityLevel" id="qualityMap">
+        <result property="levelName" column="GBLevelNM" jdbcType="VARCHAR"/>
+        <result property="level" column="GBLevel" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 监测指标-->
+    <resultMap type="com.flow.domain.statistics.MonitorPara" id="monitorParaMap">
+        <result property="monitorName" column="MonitorParaNM" jdbcType="VARCHAR"/>
+        <result property="monitorPara" column="MonitorPara" jdbcType="VARCHAR"/>
+    </resultMap>
+
 
     <resultMap type="java.lang.String" id="countMap">
         <result property="count" column="totalCount" jdbcType="VARCHAR"/>
@@ -39,7 +91,7 @@
 
     <select id="getFlowData" resultMap="flowMap,countMap">
       DECLARE @n_TotalCount INT
-      EXEC [SkyUni_DB_Moni].[dbo].[P_Q_Ecology] NULL,'TM',#{addvcd},#{scale},#{startTime},#{endTime},#{key},#{timeScale},#{alarmLevel},#{pageCount},#{pageIndex},@n_TotalCount OUTPUT
+      EXEC [SkyUni_DB_Moni].[dbo].[P_Q_Ecology] NULL,'TM',#{addvcd},#{scale},#{startTime},#{endTime},#{key},#{timeScale},#{alarmLevel},#{count},#{index},@n_TotalCount OUTPUT
       SELECT @n_TotalCount as totalCount
 </select>
 
@@ -55,5 +107,26 @@
     <select id="videoData" resultMap="areaMap">
       EXEC [SkyUni_DB_Moni].[dbo].[P_M_RealVideoCount] NULL,NULL,#{sttp},#{groupId}
     </select>
+
+    <select id="getUseFlowData" resultMap="getFlowMap,countMap">
+      DECLARE @n_TotalCount INT
+      EXEC [SkyUni_DB_Moni].[dbo].[P_Q_WaterMeter]  NULL,'TM',#{addvcd},#{sttp},#{startTime},#{endTime},#{key},#{timeScale},#{alarmLevel},#{count},#{index},@n_TotalCount OUTPUT
+      SELECT @n_TotalCount as totalCount
+</select>
+
+    <select id="getWaterQualityData" resultMap="waterQualityMap,countMap">
+      DECLARE @n_TotalCount INT
+      EXEC [SkyUni_DB_Moni].[dbo].[P_Q_WaterQuality] NULL,NULL,'WQHD',#{addvcd},#{qualityLevel},NULL,#{startTime},#{endTime},#{key},#{monitorType},#{alarmLevel},#{count},#{index},@n_TotalCount OUTPUT
+      SELECT @n_TotalCount as totalCount
+</select>
+
+    <select id="qualityLevel" resultMap="qualityMap">
+     EXEC [SkyUni_DB_Moni].[dbo].[P_GetGBMonitorParaLevel] NULL,NULL,NULL,'GB/T 14848-93'
+</select>
+
+
+    <select id="monitorPara" resultMap="monitorParaMap">
+    EXEC [SkyUni_DB_Moni].[dbo].[P_GetMonitorPara] NULL,NULL,NULL,#{sttp}
+</select>
 
 </mapper>
