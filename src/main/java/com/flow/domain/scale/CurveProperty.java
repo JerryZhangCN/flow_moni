@@ -29,6 +29,13 @@ public class CurveProperty {
     /**
      * 标准值
      */
-    @Nullable
     private String alarmValue;
+
+    private String quality;
+    private String qualityValue;
+    private String waterQuality;
+    private String name;
+    private String best;
+    private String worst;
+
 }

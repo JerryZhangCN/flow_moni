@@ -21,6 +21,12 @@
         <result property="landScape" column="landScape" jdbcType="VARCHAR"/>
         <result property="portrait" column="portrait" jdbcType="VARCHAR"/>
         <result property="unit" column="unit" jdbcType="VARCHAR"/>
+        <result property="quality" column="quality" jdbcType="VARCHAR"/>
+        <result property="qualityValue" column="qualityValue" jdbcType="VARCHAR"/>
+        <result property="waterQuality" column="waterQuality" jdbcType="VARCHAR"/>
+        <result property="name" column="uName" jdbcType="VARCHAR"/>
+        <result property="best" column="best" jdbcType="VARCHAR"/>
+        <result property="worst" column="worst" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!-- 可根据自己的需求，是否要使用 -->
@@ -28,12 +34,6 @@
         <result property="time" column="TM" jdbcType="VARCHAR"/>
         <result property="value" column="CurveMonitorPara" jdbcType="VARCHAR"/>
         <result property="alarmValue" column="DesignGBLevel" jdbcType="VARCHAR"/>
-    </resultMap>
-
-    <resultMap type="com.flow.domain.scale.CurveProperty" id="test">
-    <result property="landScape" column="a" jdbcType="VARCHAR"/>
-    <result property="portrait" column="b" jdbcType="VARCHAR"/>
-    <result property="unit" column="c" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap type="com.flow.domain.statistics.FloatWindowData" id="floatWindowMap">
@@ -91,7 +91,7 @@
     </select>
 
     <!-- 河湖水质底部曲线数据 -->
-    <select id="findQualityData" resultMap="qualityCurveMap,test">
+    <select id="findQualityData" statementType="CALLABLE" resultMap="qualityCurveMap,curvePropertyMap">
      DECLARE @c_ControlFeatures1 NVARCHAR(MAX)
      DECLARE @c_ControlFeatures2 NVARCHAR(MAX)
      DECLARE @c_ControlFeatures3 NVARCHAR(MAX)
@@ -111,9 +111,15 @@
      ,@c_ControlFeatures7 OUT
      ,@c_ControlFeatures8 OUT
      ,@c_ControlFeatures9 OUT
-    SELECT @c_ControlFeatures1 as a
-   ,@c_ControlFeatures2 as b
-   ,@c_ControlFeatures3 as c
+    SELECT @c_ControlFeatures1 as landScape
+     ,@c_ControlFeatures2 as portrait
+     ,@c_ControlFeatures3 as unit
+     ,@c_ControlFeatures4 as quality
+     ,@c_ControlFeatures5 as qualityValue
+     ,@c_ControlFeatures6 as waterQuality
+     ,@c_ControlFeatures7 as uName
+     ,@c_ControlFeatures8 as best
+     ,@c_ControlFeatures9 as worst
     </select>
 
 
