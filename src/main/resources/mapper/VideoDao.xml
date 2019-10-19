@@ -14,6 +14,20 @@
         <result property="channelId" column="PT_ChannelId" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap type="com.flow.domain.video.VideoProperty" id="videoPropertyMap">
+        <result property="screenMode" column="SplitScreenModeNM" jdbcType="VARCHAR"/>
+        <result property="screenModeId" column="SplitScreenModeID" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.flow.domain.video.VideoOnline" id="videoOnlineMap">
+        <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
+        <result property="stationName" column="STNM" jdbcType="VARCHAR"/>
+        <result property="flowName" column="ShowMonitorTypeNM" jdbcType="VARCHAR"/>
+        <result property="flowValue" column="value" jdbcType="VARCHAR"/>
+        <result property="alarmValue" column="OneLevelAlarmValue" jdbcType="VARCHAR"/>
+        <result property="time" column="TM" jdbcType="VARCHAR"/>
+    </resultMap>
+
 
     <resultMap type="java.lang.String" id="totalMap">
         <result property="number" column="total" jdbcType="VARCHAR"/>
@@ -22,6 +36,14 @@
 
     <select id="findAll" resultMap="videoMap">
      EXEC [SkyUni_DB_Moni].[dbo].[P_M_Video] NULL,NULL,null,1
+    </select>
+
+    <select id="getVideoProperty" resultMap="videoPropertyMap">
+     EXEC [SkyUni_DB_Moni].[dbo].[P_GetSplitScreenMode] NULL,NULL,NULL
+    </select>
+
+    <select id="getVideoOnline" resultMap="videoOnlineMap">
+     EXEC [SkyUni_DB_Moni].[dbo].[P_Q_PictureSTMonitorReal] NULL,#{stcd}
     </select>
 
 

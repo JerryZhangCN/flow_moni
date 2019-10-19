@@ -15,7 +15,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Curve<T,O> {
+public class Curve<T, O, X> {
     private List<T> curveData;
     private O curveProperty;
+    private X floatWindowData;
 }

@@ -34,9 +34,13 @@ public interface MoniStationDao {
     List<StationDetail> getStationDetail(@Param(DataConstants.REQUEST_PARAMS_STCD) String stcd,
                                          @Param(DataConstants.REQUEST_PARAMS_MONITOR_PARA) String monitorPara);
 
-    List<StationType> getMonitorType();
+    List<StationType> getMonitorType(@Param(DataConstants.REQUEST_PARAMS_TYPE) String type,
+                                     @Param(DataConstants.STATION_STATUS_TYPE) String sttp);
 
 
     List<MoniStation> findByGroupId(@Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String group,
-                                     @Param(DataConstants.STATION_STATUS_TYPE) String sttp);
+                                    @Param(DataConstants.STATION_STATUS_TYPE) String sttp);
+
+    List<MoniStation> groupStation(@Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId,
+                                   @Param(DataConstants.REQUEST_PARAMS_KEYS) String key);
 }

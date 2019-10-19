@@ -23,6 +23,7 @@ import com.flow.service.moniStation.MoniStationService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -106,11 +107,12 @@ public class MoniStationController extends BaseController {
      */
     @RequestMapping(value = "/monitorType", method = RequestMethod.GET)
     @ResponseBody
-    public BaseResponse monitorOnline() {
+    public BaseResponse monitorOnline(@Nullable String type,
+                                      @Nullable String sttp) {
         BaseResponse baseResponse = new BaseResponse();
         try {
             baseResponse.setResultCode(RESPONSE_OK);
-            List<StationType> types = moniStationService.getStationType();
+            List<StationType> types = moniStationService.getStationType(type,sttp);
             List<Scale> scales = scaleService.findByType(null, null);
             for (StationType stationType : types) {
                 for (Scale scale : scales) {
@@ -142,6 +144,25 @@ public class MoniStationController extends BaseController {
         try {
             baseResponse.setResultCode(RESPONSE_OK);
             baseResponse.setData(moniStationService.monitorOnline(addvcd, sttp, groupId, key));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+    /**
+     * 根据视频分组获取站点信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/groupStation", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse moniOnline(@Nullable String groupId,
+                                   @Nullable String key) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setResultCode(RESPONSE_OK);
+            baseResponse.setData(moniStationService.groupStation(groupId, key));
             return baseResponse;
         } catch (Exception e) {
             return returnError(e.getMessage());

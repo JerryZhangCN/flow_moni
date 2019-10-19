@@ -30,11 +30,11 @@
         <result property="alarmValue" column="DesignGBLevel" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <!--<resultMap type="com.flow.domain.scale.CurveProperty" id="curvePropertyMap">-->
-    <!--<result property="landScape" column="landScape" jdbcType="VARCHAR"/>-->
-    <!--<result property="portrait" column="portrait" jdbcType="VARCHAR"/>-->
-    <!--<result property="unit" column="unit" jdbcType="VARCHAR"/>-->
-    <!--</resultMap>-->
+    <resultMap type="com.flow.domain.scale.CurveProperty" id="test">
+    <result property="landScape" column="a" jdbcType="VARCHAR"/>
+    <result property="portrait" column="b" jdbcType="VARCHAR"/>
+    <result property="unit" column="c" jdbcType="VARCHAR"/>
+    </resultMap>
 
     <resultMap type="com.flow.domain.statistics.FloatWindowData" id="floatWindowMap">
         <result property="stationName" column="STNM" jdbcType="VARCHAR"/>
@@ -91,7 +91,7 @@
     </select>
 
     <!-- 河湖水质底部曲线数据 -->
-    <select id="findQualityData" resultMap="qualityCurveMap,curvePropertyMap">
+    <select id="findQualityData" resultMap="qualityCurveMap,test">
      DECLARE @c_ControlFeatures1 NVARCHAR(MAX)
      DECLARE @c_ControlFeatures2 NVARCHAR(MAX)
      DECLARE @c_ControlFeatures3 NVARCHAR(MAX)
@@ -111,15 +111,9 @@
      ,@c_ControlFeatures7 OUT
      ,@c_ControlFeatures8 OUT
      ,@c_ControlFeatures9 OUT
-    SELECT @c_ControlFeatures1 as landScape
-   ,@c_ControlFeatures2 as portrait
-   ,@c_ControlFeatures3 as unit
-   ,@c_ControlFeatures4
-   ,@c_ControlFeatures5
-   ,@c_ControlFeatures6
-   ,@c_ControlFeatures7
-   ,@c_ControlFeatures8
-   ,@c_ControlFeatures9
+    SELECT @c_ControlFeatures1 as a
+   ,@c_ControlFeatures2 as b
+   ,@c_ControlFeatures3 as c
     </select>
 
 

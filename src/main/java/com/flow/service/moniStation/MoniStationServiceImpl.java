@@ -44,7 +44,12 @@ public class MoniStationServiceImpl implements MoniStationService {
     }
 
     @Override
-    public List<StationType> getStationType() {
-        return moniStationDao.getMonitorType();
+    public List<StationType> getStationType(String type,String sttp) {
+        return moniStationDao.getMonitorType(type,sttp);
+    }
+
+    @Override
+    public List<MoniStation> groupStation(String groupId, String key) {
+        return moniStationDao.groupStation(groupId, key);
     }
 }

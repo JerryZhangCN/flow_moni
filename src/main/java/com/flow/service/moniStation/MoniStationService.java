@@ -55,5 +55,8 @@ public interface MoniStationService {
      *
      * @return
      */
-    List<StationType> getStationType();
+    List<StationType> getStationType(String type, String http);
+
+
+    List<MoniStation> groupStation(String groupId,String key);
 }

@@ -36,7 +36,8 @@ public class CurveServiceImpl implements CurveService {
                 CurveProperty curveProperty = (CurveProperty) ob.get(1).get(0);
                 CurveData curveData =(CurveData) (ob.get(0).get(0));
                 curveProperty.setAlarmValue(curveData.getAlarmValue());
-                Curve curve = new Curve(ob.get(0), curveProperty);
+
+                Curve curve = new Curve(ob.get(0), curveProperty,curveDao.flowFloatData(stcd, monitorPara, start, end));
                 return curve;
             }
         }catch (Exception e){
@@ -52,7 +53,7 @@ public class CurveServiceImpl implements CurveService {
             List<List<Object>> ob = curveDao.findWaterData(stcd, monitorPara, start, end);
             if(ob!=null&&ob.size()>0){
                 CurveProperty curveProperty = (CurveProperty) ob.get(1).get(0);
-                Curve curve = new Curve(ob.get(0), curveProperty);
+                Curve curve = new Curve(ob.get(0), curveProperty,curveDao.waterFloatData(stcd, monitorPara, start, end));
                 return curve;
             }
         }catch (Exception e){
@@ -67,7 +68,7 @@ public class CurveServiceImpl implements CurveService {
             List<List<Object>> ob = curveDao.findQualityData(stcd, monitorPara, start, end);
             if(ob!=null&&ob.size()>0){
                 CurveProperty curveProperty = (CurveProperty) ob.get(1).get(0);
-                Curve curve = new Curve(ob.get(0), curveProperty);
+                Curve curve = new Curve(ob.get(0), curveProperty,curveDao.qualityFloatData(stcd, monitorPara, start, end));
                 return curve;
             }
         }catch (Exception e){
