@@ -27,6 +27,7 @@ import com.flow.service.image.ImageService;
 import com.flow.service.moniStation.MoniStationService;
 import com.flow.service.scale.ScaleService;
 import com.flow.service.statistic.StatisticService;
+import com.flow.service.user.UserService;
 import com.flow.service.video.VideoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,8 @@ public abstract class BaseController {
     protected ImageService imageService;
     @Autowired
     protected VideoService videoService;
+    @Autowired
+    protected UserService userService;
 
 
 

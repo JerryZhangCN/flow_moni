@@ -46,4 +46,36 @@ public class Alarm {
      * 测站名称
      */
     private String stationName;
+    /**
+     * 所属乡镇
+     */
+    private String addressName;
+    /**
+     * 测站类别
+     */
+    private String stationType;
+    /**
+     * 报警时间
+     */
+    private String time;
+    /**
+     * 报警时段
+     */
+    private String alarmInterval;
+    /**
+     * 报警阈值
+     */
+    private String levelValue;
+    /**
+     * 实测值
+     */
+    private String realValue;
+    /**
+     * 报警方式
+     */
+    private String alarmMethod;
+    /**
+     * 报警内容
+     */
+    private String alarmForm;
 }

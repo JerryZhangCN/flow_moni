@@ -14,7 +14,7 @@ public class DataConstants {
     public static final String RESPONSE_PARAM_ERROR = "参数错误";
 
 
-    public static final String BASE_IMAGE_IP = "http://182.132.151.242:20080";
+    public static final String BASE_IMAGE_IP = "http://182.132.151.242:9090/img";
 
 
     /**
@@ -94,6 +94,53 @@ public class DataConstants {
      * 监测方式
      */
     public static final String REQUEST_PARAMS_MONITOR_TYPE="monitorType";
+    /**
+     * 监测方式
+     */
+    public static final String REQUEST_PARAMS_ALARM_INTERVAL="alarmInterval";
+    /**
+     * 报警关联方式 0-未关联 1-已关联 2/null-全部
+     */
+    public static final String REQUEST_PARAMS_SELECT_TYPE="selectType";
+    /**
+     * 组织ID
+     */
+    public static final String REQUEST_PARAMS_ORGANIZATION_ID="organizationId";
+    /**
+     * 组织ID
+     */
+    public static final String REQUEST_PARAMS_ADDRESS_BOOK_ID="addressbookId";
+
+    /**b
+     * 修改前的报警指标
+     */
+    public static final String REQUEST_PARAMS_BEFORE_ALARM_PARA="beforeMonitorPara";
+
+    /**
+     * 修改前的报警时段
+     */
+    public static final String REQUEST_PARAMS_BEFORE_ALARM_INTERVAL="beforeAlarmInterval";
+
+    /**
+     * 报警比较方式
+     */
+    public static final String REQUEST_PARAMS_BEFORE_ALARM_COMPARE_METHOD="compareType";
+    /**
+     * 一级阈值
+     */
+    public static final String REQUEST_PARAMS_ONE_LEVEL_ALARM = "oneLevelAlarmValue";
+    /**
+     * 二级阈值
+     */
+    public static final String REQUEST_PARAMS_TWO_LEVEL_ALARM = "twoLevelAlarmValue";
+    /**
+     * 报警方式
+     */
+    public static final String REQUEST_PARAMS_ALARM_METHOD = "alarmMethod";
+    /**
+     * 报警格式
+     */
+    public static final String REQUEST_PARAMS_ALARM_FORM = "alarmForm";
 
 
 }

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flow.dao.mapper.UserDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.flow.domain.user.ContactUser" id="contactMap">
+        <result property="name" column="NAME" jdbcType="VARCHAR"/>
+        <result property="dutiesName" column="DutiesNM" jdbcType="VARCHAR"/>
+        <result property="phone" column="MobilePhone" jdbcType="VARCHAR"/>
+        <result property="alarmCharacter" column="AlarmCharacter" jdbcType="VARCHAR"/>
+        <result property="isSelected" column="IsSelected" jdbcType="VARCHAR"/>
+        <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
+        <result property="addressbookCD" column="AddressbookCD" jdbcType="VARCHAR"/>
+        <result property="dutiesId" column="DutiesID" jdbcType="VARCHAR"/>
+        <result property="organizationId" column="OrganizationCD" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.flow.domain.user.Organization" id="organizationMap">
+        <result property="organizationId" column="OrganizationCD" jdbcType="VARCHAR"/>
+        <result property="organizationName" column="OrganizationNMShow" jdbcType="VARCHAR"/>
+        <result property="isSelected" column="IsSelected" jdbcType="VARCHAR"/>
+        <result property="totalCount" column="TotalCount" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="java.lang.String" id="countMap">
+        <result property="count" column="totalCount" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="getContactUser" resultMap="com.flow.dao.mapper.UserDao.contactMap,com.flow.dao.mapper.UserDao.countMap">
+     DECLARE @n_TotalCount INT
+     DECLARE @n_ConnectionCount INT
+     EXEC [SkyUni_DB_Moni].[DBO].[P_A_StationAlarmConnection] NULL,#{stcd},#{organizationId},#{selectType},#{key},@n_ConnectionCount OUT,#{count},#{index},@n_TotalCount OUT
+      SELECT @n_TotalCount as totalCount
+    </select>
+
+    <select id="getOrganization" resultMap="com.flow.dao.mapper.UserDao.organizationMap,com.flow.dao.mapper.UserDao.countMap">
+     DECLARE @n_TotalCount INT
+     DECLARE @n_ConnectionCount INT
+     DECLARE @n_ConnectionTotalCount INT
+     EXEC [SkyUni_DB_Moni].[DBO].[P_A_StationAlarmConnectionGroup] NULL,#{stcd},@n_ConnectionCount OUT,@n_ConnectionTotalCount OUT,#{count},#{index},@n_TotalCount OUT
+     SELECT @n_TotalCount as totalCount
+    </select>
+
+
+    <select id="associateUser" resultType="java.lang.String">
+    DECLARE @c_STCD NVARCHAR(13)=#{stcd}
+    DECLARE @c_OrganizationCD NVARCHAR(36)=#{organizationId}
+    DECLARE @c_AddressbookCD NVARCHAR(36)=#{addressbookId}
+    DECLARE @n_TotalCount INT
+    DECLARE @n_UpdateCount INT
+    DECLARE @c_ResultMessage VARCHAR(200)
+    DECLARE @n_ResultState INT
+    EXEC [SkyUni_DB_Moni].[DBO].[P_A_StationAlarmConnectionAdd]
+    @c_STCD,@c_OrganizationCD,@c_AddressbookCD
+    ,@n_TotalCount OUT,@n_UpdateCount OUT,@c_ResultMessage OUT,@n_ResultState OUT
+    SELECT @c_ResultMessage
+    </select>
+
+    <select id="associateUserCancel" resultType="java.lang.String">
+    DECLARE @c_STCD NVARCHAR(13)=#{stcd}
+    DECLARE @c_OrganizationCD NVARCHAR(36)=#{organizationId}
+    DECLARE @c_AddressbookCD NVARCHAR(36)=#{addressbookId}
+    DECLARE @n_TotalCount INT
+    DECLARE @n_UpdateCount INT
+    DECLARE @c_ResultMessage VARCHAR(200)
+    DECLARE @n_ResultState INT
+    EXEC [SkyUni_DB_Moni].[DBO].[P_A_StationAlarmConnectionCancel]
+    @c_STCD,@c_OrganizationCD,@c_AddressbookCD
+    ,@n_TotalCount OUT,@n_UpdateCount OUT,@c_ResultMessage OUT,@n_ResultState OUT
+    SELECT @c_ResultMessage
+    </select>
+
+
+</mapper>

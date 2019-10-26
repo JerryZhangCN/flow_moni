@@ -19,8 +19,10 @@ import com.flow.domain.BaseResponse;
 import com.flow.domain.area.Area;
 import com.flow.domain.tools.DataConstants;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Null;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,37 +44,158 @@ public class AlarmController extends BaseController {
      */
     @RequestMapping(value = "/query", method = RequestMethod.GET)
     @ResponseBody
-    public BaseResponse checkUpdates(@RequestParam(DataConstants.MONI_STATION_ADDVCD) String addvcd,
-                                     @RequestParam(DataConstants.STATION_STATUS_TYPE) String sttp,
-                                     @RequestParam(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId,
-                                     @RequestParam(DataConstants.REQUEST_PARAMS_KEYS) String key) {
+    public BaseResponse checkUpdates(@Nullable String addvcd,
+                                     @Nullable String sttp,
+                                     @Nullable String groupId,
+                                     @Nullable String key) {
         BaseResponse baseResponse = new BaseResponse();
         try {
-            baseResponse.setData(alarmService.queryAlarmByGroupId(addvcd,sttp,groupId,key));
+            baseResponse.setData(alarmService.queryAlarmByGroupId(addvcd, sttp, groupId, key));
             return baseResponse;
         } catch (Exception e) {
             return returnError(e.getMessage());
         }
     }
 
-//    /**
-//     * 获取报警信息
-//     *
-//     * @return
-//     */
-//    @RequestMapping(value = "/query", method = RequestMethod.GET)
-//    @ResponseBody
-//    public BaseResponse checkUpdates(@RequestParam(DataConstants.MONI_STATION_ADDVCD) String addvcd,
-//                                     @RequestParam(DataConstants.STATION_STATUS_TYPE) String sttp,
-//                                     @RequestParam(DataConstants.REQUEST_PARAMS_SCALE) String scale,
-//                                     @RequestParam(DataConstants.REQUEST_PARAMS_KEYS) String key) {
-//        BaseResponse baseResponse = new BaseResponse();
-//        try {
-//            baseResponse.setData(alarmService.queryAlarm(addvcd,sttp,scale,key));
-//            return baseResponse;
-//        } catch (Exception e) {
-//            return returnError(e.getMessage());
-//        }
-//    }
+    /**
+     * 获取报警设置信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/alarmSetting", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse alarmSetting(@Nullable String sttp,
+                                     @Nullable String groupId,
+                                     @Nullable String key,
+                                     @Nullable String count,
+                                     @Nullable String index) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(alarmService.getAlarmSetting(sttp, groupId, key, count, index));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
 
+    /**
+     * 获取报警设置信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/settingDetail", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse settingDatail(@Nullable String stcd,
+                                      @Nullable String monitorPara,
+                                      @Nullable String alarmInterval) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(alarmService.settingDetail(stcd, monitorPara, alarmInterval));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 获取报警设置信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getAlarmInterval", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse alarmInterval() {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(alarmService.getAlarmInterval());
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 获取报警设置信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getAlarmMethod", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse alarmMethod() {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(alarmService.getAlarmMethod());
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+    /**
+     * 创建报警阈值
+     *
+     * @return
+     */
+    @RequestMapping(value = "/createAlarm", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse createAlarm(@Nullable String stcd) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(alarmService.createAlarm(stcd));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 保存报警阈值
+     *
+     * @return
+     */
+    @RequestMapping(value = "/saveAlarm", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse saveAlarm(@Nullable String stcd,
+                                  @Nullable String beforeMonitorPara,
+                                  @Nullable String beforeAlarmInterval,
+                                  @Nullable String monitorPara,
+                                  @Nullable String alarmInterval,
+                                  @Nullable String compareType,
+                                  @Nullable String oneLevelAlarmValue,
+                                  @Nullable String twoLevelAlarmValue,
+                                  @Nullable String alarmMethod,
+                                  @Nullable String alarmForm) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(alarmService.saveAlarm(stcd, beforeMonitorPara, beforeAlarmInterval, monitorPara, alarmInterval, compareType, oneLevelAlarmValue, twoLevelAlarmValue, alarmMethod, alarmForm));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 获取报警设置信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/alarmHistory", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse alarmHistory(@Nullable String sttp,
+                                     @Nullable String groupId,
+                                     @Nullable String key,
+                                     @Nullable String count,
+                                     @Nullable String index) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(alarmService.getAlarmHistory(sttp, groupId, key, count, index));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
 }

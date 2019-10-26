@@ -49,7 +49,7 @@ public class FloatWindowData {
     /**
      * 最优
      */
-    private String baseValue;
+    private String bestValue;
     /**
      * 最劣
      */

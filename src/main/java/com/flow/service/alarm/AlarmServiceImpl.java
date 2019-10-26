@@ -2,6 +2,9 @@ package com.flow.service.alarm;
 
 import com.flow.dao.mapper.AlarmDao;
 import com.flow.domain.alarm.Alarm;
+import com.flow.domain.alarm.AlarmInterval;
+import com.flow.domain.alarm.AlarmSetting;
+import com.flow.domain.statistics.PageData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +27,42 @@ public class AlarmServiceImpl implements AlarmService {
     @Override
     public List<Alarm> queryAlarmByGroupId(String addvcd, String http, String groupId, String key) {
         return alarmDao.queryByGroupId(addvcd, http, groupId, key);
+    }
+
+    @Override
+    public PageData getAlarmSetting(String sttp, String groupId, String key, String count, String index) {
+        List<List<Object>> result = alarmDao.queryAlarmSetting(sttp, groupId, key, count, index);
+        return new PageData(result.get(0), result.get(1).get(0).toString());
+    }
+
+    @Override
+    public List<AlarmInterval> getAlarmInterval() {
+        return alarmDao.getAlarmInterval();
+    }
+
+    @Override
+    public List<AlarmInterval> getAlarmMethod() {
+        return alarmDao.getAlarmMethod();
+    }
+
+    @Override
+    public AlarmSetting createAlarm(String stcd) {
+        return alarmDao.createAlarm(stcd);
+    }
+
+    @Override
+    public AlarmSetting saveAlarm(String stcd, String beforeMonitorPara, String beforeAlarmInterval, String monitorPara, String alarmInterval, String compareType, String oneLevelAlarmValue, String twoLevelAlarmValue, String alarmMethod, String alarmForm) {
+        return alarmDao.saveAlarm(stcd, beforeMonitorPara, beforeAlarmInterval, monitorPara, alarmInterval, compareType, oneLevelAlarmValue, twoLevelAlarmValue, alarmMethod, alarmForm);
+    }
+
+    @Override
+    public PageData getAlarmHistory(String sttp, String groupId, String key, String count, String index) {
+        List<List<Object>> result = alarmDao.queryAlarmSetting(sttp, groupId, key, count, index);
+        return new PageData(result.get(0), result.get(1).get(0).toString());
+    }
+
+    @Override
+    public AlarmSetting settingDetail(String tscd, String monitorPara, String alarmInterval) {
+        return alarmDao.getSettingDetail(tscd, monitorPara, alarmInterval);
     }
 }

@@ -9,11 +9,56 @@
         <result property="name" column="STNMShow" jdbcType="VARCHAR"/>
         <result property="value" column="Value" jdbcType="VARCHAR"/>
         <result property="alarmLevelValue" column="AlarmLevelValue" jdbcType="VARCHAR"/>
-        <result property="orderLevel" column="OrderFieldAlarmLevel" jdbcType="VARCHAR"/>
-        <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
-        <result property="monitorPara" column="MonitorPara" jdbcType="VARCHAR"/>
+        <result property="time" column="TM" jdbcType="VARCHAR"/>
+        <result property="addressName" column="ADDVNM" jdbcType="VARCHAR"/>
+        <result property="stationType" column="STTPNM" jdbcType="VARCHAR"/>
         <result property="stationName" column="STNM" jdbcType="VARCHAR"/>
+        <result property="time" column="TM" jdbcType="VARCHAR"/>
+        <result property="monitorPara" column="MonitorParaNM" jdbcType="VARCHAR"/>
+        <result property="alarmInterval" column="AlarmIntervalNM" jdbcType="VARCHAR"/>
+        <result property="alarmLevel" column="AlarmLevel" jdbcType="VARCHAR"/>
+        <result property="levelValue" column="LevelValue" jdbcType="VARCHAR"/>
+        <result property="realValue" column="RealValue" jdbcType="VARCHAR"/>
+        <result property="alarmMethod" column="AlarmMethodNM" jdbcType="VARCHAR"/>
+        <result property="alarmForm" column="AlarmForm" jdbcType="VARCHAR"/>
+        <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
     </resultMap>
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.flow.domain.alarm.AlarmSetting" id="alarmSettingMap">
+        <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
+        <result property="address" column="ADDVNM" jdbcType="VARCHAR"/>
+        <result property="stationType" column="STTP" jdbcType="VARCHAR"/>
+        <result property="stationTypeName" column="STTPNM" jdbcType="VARCHAR"/>
+        <result property="stationName" column="STNM" jdbcType="VARCHAR"/>
+        <result property="monitorPara" column="MonitorPara" jdbcType="VARCHAR"/>
+        <result property="monitorParaName" column="MonitorParaNM" jdbcType="VARCHAR"/>
+        <result property="alarmInterval" column="AlarmInterval" jdbcType="VARCHAR"/>
+        <result property="alarmIntervalName" column="AlarmIntervalNM" jdbcType="VARCHAR"/>
+        <result property="compareType" column="CompareType" jdbcType="VARCHAR"/>
+        <result property="oneLevelAlarmValue" column="OneLevelAlarmValue" jdbcType="VARCHAR"/>
+        <result property="twoLevelAlarmValue" column="TwoLevelAlarmValue" jdbcType="VARCHAR"/>
+        <result property="alarmMethod" column="AlarmMethodNM" jdbcType="VARCHAR"/>
+        <result property="alarmForm" column="AlarmForm" jdbcType="VARCHAR"/>
+        <result property="addvcd" column="ADDVCD" jdbcType="VARCHAR"/>
+        <result property="totalCount" column="totalCount" jdbcType="VARCHAR"/>
+        <result property="updateCount" column="updateCount" jdbcType="VARCHAR"/>
+        <result property="result" column="result" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.flow.domain.alarm.AlarmInterval" id="alarmIntervalMap">
+        <result property="alarmInterval" column="AlarmInterval" jdbcType="VARCHAR"/>
+        <result property="alarmIntervalName" column="AlarmIntervalNM" jdbcType="VARCHAR"/>
+        <result property="alarmMethod" column="AlarmMethod" jdbcType="VARCHAR"/>
+        <result property="alarmMethodName" column="AlarmMethodNM" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="java.lang.String" id="count">
+        <result property="count" column="totalCount" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <select id="queryAlarm" resultMap="alarmMap">
       EXEC [SkyUni_DB_Moni].[dbo].[P_M_MonitorAlarm] NULL,NULL,NULL,#{addvcd},#{sttp},#{scale},#{key}
     </select>
@@ -21,4 +66,61 @@
     <select id="queryByGroupId" resultMap="alarmMap">
       EXEC [SkyUni_DB_Moni].[dbo].[P_M_MonitorAlarm] NULL,NULL,NULL,#{addvcd},#{sttp},#{groupId},#{key},'V2.01'
     </select>
+
+
+    <select id="queryAlarmSetting" resultMap="alarmSettingMap,count">
+      DECLARE @n_TotalCount VARCHAR(200)
+      EXEC [SkyUni_DB_Moni].[DBO].[P_A_StationMonitorParaLevel] NULL,NULL,NULL,#{sttp},#{groupId},#{key},#{count},#{index},@n_TotalCount OUT
+      SELECT @n_TotalCount as totalCount
+    </select>
+
+    <select id="getSettingDetail" resultMap="alarmSettingMap">
+     EXEC [SkyUni_DB_Moni].[DBO].[P_A_StationMonitorparaAlarmintervalEdit] #{stcd},#{monitorPara},#{alarmInterval}
+    </select>
+
+
+    <select id="getAlarmInterval" resultMap="alarmIntervalMap">
+    EXEC [SkyUni_DB_Moni].[DBO].[P_GetAlarmInterval] NULL,NULL,NULL
+    </select>
+
+    <select id="getAlarmMethod" resultMap="alarmIntervalMap">
+    EXEC [SkyUni_DB_Moni].[DBO].[P_GetAlarmMethod] NULL,NULL,NULL
+    </select>
+
+    <select id="createAlarm" resultMap="alarmSettingMap">
+    DECLARE @c_STCD NVARCHAR(13)=#{stcd}
+    DECLARE @c_MonitorPara NVARCHAR(13)
+    DECLARE @c_AlarmInterval NVARCHAR(13)
+    DECLARE @n_TotalCount INT
+    DECLARE @n_UpdateCount INT
+    DECLARE @c_Result  VARCHAR(200)
+    EXEC [SkyUni_DB_Moni].[DBO].[P_A_StationMonitorparaAlarmintervalAdd]
+    @c_STCD OUT,@c_MonitorPara OUT,@c_AlarmInterval OUT
+    ,@n_TotalCount OUT,@n_UpdateCount OUT,@c_Result OUT
+    SELECT @c_STCD as STCD,
+    @c_MonitorPara as MonitorPara,
+    @c_AlarmInterval as AlarmInterval,
+    @n_TotalCount as totalCount,
+    @n_UpdateCount as updateCount,
+    @c_Result as result
+    </select>
+
+
+    <select id="saveAlarm" resultMap="alarmSettingMap">
+    DECLARE @n_TotalCount INT
+    DECLARE @n_UpdateCount INT
+    DECLARE @c_Result  VARCHAR(200)
+    EXEC [SkyUni_DB_Moni].[DBO].[P_A_StationMonitorparaAlarmintervalSave] #{stcd},#{beforeMonitorPara},#{beforeAlarmInterval},#{monitorPara},#{alarmInterval},#{compareType},#{oneLevelAlarmValue},#{twoLevelAlarmValue},#{alarmMethod},#{alarmForm},@n_TotalCount OUT,@n_UpdateCount OUT,@c_Result OUT
+    SELECT @n_TotalCount as totalCount,
+    @n_UpdateCount as updateCount,
+    @c_Result as result
+    </select>
+
+    <select id="alarmHistory" resultMap="alarmMap,count">
+   DECLARE @n_TotalCount INT
+   EXEC [SkyUni_DB_Moni].[DBO].[P_A_StationMonitorparaAlarm] NULL,NULL,NULL,#{sttp},#{groupId},#{key},#{count},#{index},@n_TotalCount OUT
+   SELECT @n_TotalCount as totalCount
+    </select>
+
+
 </mapper>

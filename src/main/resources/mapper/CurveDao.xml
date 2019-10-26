@@ -13,7 +13,7 @@
     <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.flow.domain.statistics.CurveData" id="curveMap2">
         <result property="time" column="TM" jdbcType="VARCHAR"/>
-        <result property="value" column="HourQ" jdbcType="VARCHAR"/>
+        <result property="value" column="Value" jdbcType="VARCHAR"/>
         <result property="alarmValue" column="OneLevelAlarmValue" jdbcType="VARCHAR"/>
     </resultMap>
 
