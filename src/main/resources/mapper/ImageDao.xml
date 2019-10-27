@@ -33,7 +33,7 @@
     </select>
 
 
-    <select id="getImages" resultMap="imageMap2,totalMap">
+    <select id="getImages" resultMap="imageMap2,com.flow.dao.mapper.ImageDao.totalMap">
      DECLARE @n_TotalCount INT
      EXEC [SkyUni_DB_Moni].[dbo].[P_Q_Picture] NULL,NULL,#{addvcd},#{sttp},#{endTime},#{key},#{count},#{index},@n_TotalCount OUTPUT
      SELECT @n_TotalCount as total

@@ -29,11 +29,6 @@
     </resultMap>
 
 
-    <resultMap type="java.lang.String" id="totalMap">
-        <result property="number" column="total" jdbcType="VARCHAR"/>
-    </resultMap>
-
-
     <select id="findAll" resultMap="videoMap">
      EXEC [SkyUni_DB_Moni].[dbo].[P_M_Video] NULL,NULL,null,1
     </select>
