@@ -59,6 +59,10 @@ public class Alarm {
      */
     private String time;
     /**
+     * 报警级别
+     */
+    private String alarmLevel;
+    /**
      * 报警时段
      */
     private String alarmInterval;
@@ -78,4 +82,16 @@ public class Alarm {
      * 报警内容
      */
     private String alarmForm;
+    /**
+     * 已发送短信人数
+     */
+    private String alreadyReleaseNumber;
+    /**
+     * 共发布人数
+     */
+    private String preReleaseNumber;
+    /**
+     * 操作
+     */
+    private String operation;
 }

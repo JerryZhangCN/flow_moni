@@ -1,12 +1,12 @@
 /**
  * Copyright © 2016-2019 The Thingsboard Authors
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -42,15 +43,14 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity()
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Order(SecurityProperties.BASIC_AUTH_ORDER)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -58,8 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public static final String JWT_TOKEN_HEADER_PARAM = "X-Authorization";
     public static final String JWT_TOKEN_QUERY_PARAM = "token";
 
-    public static final String WEBJARS_ENTRY_POINT = "/webjars/**";
-    public static final String DEVICE_API_ENTRY_POINT = "/api/v1/**";
+
     public static final String FORM_BASED_LOGIN_ENTRY_POINT = "/api/auth/login";
     public static final String PUBLIC_LOGIN_ENTRY_POINT = "/api/auth/login/public";
     public static final String TOKEN_REFRESH_ENTRY_POINT = "/api/auth/token";
@@ -85,6 +84,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private JwtAuthenticationProvider jwtAuthenticationProvider;
     @Autowired
     private RefreshTokenAuthenticationProvider refreshTokenAuthenticationProvider;
+
+    @Autowired
+    private MyWebfILTER myWebfILTER;
 
     @Autowired
     @Qualifier("jwtHeaderTokenExtractor")
@@ -118,7 +120,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter() throws Exception {
         List<String> pathsToSkip = new ArrayList(Arrays.asList(NON_TOKEN_BASED_AUTH_ENTRY_POINTS));
         pathsToSkip.addAll(Arrays.asList(WS_TOKEN_BASED_AUTH_ENTRY_POINT, TOKEN_REFRESH_ENTRY_POINT, FORM_BASED_LOGIN_ENTRY_POINT,
-                PUBLIC_LOGIN_ENTRY_POINT, DEVICE_API_ENTRY_POINT, WEBJARS_ENTRY_POINT, ENERGY, DATAMAINTENANCE, ALARM, API_PLUGINS_RPC));
+                PUBLIC_LOGIN_ENTRY_POINT,  ENERGY, DATAMAINTENANCE, ALARM, API_PLUGINS_RPC));
         SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, "api/auth/**");
         JwtTokenAuthenticationProcessingFilter filter
                 = new JwtTokenAuthenticationProcessingFilter(failureHandler, jwtHeaderTokenExtractor, matcher);
@@ -195,23 +197,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // 调整为让 Spring Security 不创建和使用 session
                 .and()
                 .authorizeRequests() //满足下列api列表的请求可以访问
-                .antMatchers(WEBJARS_ENTRY_POINT).permitAll() // Webjars
-                .antMatchers(DEVICE_API_ENTRY_POINT).permitAll() // Device HTTP Transport API
-                .antMatchers(FORM_BASED_LOGIN_ENTRY_POINT).permitAll() // Login end-point
-                .antMatchers(PUBLIC_LOGIN_ENTRY_POINT).permitAll() // Public login end-point
-                .antMatchers(TOKEN_REFRESH_ENTRY_POINT).permitAll() // Token refresh end-point
-                .antMatchers(NON_TOKEN_BASED_AUTH_ENTRY_POINTS).permitAll()// static resources, user activation and password reset end-points
+                .antMatchers(FORM_BASED_LOGIN_ENTRY_POINT).permitAll()// Login end-point
                 .antMatchers(ENERGY).permitAll()
-                .antMatchers(ALARM).permitAll()
-                .antMatchers(DATAMAINTENANCE).permitAll()
-                .antMatchers(API_PLUGINS_RPC).permitAll()
                 .and()
-                .authorizeRequests()//满足下列api列表的必须要登录后才能访问
-                .antMatchers(WS_TOKEN_BASED_AUTH_ENTRY_POINT).authenticated() // Protected WebSocket API End-points
-                //+.antMatchers(TOKEN_BASED_AUTH_ENTRY_POINT).authenticated() // Protected API End-points
-                .and()
+ //               .authorizeRequests()//满足下列api列表的必须要登录后才能访问
+//                .antMatchers(ENERGY).authenticated() // Protected WebSocket API End-points
+// .and()
                 .exceptionHandling().accessDeniedHandler(restAccessDeniedHandler)//添加自定义访问异常处理
                 .and()
+                .addFilterBefore(myWebfILTER,UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(buildRestLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(buildRestPublicLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
@@ -220,16 +214,34 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
 
-    @Bean
-    @ConditionalOnMissingBean(CorsFilter.class)
-    public CorsFilter corsFilter(@Autowired MvcCorsProperties mvcCorsProperties) {
-//        if (mvcCorsProperties.getMappings().size() == 0) {
-//            return new CorsFilter(new UrlBasedCorsConfigurationSource());
-//        } else {
-//            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//            source.setCorsConfigurations(mvcCorsProperties.getMappings());
-//            return new CorsFilter(source);
-//        }
-        return new CorsFilter(new UrlBasedCorsConfigurationSource());
-    }
+//    @Bean
+//    @ConditionalOnMissingBean(CorsFilter.class)
+//    public CorsFilter corsFilter() {
+//        Map<String, CorsConfiguration> mappings = new HashMap<>();
+//        CorsConfiguration corsConfiguration = new CorsConfiguration();
+//        corsConfiguration.setAllowCredentials(true);
+//        List<String> methods = new ArrayList<>();
+//        methods.add("POST");
+//        methods.add("GET");
+//        methods.add("OPTIONS");
+//        methods.add("DELETE");
+//        corsConfiguration.setAllowedMethods(methods);
+//        List<String> headers = new ArrayList<>();
+//        headers.add("access-control-allow-headers");
+//        headers.add("access-control-allow-methods");
+//        headers.add("access-control-allow-origin");
+//        headers.add("access-control-max-age");
+//        headers.add("X-Frame-Options");
+//        corsConfiguration.setAllowedOrigins(Collections.singletonList(CorsConfiguration.ALL));
+//        corsConfiguration.setAllowedHeaders(Collections.singletonList(CorsConfiguration.ALL));
+//        corsConfiguration.setMaxAge(Long.parseLong("3600"));
+//        corsConfiguration.setExposedHeaders(headers);
+//        mappings.put("api/**", corsConfiguration);
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.setCorsConfigurations(mappings);
+//        CorsFilter corsFilter = new CorsFilter(source);
+//        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(corsFilter);
+//        filterRegistrationBean.setOrder(0);
+//        return new CorsFilter(source);
+//    }
 }

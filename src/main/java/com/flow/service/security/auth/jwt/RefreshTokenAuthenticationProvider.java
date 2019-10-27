@@ -62,7 +62,7 @@ public class RefreshTokenAuthenticationProvider implements AuthenticationProvide
         if (user.getAuthority() == null)
             throw new InsufficientAuthenticationException("User has no authority assigned");
 
-        UserPrincipal userPrincipal = new UserPrincipal(UserPrincipal.Type.USER_NAME, user.getEmail());
+        UserPrincipal userPrincipal = new UserPrincipal(UserPrincipal.Type.USER_NAME, user.getUserName());
 
         SecurityUser securityUser = new SecurityUser(user, true, userPrincipal);
 

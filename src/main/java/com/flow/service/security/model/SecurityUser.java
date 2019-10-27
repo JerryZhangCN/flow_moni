@@ -46,16 +46,22 @@ public class SecurityUser extends User {
 
 
     public SecurityUser(User user, boolean enabled, UserPrincipal userPrincipal) {
+        this.setUserName(user.getUserName());
+        this.setPassword(user.getPassword());
         this.enabled = enabled;
         this.userPrincipal = userPrincipal;
     }
 
+    /**
+     * TODO 权限未加
+     * @return
+     */
     public Collection<GrantedAuthority> getAuthorities() {
-        if (authorities == null) {
-            authorities = Stream.of(SecurityUser.this.getAuthority())
-                    .map(authority -> new SimpleGrantedAuthority(authority.name()))
-                    .collect(Collectors.toList());
-        }
+//        if (authorities == null) {
+//            authorities = Stream.of(SecurityUser.this.getAuthority())
+//                    .map(authority -> new SimpleGrantedAuthority(authority.name()))
+//                    .collect(Collectors.toList());
+//        }
         return authorities;
     }
 

@@ -22,6 +22,9 @@
         <result property="alarmMethod" column="AlarmMethodNM" jdbcType="VARCHAR"/>
         <result property="alarmForm" column="AlarmForm" jdbcType="VARCHAR"/>
         <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
+        <result property="alreadyReleaseNumber" column="AlreadyReleaseNum" jdbcType="VARCHAR"/>
+        <result property="preReleaseNumber" column="preReleaseNum" jdbcType="VARCHAR"/>
+        <result property="operation" column="Operation" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!-- 可根据自己的需求，是否要使用 -->
@@ -53,6 +56,12 @@
         <result property="alarmIntervalName" column="AlarmIntervalNM" jdbcType="VARCHAR"/>
         <result property="alarmMethod" column="AlarmMethod" jdbcType="VARCHAR"/>
         <result property="alarmMethodName" column="AlarmMethodNM" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.flow.domain.alarm.CompareType" id="compareTypeMap">
+        <result property="compareType" column="CompareType" jdbcType="VARCHAR"/>
+        <result property="compareTypeName" column="CompareTypeNM" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap type="java.lang.String" id="count">
@@ -120,6 +129,11 @@
    DECLARE @n_TotalCount INT
    EXEC [SkyUni_DB_Moni].[DBO].[P_A_StationMonitorparaAlarm] NULL,NULL,NULL,#{sttp},#{groupId},#{key},#{count},#{index},@n_TotalCount OUT
    SELECT @n_TotalCount as totalCount
+    </select>
+
+
+    <select id="compareType" resultMap="compareTypeMap">
+     EXEC [SkyUni_DB_Moni].[DBO].[P_GetAlarmCompareType] NULL,NULL,NULL
     </select>
 
 

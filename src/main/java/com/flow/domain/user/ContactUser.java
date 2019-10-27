@@ -41,7 +41,7 @@ public class ContactUser {
     /**
      * 暂不明
      */
-    private String addressbookCD;
+    private String addressbookId;
     /**
      * 职位ID
      */
@@ -50,6 +50,22 @@ public class ContactUser {
      * 组织ID
      */
     private String organizationId;
+    /**
+     * 重试次数
+     */
+    private String retryNumber;
+    /**
+     * 最大次数
+     */
+    private String maxNumber;
+    /**
+     * 发布结果
+     */
+    private String result;
+    /**
+     * 操作
+     */
+    private String operation;
 
 
 }

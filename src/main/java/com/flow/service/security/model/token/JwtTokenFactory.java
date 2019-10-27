@@ -44,28 +44,32 @@ public class JwtTokenFactory {
     private static final String ENABLED = "enabled";
     private static final String IS_PUBLIC = "isPublic";
     private static final String PHONE = "phone";
+    private static final String TOKEN_ISSUER = "monitor";
+    private static final String TOKEN_SIGNING_KEY = "monitorDefaultSigningKey";
+    private static final long TOKEN_EXPIRATION_TIME =90000000;
+    private static final long REFRESH_TOKEN_EXPIRATION_TIME =3600;
 
-    private final JwtSettings settings;
+    //private final JwtSettings settings;
 
     @Autowired
     public JwtTokenFactory(JwtSettings settings) {
-        this.settings = settings;
+//        this.settings = settings;
     }
 
     /**
      * Factory method for issuing new JWT Tokens.
      */
     public AccessJwtToken createAccessJwtToken(SecurityUser securityUser) {
-        if (StringUtils.isBlank(securityUser.getEmail()))
+        if (StringUtils.isBlank(securityUser.getUserName()))
             throw new IllegalArgumentException("Cannot create JWT Token without username/email");
 
-        if (securityUser.getAuthority() == null)
-            throw new IllegalArgumentException("User doesn't have any privileges");
+//        if (securityUser.getAuthority() == null)
+//            throw new IllegalArgumentException("User doesn't have any privileges");
 
         UserPrincipal principal = securityUser.getUserPrincipal();
         String subject = principal.getValue();
         Claims claims = Jwts.claims().setSubject(subject);
-        claims.put(SCOPES, securityUser.getAuthorities().stream().map(s -> s.getAuthority()).collect(Collectors.toList()));
+        //claims.put(SCOPES, securityUser.getAuthorities().stream().map(s -> s.getAuthority()).collect(Collectors.toList()));
         claims.put(USER_ID, securityUser.getUserId());
         claims.put(USER_NAME, securityUser.getUserName());
         claims.put(ENABLED, securityUser.isEnabled());
@@ -80,27 +84,27 @@ public class JwtTokenFactory {
 
         String token = Jwts.builder()
                 .setClaims(claims)
-                .setIssuer(settings.getTokenIssuer())
+                .setIssuer(TOKEN_ISSUER)
                 .setIssuedAt(Date.from(currentTime.toInstant()))
-                .setExpiration(Date.from(currentTime.plusSeconds(settings.getTokenExpirationTime()).toInstant()))
-                .signWith(SignatureAlgorithm.HS512, settings.getTokenSigningKey())
+                .setExpiration(Date.from(currentTime.plusSeconds(TOKEN_EXPIRATION_TIME).toInstant()))
+                .signWith(SignatureAlgorithm.HS512, TOKEN_SIGNING_KEY)
                 .compact();
 
         return new AccessJwtToken(token, claims);
     }
 
     public SecurityUser parseAccessJwtToken(RawAccessJwtToken rawAccessToken) {
-        Jws<Claims> jwsClaims = rawAccessToken.parseClaims(settings.getTokenSigningKey());
+        Jws<Claims> jwsClaims = rawAccessToken.parseClaims(TOKEN_SIGNING_KEY);
         Claims claims = jwsClaims.getBody();
         String subject = claims.getSubject();
         List<String> scopes = claims.get(SCOPES, List.class);
-        if (scopes == null || scopes.isEmpty()) {
-            throw new IllegalArgumentException("JWT Token doesn't have any scopes");
-        }
+//        if (scopes == null || scopes.isEmpty()) {
+//            throw new IllegalArgumentException("JWT Token doesn't have any scopes");
+//        }
 
         SecurityUser securityUser = new SecurityUser(claims.get(USER_ID, String.class));
-        securityUser.setEmail(subject);
-        securityUser.setAuthority(Authority.parse(scopes.get(0)));
+//        securityUser.setEmail(subject);
+//        securityUser.setAuthority(Authority.parse(scopes.get(0)));
         securityUser.setUserName(claims.get(USER_NAME, String.class));
         securityUser.setEnabled(claims.get(ENABLED, Boolean.class));
         boolean isPublic = claims.get(IS_PUBLIC, Boolean.class);
@@ -110,7 +114,7 @@ public class JwtTokenFactory {
     }
 
     public JwtToken createRefreshToken(SecurityUser securityUser) {
-        if (StringUtils.isBlank(securityUser.getEmail())) {
+        if (StringUtils.isBlank(securityUser.getUserName())) {
             throw new IllegalArgumentException("Cannot create JWT Token without username/email");
         }
 
@@ -124,18 +128,18 @@ public class JwtTokenFactory {
 
         String token = Jwts.builder()
                 .setClaims(claims)
-                .setIssuer(settings.getTokenIssuer())
+                .setIssuer(TOKEN_ISSUER)
                 .setId(UUID.randomUUID().toString())
                 .setIssuedAt(Date.from(currentTime.toInstant()))
-                .setExpiration(Date.from(currentTime.plusSeconds(settings.getRefreshTokenExpTime()).toInstant()))
-                .signWith(SignatureAlgorithm.HS512, settings.getTokenSigningKey())
+                .setExpiration(Date.from(currentTime.plusSeconds(REFRESH_TOKEN_EXPIRATION_TIME).toInstant()))
+                .signWith(SignatureAlgorithm.HS512, TOKEN_SIGNING_KEY)
                 .compact();
 
         return new AccessJwtToken(token, claims);
     }
 
     public SecurityUser parseRefreshToken(RawAccessJwtToken rawAccessToken) {
-        Jws<Claims> jwsClaims = rawAccessToken.parseClaims(settings.getTokenSigningKey());
+        Jws<Claims> jwsClaims = rawAccessToken.parseClaims(TOKEN_SIGNING_KEY);
         Claims claims = jwsClaims.getBody();
         String subject = claims.getSubject();
         List<String> scopes = claims.get(SCOPES, List.class);

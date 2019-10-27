@@ -17,8 +17,8 @@
     <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.flow.domain.scale.Group" id="groupMap">
         <result property="groupName" column="GroupNM" jdbcType="VARCHAR"/>
-        <result property="groupCd" column="GroupCD" jdbcType="VARCHAR"/>
-        <result property="pGroupCd" column="PGroupCD" jdbcType="VARCHAR"/>
+        <result property="groupId" column="GroupCD" jdbcType="VARCHAR"/>
+        <result property="pGroupId" column="PGroupCD" jdbcType="VARCHAR"/>
         <result property="groupLevel" column="GroupLevel" jdbcType="VARCHAR"/>
     </resultMap>
 

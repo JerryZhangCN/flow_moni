@@ -4,6 +4,7 @@ import com.flow.dao.mapper.AlarmDao;
 import com.flow.domain.alarm.Alarm;
 import com.flow.domain.alarm.AlarmInterval;
 import com.flow.domain.alarm.AlarmSetting;
+import com.flow.domain.alarm.CompareType;
 import com.flow.domain.statistics.PageData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,8 +58,13 @@ public class AlarmServiceImpl implements AlarmService {
 
     @Override
     public PageData getAlarmHistory(String sttp, String groupId, String key, String count, String index) {
-        List<List<Object>> result = alarmDao.queryAlarmSetting(sttp, groupId, key, count, index);
+        List<List<Object>> result = alarmDao.alarmHistory(sttp, groupId, key, count, index);
         return new PageData(result.get(0), result.get(1).get(0).toString());
+    }
+
+    @Override
+    public List<CompareType> getCompareType() {
+        return alarmDao.compareType();
     }
 
     @Override

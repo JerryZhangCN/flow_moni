@@ -15,6 +15,7 @@
  */
 package com.flow.service.security.auth.rest;
 
+import com.flow.domain.tools.DataConstants;
 import com.flow.domain.user.User;
 import com.flow.service.security.model.SecurityUser;
 import com.flow.service.security.model.UserPrincipal;
@@ -59,10 +60,10 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
     }
 
     private Authentication authenticateByUsernameAndPassword(UserPrincipal userPrincipal, String username, String password) {
-        User user = userService.findById(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found: " + username);
-        }
+//        User user = userService.findById(username);
+//        if (user == null) {
+//            throw new UsernameNotFoundException("User not found: " + username);
+//        }
 
 //        UserCredentials userCredentials = userService.findUserCredentialsByUserId(user.getId());
 //        if (userCredentials == null) {
@@ -72,13 +73,22 @@ public class RestAuthenticationProvider implements AuthenticationProvider {
 //        if (!userCredentials.isEnabled()) {
 //            throw new DisabledException("User is not active");
 //        }
-
-        if (!encoder.matches(password, user.getPassword())) {
-            throw new BadCredentialsException("Authentication Failed. Username or Password not valid.");
+        User user = new User();
+        user.setUserName(username);
+        user.setPassword(password);
+        if(!((username.equalsIgnoreCase(DataConstants.LOGIN_NAME1)&&password.equalsIgnoreCase(DataConstants.LOGIN_PASSWORD1))||
+                (username.equalsIgnoreCase(DataConstants.LOGIN_NAME2)&&password.equalsIgnoreCase(DataConstants.LOGIN_PASSWORD2)))){
+//        if(!username.equalsIgnoreCase(DataConstants.LOGIN_NAME1)||!password.equalsIgnoreCase(DataConstants.LOGIN_PASSWORD1)){
+            throw new BadCredentialsException("用户名或密码错误");
         }
 
-        if (user.getAuthority() == null)
-            throw new InsufficientAuthenticationException("User has no authority assigned");
+
+//        if (!encoder.matches(password, user.getPassword())) {
+//            throw new BadCredentialsException("Authentication Failed. Username or Password not valid.");
+//        }
+//
+//        if (user.getAuthority() == null)
+//            throw new InsufficientAuthenticationException("User has no authority assigned");
 
         SecurityUser securityUser = new SecurityUser(user, true, userPrincipal);
 

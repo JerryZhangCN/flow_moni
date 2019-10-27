@@ -27,11 +27,20 @@ public interface UserDao {
                                       @Param(DataConstants.REQUEST_PARAMS_PAGE_INDEX) String index);
 
     String associateUser(@Param(DataConstants.REQUEST_PARAMS_STCD) String stcd,
-                         @Param(DataConstants.REQUEST_PARAMS_ADDRESS_BOOK_ID) String addressBookId,
-                         @Param(DataConstants.REQUEST_PARAMS_ORGANIZATION_ID) String organizationId);
+                         @Param(DataConstants.REQUEST_PARAMS_ORGANIZATION_ID) String organizationId,
+                         @Param(DataConstants.REQUEST_PARAMS_ADDRESS_BOOK_ID) String addressBookId);
 
     String associateUserCancel(@Param(DataConstants.REQUEST_PARAMS_STCD) String stcd,
-                               @Param(DataConstants.REQUEST_PARAMS_ADDRESS_BOOK_ID) String addressBookId,
-                               @Param(DataConstants.REQUEST_PARAMS_ORGANIZATION_ID) String organizationId);
+                               @Param(DataConstants.REQUEST_PARAMS_ORGANIZATION_ID) String organizationId,
+                               @Param(DataConstants.REQUEST_PARAMS_ADDRESS_BOOK_ID) String addressBookId);
+
+
+    List<List<Object>> historyUser(@Param(DataConstants.REQUEST_PARAMS_STCD) String stcd,
+                                   @Param(DataConstants.REQUEST_PARAMS_MONITOR_PARA) String selectType,
+                                   @Param(DataConstants.REQUEST_PARAMS_ALARM_INTERVAL) String organizationId,
+                                   @Param(DataConstants.REQUEST_PARAMS_TIME) String time,
+                                   @Param(DataConstants.REQUEST_PARAMS_KEYS) String key,
+                                   @Param(DataConstants.REQUEST_PARAMS_PAGE_COUNT) String count,
+                                   @Param(DataConstants.REQUEST_PARAMS_PAGE_INDEX) String index);
 
 }

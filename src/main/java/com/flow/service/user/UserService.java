@@ -3,6 +3,7 @@ package com.flow.service.user;
 import com.flow.domain.statistics.PageData;
 import com.flow.domain.user.User;
 import com.google.common.util.concurrent.ListenableFuture;
+import org.springframework.lang.Nullable;
 
 import java.util.List;
 
@@ -24,9 +25,17 @@ public interface UserService {
 
     PageData getOrganization(String stcd, String count, String index);
 
-    PageData getContactUser(String stcd, String selectType,String organizationId,String key,String count, String index);
+    PageData getContactUser(String stcd, String selectType, String organizationId, String key, String count, String index);
 
-    String associateUser(String stcd,String organozationId,String addressbookId);
+    String associateUser(String stcd, String organozationId, String addressbookId);
 
-    String associateUserCancel(String stcd,String organozationId,String addressbookId);
+    String associateUserCancel(String stcd, String organozationId, String addressbookId);
+
+    PageData historyUser(String stcd,
+                         String monitorPara,
+                         String alarmInterval,
+                         String time,
+                         String key,
+                         String count,
+                         String index);
 }

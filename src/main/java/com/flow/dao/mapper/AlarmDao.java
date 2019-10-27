@@ -4,6 +4,7 @@ package com.flow.dao.mapper;
 import com.flow.domain.alarm.Alarm;
 import com.flow.domain.alarm.AlarmInterval;
 import com.flow.domain.alarm.AlarmSetting;
+import com.flow.domain.alarm.CompareType;
 import com.flow.domain.area.Area;
 import com.flow.domain.tools.DataConstants;
 import org.apache.ibatis.annotations.Mapper;
@@ -58,6 +59,8 @@ public interface AlarmDao {
                                          @Param(DataConstants.REQUEST_PARAMS_KEYS) String key,
                                          @Param(DataConstants.REQUEST_PARAMS_PAGE_COUNT) String count,
                                          @Param(DataConstants.REQUEST_PARAMS_PAGE_INDEX) String index);
+
+    List<CompareType> compareType();
 
 
 }

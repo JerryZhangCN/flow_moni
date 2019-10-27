@@ -49,4 +49,10 @@ public class UserServiceImpl implements UserService {
     public String associateUserCancel(String stcd, String organozationId, String addressbookId) {
         return userDao.associateUserCancel(stcd, organozationId, addressbookId);
     }
+
+    @Override
+    public PageData historyUser(String stcd, String monitorPara, String alarmInterval, String time, String key, String count, String index) {
+        List<List<Object>> ob = userDao.historyUser(stcd, monitorPara, alarmInterval, time, key, count, index);
+        return new PageData(ob.get(0), ob.get(1).get(0).toString());
+    }
 }

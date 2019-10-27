@@ -12,6 +12,10 @@ public class DataConstants {
     public static final String RESPONSE_OK = "OK";
     public static final String RESPONSE_ERROR = "服务器异常";
     public static final String RESPONSE_PARAM_ERROR = "参数错误";
+    public static final String LOGIN_NAME1 = "admin";
+    public static final String LOGIN_PASSWORD1 = "admin";
+    public static final String LOGIN_NAME2 = "XSLJ";
+    public static final String LOGIN_PASSWORD2 = "XSLJ";
 
 
     public static final String BASE_IMAGE_IP = "http://182.132.151.242:9090/img";
@@ -89,42 +93,43 @@ public class DataConstants {
     /**
      * 水质等级
      */
-    public static final String REQUEST_PARAMS_QUALITY_LEVEL="qualityLevel";
+    public static final String REQUEST_PARAMS_QUALITY_LEVEL = "qualityLevel";
     /**
      * 监测方式
      */
-    public static final String REQUEST_PARAMS_MONITOR_TYPE="monitorType";
+    public static final String REQUEST_PARAMS_MONITOR_TYPE = "monitorType";
     /**
      * 监测方式
      */
-    public static final String REQUEST_PARAMS_ALARM_INTERVAL="alarmInterval";
+    public static final String REQUEST_PARAMS_ALARM_INTERVAL = "alarmInterval";
     /**
      * 报警关联方式 0-未关联 1-已关联 2/null-全部
      */
-    public static final String REQUEST_PARAMS_SELECT_TYPE="selectType";
+    public static final String REQUEST_PARAMS_SELECT_TYPE = "selectType";
     /**
      * 组织ID
      */
-    public static final String REQUEST_PARAMS_ORGANIZATION_ID="organizationId";
+    public static final String REQUEST_PARAMS_ORGANIZATION_ID = "organizationId";
     /**
      * 组织ID
      */
-    public static final String REQUEST_PARAMS_ADDRESS_BOOK_ID="addressbookId";
+    public static final String REQUEST_PARAMS_ADDRESS_BOOK_ID = "addressbookId";
 
-    /**b
+    /**
+     * b
      * 修改前的报警指标
      */
-    public static final String REQUEST_PARAMS_BEFORE_ALARM_PARA="beforeMonitorPara";
+    public static final String REQUEST_PARAMS_BEFORE_ALARM_PARA = "beforeMonitorPara";
 
     /**
      * 修改前的报警时段
      */
-    public static final String REQUEST_PARAMS_BEFORE_ALARM_INTERVAL="beforeAlarmInterval";
+    public static final String REQUEST_PARAMS_BEFORE_ALARM_INTERVAL = "beforeAlarmInterval";
 
     /**
      * 报警比较方式
      */
-    public static final String REQUEST_PARAMS_BEFORE_ALARM_COMPARE_METHOD="compareType";
+    public static final String REQUEST_PARAMS_BEFORE_ALARM_COMPARE_METHOD = "compareType";
     /**
      * 一级阈值
      */
@@ -141,6 +146,10 @@ public class DataConstants {
      * 报警格式
      */
     public static final String REQUEST_PARAMS_ALARM_FORM = "alarmForm";
+    /**
+     * 报警时间
+     */
+    public static final String REQUEST_PARAMS_TIME = "time";
 
 
 }

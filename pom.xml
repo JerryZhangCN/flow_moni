@@ -19,17 +19,27 @@
     </properties>
 
     <dependencies>
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-jdbc</artifactId>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+            <exclusions>
+                <!-- 排除自带的logback依赖 -->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+            <!-- 排除自带的logback依赖 -->
+            <exclusion>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-logging</artifactId>
+            </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -38,12 +48,6 @@
             <scope>runtime</scope>
             <version>6.4.0.jre8</version>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>com.microsoft.sqlserver</groupId>-->
-        <!--<artifactId>sqljdbc4</artifactId>-->
-        <!--<version>4.0.0</version>-->
-        <!--<scope>runtime</scope>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -72,6 +76,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <exclusions>
+                <!-- 排除自带的logback依赖 -->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -104,6 +115,60 @@
             <artifactId>thymeleaf</artifactId>
             <version>3.0.11.RELEASE</version>
         </dependency>
+        <dependency>
+            <!--groupId随意填写，其他引入时候会自动匹配版本-->
+            <groupId>sms</groupId>
+            <artifactId>sms</artifactId>
+            <version>3.2.2</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/sms.jar</systemPath>
+        </dependency>
+        <dependency>
+            <!--groupId随意填写，其他引入时候会自动匹配版本-->
+            <groupId>httpcore</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>3.2.2</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/httpcore-4.3.2.jar</systemPath>
+        </dependency>
+        <dependency>
+        <!--groupId随意填写，其他引入时候会自动匹配版本-->
+        <groupId>activemq</groupId>
+        <artifactId>activemq</artifactId>
+        <version>3.2.2</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/activemq-all-5.9.1.jar</systemPath>
+        <exclusions>
+        <exclusion>
+        <groupId>org.slf4j.impl.Log4jLoggerFactory</groupId>
+        <artifactId>org.slf4j.impl.Log4jLoggerFactory</artifactId>
+        </exclusion>
+        </exclusions>
+        </dependency>
+        <dependency>
+        <!--groupId随意填写，其他引入时候会自动匹配版本-->
+        <groupId>logging</groupId>
+        <artifactId>logging</artifactId>
+        <version>3.2.2</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/commons-logging-1.1.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <!--groupId随意填写，其他引入时候会自动匹配版本-->
+            <groupId>pool</groupId>
+            <artifactId>pool</artifactId>
+            <version>3.2.2</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/commons-pool-1.6.jar</systemPath>
+        </dependency>
+        <dependency>
+            <!--groupId随意填写，其他引入时候会自动匹配版本-->
+            <groupId>httpclient</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>3.2.2</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/httpclient-4.3.3.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>
@@ -115,13 +180,15 @@
         </plugins>
         <resources>
             <resource>
-                <directory>src/main/java</directory>
+                <directory>${project.basedir}/lib</directory>
+                <targetPath>BOOT-INF/lib/</targetPath>
                 <includes>
-                    <include>**/*.yml</include>
-                    <include>**/*.properties</include>
-                    <include>**/*.xml</include>
+                    <include>**/*.jar</include>
                 </includes>
-                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>BOOT-INF/classes/</targetPath>
             </resource>
             <resource>
                 <directory>src/main/resources</directory>

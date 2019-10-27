@@ -118,4 +118,29 @@ public class UserController extends BaseController {
     }
 
 
+    /**
+     * 获取历史报警关联
+     *
+     * @return
+     */
+    @RequestMapping(value = "/historyUser", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse historyUser(@Nullable String stcd,
+                                    @Nullable String monitorPara,
+                                    @Nullable String alarmInterval,
+                                    @Nullable String time,
+                                    @Nullable String key,
+                                    @Nullable String count,
+                                    @Nullable String index) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setResultCode(200);
+            baseResponse.setData(userService.historyUser(stcd, monitorPara, alarmInterval, time, key, count, index));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+
 }

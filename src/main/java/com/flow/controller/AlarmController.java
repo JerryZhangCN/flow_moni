@@ -179,7 +179,7 @@ public class AlarmController extends BaseController {
 
 
     /**
-     * 获取报警设置信息
+     * 获取历史报警
      *
      * @return
      */
@@ -193,6 +193,23 @@ public class AlarmController extends BaseController {
         BaseResponse baseResponse = new BaseResponse();
         try {
             baseResponse.setData(alarmService.getAlarmHistory(sttp, groupId, key, count, index));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+    /**
+     * 获取报警比较类型
+     *
+     * @return
+     */
+    @RequestMapping(value = "/compareType", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse compareType() {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(alarmService.getCompareType());
             return baseResponse;
         } catch (Exception e) {
             return returnError(e.getMessage());

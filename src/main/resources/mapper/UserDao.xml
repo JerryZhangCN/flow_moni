@@ -11,9 +11,13 @@
         <result property="alarmCharacter" column="AlarmCharacter" jdbcType="VARCHAR"/>
         <result property="isSelected" column="IsSelected" jdbcType="VARCHAR"/>
         <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
-        <result property="addressbookCD" column="AddressbookCD" jdbcType="VARCHAR"/>
+        <result property="addressbookId" column="AddressbookCD" jdbcType="VARCHAR"/>
         <result property="dutiesId" column="DutiesID" jdbcType="VARCHAR"/>
         <result property="organizationId" column="OrganizationCD" jdbcType="VARCHAR"/>
+        <result property="retryNumber" column="AlreadyRetryNum" jdbcType="VARCHAR"/>
+        <result property="maxNumber" column="MaxRetryNum" jdbcType="VARCHAR"/>
+        <result property="result" column="ReleaseStatNotes" jdbcType="VARCHAR"/>
+        <result property="operation" column="Operation" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!-- 可根据自己的需求，是否要使用 -->
@@ -46,9 +50,9 @@
 
 
     <select id="associateUser" resultType="java.lang.String">
-    DECLARE @c_STCD NVARCHAR(13)=#{stcd}
-    DECLARE @c_OrganizationCD NVARCHAR(36)=#{organizationId}
-    DECLARE @c_AddressbookCD NVARCHAR(36)=#{addressbookId}
+    DECLARE @c_STCD NVARCHAR(13)= #{stcd}
+    DECLARE @c_OrganizationCD NVARCHAR(36)= #{organizationId}
+    DECLARE @c_AddressbookCD NVARCHAR(36)= #{addressbookId}
     DECLARE @n_TotalCount INT
     DECLARE @n_UpdateCount INT
     DECLARE @c_ResultMessage VARCHAR(200)
@@ -60,9 +64,9 @@
     </select>
 
     <select id="associateUserCancel" resultType="java.lang.String">
-    DECLARE @c_STCD NVARCHAR(13)=#{stcd}
-    DECLARE @c_OrganizationCD NVARCHAR(36)=#{organizationId}
-    DECLARE @c_AddressbookCD NVARCHAR(36)=#{addressbookId}
+    DECLARE @c_STCD NVARCHAR(13)= #{stcd}
+    DECLARE @c_OrganizationCD NVARCHAR(36)= #{organizationId}
+    DECLARE @c_AddressbookCD NVARCHAR(36)= #{addressbookId}
     DECLARE @n_TotalCount INT
     DECLARE @n_UpdateCount INT
     DECLARE @c_ResultMessage VARCHAR(200)
@@ -71,6 +75,12 @@
     @c_STCD,@c_OrganizationCD,@c_AddressbookCD
     ,@n_TotalCount OUT,@n_UpdateCount OUT,@c_ResultMessage OUT,@n_ResultState OUT
     SELECT @c_ResultMessage
+    </select>
+
+    <select id="historyUser" resultMap="com.flow.dao.mapper.UserDao.contactMap,com.flow.dao.mapper.UserDao.countMap">
+    DECLARE @n_TotalCount INT
+    EXEC [SkyUni_DB_Moni].[DBO].[P_A_StationAlarmRelease] NULL,NULL,NULL,#{stcd},#{monitorPara},#{alarmInterval},#{time},NULL,#{count},#{index},@n_TotalCount OUT
+    SELECT @n_TotalCount as totalCount
     </select>
 
 
