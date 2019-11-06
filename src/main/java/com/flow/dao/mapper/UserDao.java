@@ -43,4 +43,14 @@ public interface UserDao {
                                    @Param(DataConstants.REQUEST_PARAMS_PAGE_COUNT) String count,
                                    @Param(DataConstants.REQUEST_PARAMS_PAGE_INDEX) String index);
 
+
+
+    List<List<Object>> addressBookUser(@Param(DataConstants.REQUEST_PARAMS_ORGANIZATION_ID) String organizationId,
+                                      @Param(DataConstants.REQUEST_PARAMS_KEYS) String key,
+                                      @Param(DataConstants.REQUEST_PARAMS_PAGE_COUNT) String count,
+                                      @Param(DataConstants.REQUEST_PARAMS_PAGE_INDEX) String index);
+
+
+
+
 }

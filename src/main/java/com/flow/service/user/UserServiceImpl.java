@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageData getContactUser(String stcd, String selectType,String organizationId,String key,String count, String index) {
+    public PageData getContactUser(String stcd, String selectType, String organizationId, String key, String count, String index) {
         List<List<Object>> ob = userDao.getContactUser(stcd, selectType, organizationId, key, count, index);
         return new PageData(ob.get(0), ob.get(1).get(0).toString());
     }
@@ -53,6 +53,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public PageData historyUser(String stcd, String monitorPara, String alarmInterval, String time, String key, String count, String index) {
         List<List<Object>> ob = userDao.historyUser(stcd, monitorPara, alarmInterval, time, key, count, index);
+        return new PageData(ob.get(0), ob.get(1).get(0).toString());
+    }
+
+    @Override
+    public PageData addressBookUser(String organizationId, String key, String count, String index) {
+        List<List<Object>> ob = userDao.addressBookUser(organizationId, key, count, index);
         return new PageData(ob.get(0), ob.get(1).get(0).toString());
     }
 }

@@ -78,7 +78,7 @@ public class UserController extends BaseController {
 
 
     /**
-     * 获取报警关联
+     * 报警关联联系人
      *
      * @return
      */
@@ -98,7 +98,7 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 获取报警关联
+     * 报警取消关联联系人
      *
      * @return
      */
@@ -136,6 +136,27 @@ public class UserController extends BaseController {
         try {
             baseResponse.setResultCode(200);
             baseResponse.setData(userService.historyUser(stcd, monitorPara, alarmInterval, time, key, count, index));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 获取获取
+     *
+     * @return
+     */
+    @RequestMapping(value = "/addressBookUser", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse getAddressBookUser(@Nullable String organizationId,
+                                           @Nullable String key,
+                                           @Nullable String count,
+                                           @Nullable String index) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(userService.addressBookUser(organizationId, key, count, index));
             return baseResponse;
         } catch (Exception e) {
             return returnError(e.getMessage());

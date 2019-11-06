@@ -38,4 +38,6 @@ public interface UserService {
                          String key,
                          String count,
                          String index);
+
+    PageData addressBookUser( String organizationId, String key, String count, String index);
 }

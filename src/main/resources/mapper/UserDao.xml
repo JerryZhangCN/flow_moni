@@ -9,7 +9,7 @@
         <result property="dutiesName" column="DutiesNM" jdbcType="VARCHAR"/>
         <result property="phone" column="MobilePhone" jdbcType="VARCHAR"/>
         <result property="alarmCharacter" column="AlarmCharacter" jdbcType="VARCHAR"/>
-        <result property="isSelected" column="IsSelected" jdbcType="VARCHAR"/>
+        <result property="isSelected" column="IsConnection" jdbcType="VARCHAR"/>
         <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
         <result property="addressbookId" column="AddressbookCD" jdbcType="VARCHAR"/>
         <result property="dutiesId" column="DutiesID" jdbcType="VARCHAR"/>
@@ -24,7 +24,7 @@
     <resultMap type="com.flow.domain.user.Organization" id="organizationMap">
         <result property="organizationId" column="OrganizationCD" jdbcType="VARCHAR"/>
         <result property="organizationName" column="OrganizationNMShow" jdbcType="VARCHAR"/>
-        <result property="isSelected" column="IsSelected" jdbcType="VARCHAR"/>
+        <result property="isSelected" column="IsConnection" jdbcType="VARCHAR"/>
         <result property="totalCount" column="TotalCount" jdbcType="VARCHAR"/>
     </resultMap>
 
@@ -33,6 +33,7 @@
     </resultMap>
 
 
+    <!-- 获取联系人 -->
     <select id="getContactUser" resultMap="com.flow.dao.mapper.UserDao.contactMap,com.flow.dao.mapper.UserDao.countMap">
      DECLARE @n_TotalCount INT
      DECLARE @n_ConnectionCount INT
@@ -40,7 +41,9 @@
       SELECT @n_TotalCount as totalCount
     </select>
 
-    <select id="getOrganization" resultMap="com.flow.dao.mapper.UserDao.organizationMap,com.flow.dao.mapper.UserDao.countMap">
+    <!-- 获取联系人分组 -->
+    <select id="getOrganization"
+            resultMap="com.flow.dao.mapper.UserDao.organizationMap,com.flow.dao.mapper.UserDao.countMap">
      DECLARE @n_TotalCount INT
      DECLARE @n_ConnectionCount INT
      DECLARE @n_ConnectionTotalCount INT
@@ -49,6 +52,7 @@
     </select>
 
 
+    <!-- 报警关联联系人 -->
     <select id="associateUser" resultType="java.lang.String">
     DECLARE @c_STCD NVARCHAR(13)= #{stcd}
     DECLARE @c_OrganizationCD NVARCHAR(36)= #{organizationId}
@@ -63,6 +67,7 @@
     SELECT @c_ResultMessage
     </select>
 
+    <!-- 取消报警关联 -->
     <select id="associateUserCancel" resultType="java.lang.String">
     DECLARE @c_STCD NVARCHAR(13)= #{stcd}
     DECLARE @c_OrganizationCD NVARCHAR(36)= #{organizationId}
@@ -77,10 +82,19 @@
     SELECT @c_ResultMessage
     </select>
 
+    <!-- 历史报警关联人 -->
     <select id="historyUser" resultMap="com.flow.dao.mapper.UserDao.contactMap,com.flow.dao.mapper.UserDao.countMap">
     DECLARE @n_TotalCount INT
     EXEC [SkyUni_DB_Moni].[DBO].[P_A_StationAlarmRelease] NULL,NULL,NULL,#{stcd},#{monitorPara},#{alarmInterval},#{time},NULL,#{count},#{index},@n_TotalCount OUT
     SELECT @n_TotalCount as totalCount
+    </select>
+
+
+    <!-- 获取通讯录关联人 -->
+    <select id="addressBookUser" resultMap="com.flow.dao.mapper.UserDao.contactMap,com.flow.dao.mapper.UserDao.countMap">
+   DECLARE @n_TotalCount INT
+   EXEC [SkyUni_DB_Busi].[DBO].[P_B_OrganizationAddressbook] NULL,#{organizationId},#{key},#{count},#{index},@n_TotalCount OUT
+   SELECT @n_TotalCount as totalCount
     </select>
 
 
