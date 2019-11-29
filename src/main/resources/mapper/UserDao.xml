@@ -18,6 +18,11 @@
         <result property="maxNumber" column="MaxRetryNum" jdbcType="VARCHAR"/>
         <result property="result" column="ReleaseStatNotes" jdbcType="VARCHAR"/>
         <result property="operation" column="Operation" jdbcType="VARCHAR"/>
+        <result property="userType" column="UserType" jdbcType="VARCHAR"/>
+        <result property="tel" column="TelePhone" jdbcType="VARCHAR"/>
+        <result property="email" column="Email" jdbcType="VARCHAR"/>
+        <result property="remarks" column="Remarks" jdbcType="VARCHAR"/>
+        <result property="index" column="INDEX_F" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!-- 可根据自己的需求，是否要使用 -->
@@ -30,6 +35,18 @@
 
     <resultMap type="java.lang.String" id="countMap">
         <result property="count" column="totalCount" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.flow.domain.user.Duties" id="dutiesMap">
+        <result property="dutiesId" column="DutiesId" jdbcType="VARCHAR"/>
+        <result property="dutiesName" column="DutiesNM" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.flow.domain.tools.BaseReturnData" id="baseReturnMap">
+        <result property="resultData" column="resultData" jdbcType="VARCHAR"/>
+        <result property="totalCount" column="totalCount" jdbcType="VARCHAR"/>
+        <result property="updateCount" column="updateCount" jdbcType="VARCHAR"/>
+        <result property="result" column="result" jdbcType="VARCHAR"/>
     </resultMap>
 
 
@@ -91,11 +108,138 @@
 
 
     <!-- 获取通讯录关联人 -->
-    <select id="addressBookUser" resultMap="com.flow.dao.mapper.UserDao.contactMap,com.flow.dao.mapper.UserDao.countMap">
+    <select id="addressBookUser"
+            resultMap="com.flow.dao.mapper.UserDao.contactMap,com.flow.dao.mapper.UserDao.countMap">
    DECLARE @n_TotalCount INT
    EXEC [SkyUni_DB_Busi].[DBO].[P_B_OrganizationAddressbook] NULL,#{organizationId},#{key},#{count},#{index},@n_TotalCount OUT
    SELECT @n_TotalCount as totalCount
     </select>
 
+    <!-- 新增通讯录分组 -->
+    <select id="addOrganization" resultMap="com.flow.dao.mapper.UserDao.contactMap,com.flow.dao.mapper.UserDao.baseReturnMap">
+   DECLARE @c_OrganizationCDFromCD NVARCHAR(50)='Common'
+   DECLARE @c_FatherOrganizationCD NVARCHAR(15)=#{organizationId}
+   DECLARE @c_AddOrganizationCD NVARCHAR(12)=NULL
+   DECLARE @n_TotalCount INT
+   DECLARE @n_UpdateCount INT
+   DECLARE @c_Result  VARCHAR(200)
+   EXEC [SkyUni_DB_Busi].[DBO].[P_B_OrganizationAdd]
+   @c_OrganizationCDFromCD
+   ,@c_FatherOrganizationCD
+   ,@c_AddOrganizationCD OUT
+   ,@n_TotalCount OUT,@n_UpdateCount OUT,@c_Result OUT
+   SELECT @c_FatherOrganizationCD as resultData,@n_TotalCount as totalCount,@n_UpdateCount as updateCount,@c_Result as result
+    </select>
+
+    <!-- 删除通讯录分组 -->
+    <select id="delOrganization" resultMap="com.flow.dao.mapper.UserDao.baseReturnMap">
+    DECLARE @c_OrganizationCDFromCD NVARCHAR(50)='Common'
+    DECLARE @c_OrganizationCD NVARCHAR(50)=#{organizationId}
+    DECLARE @n_TotalCount INT
+    DECLARE @n_DelCount INT
+    DECLARE @c_Result  VARCHAR(200)
+    EXEC [SkyUni_DB_Busi].[DBO].[P_B_OrganizationDel]
+    @c_OrganizationCDFromCD,@c_OrganizationCD
+    ,@n_TotalCount OUT,@n_DelCount OUT,@c_Result OUT
+    SELECT @n_TotalCount as totalCount,@n_DelCount as updateCount,@c_Result as result
+    </select>
+
+    <!-- 获取通讯录分组 -->
+    <select id="allOrganization"
+            resultMap="com.flow.dao.mapper.UserDao.organizationMap,com.flow.dao.mapper.UserDao.countMap">
+    DECLARE @n_TotalCount INT
+    EXEC [SkyUni_DB_Busi].[DBO].[P_B_OrganizationGroup] NULL,#{count},#{index},@n_TotalCount OUT
+    SELECT @n_TotalCount as totalCount
+    </select>
+
+
+    <!-- 移动到联系人到指定分组 -->
+    <select id="moveToOrganization" resultMap="com.flow.dao.mapper.UserDao.baseReturnMap">
+    DECLARE @c_BeforeOrganizationCD NVARCHAR(15)=#{beforeOrganizationId}
+    DECLARE @c_AfterOrganizationCD NVARCHAR(15)=#{organizationId}
+    DECLARE @c_AddressbookCD NVARCHAR(50)=#{addressbookId}
+    DECLARE @n_TotalCount INT
+    DECLARE @n_AddCount INT
+    DECLARE @c_Result  VARCHAR(200)
+    EXEC [SkyUni_DB_Busi].[DBO].[P_B_OrganizationAddressbookMove]
+    @c_BeforeOrganizationCD,@c_AfterOrganizationCD,@c_AddressbookCD
+    ,@n_TotalCount OUT,@n_AddCount OUT,@c_Result OUT
+    SELECT @n_TotalCount as totalCount,@n_AddCount as updateCount,@c_Result as result
+    </select>
+
+    <!-- 复制到联系人到指定分组 -->
+    <select id="copyToOrganization" resultMap="com.flow.dao.mapper.UserDao.baseReturnMap">
+    DECLARE @c_BeforeOrganizationCD NVARCHAR(15)=#{beforeOrganizationId}
+    DECLARE @c_AfterOrganizationCD NVARCHAR(15)=#{organizationId}
+    DECLARE @c_AddressbookCD NVARCHAR(50)=#{addressbookId}
+    DECLARE @n_TotalCount INT
+    DECLARE @n_AddCount INT
+    DECLARE @c_Result  VARCHAR(200)
+    EXEC [SkyUni_DB_Busi].[DBO].[P_B_OrganizationAddressbookCopy]
+    @c_BeforeOrganizationCD,@c_AfterOrganizationCD,@c_AddressbookCD
+    ,@n_TotalCount OUT,@n_AddCount OUT,@c_Result OUT
+    SELECT @n_TotalCount as totalCount,@n_AddCount as updateCount,@c_Result as result
+    </select>
+
+    <!-- 删除联系人 -->
+    <select id="delUser" resultMap="com.flow.dao.mapper.UserDao.baseReturnMap">
+    DECLARE @c_OrganizationCD NVARCHAR(15)=#{organizationId}
+    DECLARE @c_AddressbookCD NVARCHAR(50)=#{addressbookId}
+    DECLARE @n_TotalCount INT
+    DECLARE @n_DelCount INT
+    DECLARE @c_Result  VARCHAR(200)
+    EXEC [SkyUni_DB_Busi].[DBO].[P_B_OrganizationAddressbookDel]
+    @c_OrganizationCD,@c_AddressbookCD
+    ,@n_TotalCount OUT,@n_DelCount OUT,@c_Result OUT
+    SELECT @n_TotalCount as totalCount,@n_DelCount as totalCount,@c_Result as result
+    </select>
+
+
+    <!-- 获取联系人详情 -->
+    <select id="userDetail" resultMap="com.flow.dao.mapper.UserDao.contactMap">
+    DECLARE @n_TotalCount INT
+    EXEC [SkyUni_DB_Busi].[DBO].[P_B_OrganizationAddressbookEdit] #{organizationId},#{addressbookId},20,1,@n_TotalCount OUT
+    </select>
+
+
+    <!-- 保存联系人信息 -->
+    <select id="saveUser" parameterType="com.flow.domain.user.ContactUser"
+            resultMap="com.flow.dao.mapper.UserDao.baseReturnMap">
+   DECLARE @c_OrganizationCD NVARCHAR(15)=#{organizationId}
+   DECLARE @c_AddressbookCD NVARCHAR(36)=#{addressbookId}
+   DECLARE @c_Name NVARCHAR(20)=#{name}
+   DECLARE @c_UserType NVARCHAR(20)=#{userType}
+   DECLARE @c_DutiesID NVARCHAR(20)=#{dutiesId}
+   DECLARE @c_MobilePhone  NVARCHAR(50)=#{phone}
+   DECLARE @c_TelePhone  NVARCHAR(50)=#{tel}
+   DECLARE @c_Email NVARCHAR(50) =#{email}
+   DECLARE @c_Remarks NVARCHAR(500)=#{remarks}
+   DECLARE @n_INDEX_F INT=#{index}
+   DECLARE @n_TotalCount INT
+   DECLARE @n_UpdateCount INT
+   DECLARE @c_Result  VARCHAR(200)
+   EXEC [SkyUni_DB_Busi].[DBO].[P_B_OrganizationAddressbookSave]
+   @c_OrganizationCD,@c_AddressbookCD,@c_Name,@c_UserType,@c_DutiesID,@c_MobilePhone,@c_TelePhone,@c_Email,@c_Remarks,@n_INDEX_F
+   ,@n_TotalCount OUT,@n_UpdateCount OUT,@c_Result OUT
+   SELECT @n_TotalCount as totalCount,@n_UpdateCount as updateCount,@c_Result as result
+    </select>
+
+
+    <!-- 创建联系人 -->
+    <select id="createUser" resultMap="com.flow.dao.mapper.UserDao.contactMap,com.flow.dao.mapper.UserDao.baseReturnMap">
+   DECLARE @c_OrganizationCD NVARCHAR(15)=#{organizationId}
+   DECLARE @n_TotalCount INT
+   DECLARE @n_AddCount INT
+   DECLARE @c_Result  VARCHAR(200)
+   EXEC [SkyUni_DB_Busi].[DBO].[P_B_OrganizationAddressbookAdd]
+   @c_OrganizationCD
+   ,@n_TotalCount OUT,@n_AddCount OUT,@c_Result OUT
+   SELECT @n_TotalCount as totalCount,@n_AddCount as updateCount,@c_Result as result
+    </select>
+
+    <!-- 获取职务 -->
+    <select id="getDuties" resultMap="com.flow.dao.mapper.UserDao.dutiesMap">
+   EXEC [SkyUni_DB_Busi].[DBO].[P_GetDuties]
+    </select>
 
 </mapper>

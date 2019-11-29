@@ -1,11 +1,10 @@
 package com.flow.dao.mapper;
 
 
-import com.flow.domain.moniStation.MoniOnline;
-import com.flow.domain.moniStation.MoniStation;
-import com.flow.domain.moniStation.StationDetail;
-import com.flow.domain.moniStation.StationType;
+import com.flow.domain.moniStation.*;
+import com.flow.domain.tools.BaseReturnData;
 import com.flow.domain.tools.DataConstants;
+import com.flow.domain.video.Video;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -41,6 +40,24 @@ public interface MoniStationDao {
     List<MoniStation> findByGroupId(@Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String group,
                                     @Param(DataConstants.STATION_STATUS_TYPE) String sttp);
 
-    List<MoniStation> groupStation(@Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId,
-                                   @Param(DataConstants.REQUEST_PARAMS_KEYS) String key);
+    List<Video> groupStation(@Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId,
+                             @Param(DataConstants.REQUEST_PARAMS_KEYS) String key);
+
+
+    List<List<Object>> operationStations(@Param(DataConstants.STATION_STATUS_TYPE) String sttp,
+                                         @Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId,
+                                         @Param(DataConstants.REQUEST_PARAMS_KEYS) String key,
+                                         @Param(DataConstants.REQUEST_PARAMS_PAGE_COUNT) String count,
+                                         @Param(DataConstants.REQUEST_PARAMS_PAGE_INDEX) String index);
+
+    StationMsg operationDetail(@Param(DataConstants.REQUEST_PARAMS_STCD) String stcd);
+
+
+    List<ConvertMethod> getConvertMethod(@Param(DataConstants.REQUEST_PARAMS_MONITOR_PARA) String monitorPara);
+
+    List<GB> getGB();
+
+    List<List<Object>> createStation(@Param(DataConstants.REQUEST_PARAMS_MONITOR_PARA) String monitorPara);
+
+    BaseReturnData saveStation(StationMsg stationMsg);
 }

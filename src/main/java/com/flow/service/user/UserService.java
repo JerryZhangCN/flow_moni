@@ -1,8 +1,12 @@
 package com.flow.service.user;
 
 import com.flow.domain.statistics.PageData;
+import com.flow.domain.tools.BaseReturnData;
+import com.flow.domain.tools.DataConstants;
+import com.flow.domain.user.ContactUser;
 import com.flow.domain.user.User;
 import com.google.common.util.concurrent.ListenableFuture;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.lang.Nullable;
 
 import java.util.List;
@@ -39,5 +43,50 @@ public interface UserService {
                          String count,
                          String index);
 
-    PageData addressBookUser( String organizationId, String key, String count, String index);
+    PageData addressBookUser(String organizationId, String key, String count, String index);
+
+
+    PageData allOrganization(String count, String index);
+
+    BaseReturnData addOrganization(String organizationId);
+
+    BaseReturnData delOrganization(String organizationId);
+
+    BaseReturnData moveToOrganization(String beforeOrganizationId,
+                                      String organizationId,
+                                      String addressBookId);
+
+    BaseReturnData copyToOrganization(String beforeOrganizationId,
+                                      String organizationId,
+                                      String addressBookId);
+
+    /**
+     * 删除用户
+     *
+     * @param organizationId
+     * @param addressBookId
+     * @return
+     */
+    BaseReturnData delUser(String organizationId, String addressBookId);
+
+    ContactUser userDetail(String organizationId,
+                           String addressBookId);
+
+
+    /**
+     * 保存用户数据
+     *
+     * @param contactUser
+     * @return
+     */
+    BaseReturnData saveUser(ContactUser contactUser);
+
+
+    /**
+     * 获取所有的通讯录分组
+     *
+     * @param organizationId
+     * @return
+     */
+    BaseReturnData createUser(@Param(DataConstants.REQUEST_PARAMS_ORGANIZATION_ID) String organizationId);
 }

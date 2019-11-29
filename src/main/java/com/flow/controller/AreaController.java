@@ -23,6 +23,7 @@ import com.flow.service.moniStation.MoniStationService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class AreaController extends BaseController {
 
 
     /**
-     * 获取行政区域
+     * 获取行政分组
      *
      * @return
      */
@@ -80,13 +81,67 @@ public class AreaController extends BaseController {
             List<Group> result = areaService.findGroup(sttp);
             Map<String, Group> areaMap = new LinkedHashMap<>();
             for (Group group : result) {
-                if (group.getPGroupId()==null||group.getPGroupId()==""||group.getPGroupId().length()==0){
+                if (group.getPGroupId() == null || group.getPGroupId() == "" || group.getPGroupId().length() == 0) {
                     areaMap.put(group.getGroupId(), group);
-                }else if(areaMap.containsKey(group.getPGroupId())){
+                } else if (areaMap.containsKey(group.getPGroupId())) {
                     areaMap.get(group.getPGroupId()).getGroups().add(group);
                 }
             }
             baseResponse.setData(areaMap.values());
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+    /**
+     * 根据行政区划获取子行政区划列表
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getAreaByAddvcd", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse getAreaByAddvcd(@Nullable String addvcd,
+                                        @Nullable String key,
+                                        @Nullable String count,
+                                        @Nullable String index) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(areaService.getAreaByAddvcd(addvcd, key, count, index));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+    /**
+     * 创建行政区划
+     *
+     * @return
+     */
+    @RequestMapping(value = "/createArea", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse createArea(@Nullable String addvcd) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(areaService.createArea(addvcd));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+    /**
+     * 编辑行政区划
+     *
+     * @return
+     */
+    @RequestMapping(value = "/saveArea", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResponse saveArea(@RequestBody Area area) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(areaService.saveArea(area));
             return baseResponse;
         } catch (Exception e) {
             return returnError(e.getMessage());

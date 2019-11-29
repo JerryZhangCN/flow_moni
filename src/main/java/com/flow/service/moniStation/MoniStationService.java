@@ -1,10 +1,12 @@
 package com.flow.service.moniStation;
 
 
-import com.flow.domain.moniStation.MoniOnline;
-import com.flow.domain.moniStation.MoniStation;
-import com.flow.domain.moniStation.StationDetail;
-import com.flow.domain.moniStation.StationType;
+import com.flow.domain.moniStation.*;
+import com.flow.domain.statistics.PageData;
+import com.flow.domain.tools.BaseReturnData;
+import com.flow.domain.tools.DataConstants;
+import com.flow.domain.video.Video;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,12 +19,13 @@ public interface MoniStationService {
     /**
      * 根据参数获取站点列表
      *
+     * @return
      * @RequestParam Addvcd
      * @RequestParam http
      * @RequestParam scale
-     * @return
      */
     List<MoniStation> findByAddvcdAndScale(String Addvcd, String http, String scale);
+
     /**
      * 根据参数获取站点列表
      *
@@ -33,20 +36,20 @@ public interface MoniStationService {
     /**
      * 获取实时监测
      *
+     * @return
      * @RequestParam Addvcd
      * @RequestParam http
      * @RequestParam scale
      * @RequestParam key
-     * @return
      */
     List<MoniOnline> monitorOnline(String Addvcd, String http, String groupId, String key);
 
     /**
      * 获取站点详细信息
      *
+     * @return
      * @RequestParam stcd
      * @RequestParam monitorPara
-     * @return
      */
     List<StationDetail> getStationDetail(String stcd, String monitorPara);
 
@@ -58,5 +61,20 @@ public interface MoniStationService {
     List<StationType> getStationType(String type, String http);
 
 
-    List<MoniStation> groupStation(String groupId,String key);
+    List<Video> groupStation(String groupId, String key);
+
+
+    PageData operationStations(String sttp, String groupId, String key, String count, String index);
+
+
+    StationMsg operationDetail(String stcd);
+
+
+    List<ConvertMethod> getConvertMethod(String monitorPara);
+
+    List<GB> getGB();
+
+    BaseReturnData createStation(String monitorPara);
+
+    BaseReturnData saveStation(StationMsg stationMsg);
 }

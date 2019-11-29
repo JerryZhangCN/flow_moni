@@ -3,7 +3,7 @@
 
 <mapper namespace="com.flow.dao.mapper.MoniStationDao">
 
-    <!-- 可根据自己的需求，是否要使用 -->
+    <!-- 测站列表-->
     <resultMap type="com.flow.domain.moniStation.MoniStation" id="stationMap">
         <result property="id" column="ID" jdbcType="VARCHAR"/>
         <result property="lttd" column="LTTD" jdbcType="VARCHAR"/>
@@ -29,9 +29,14 @@
         <result property="sonSttpName" column="SonSTTPNM" jdbcType="VARCHAR"/>
         <result property="stlc" column="STLC" jdbcType="VARCHAR"/>
         <result property="monitorPara" column="MainMonitorPara"/>
+        <result property="address" column="ADDVNM"/>
+        <result property="river" column="RVNM"/>
+        <result property="administration" column="ADMAUTH"/>
+        <result property="discharge" column="LeakProject"/>
+        <result property="convert" column="MainMonitorParaConverNM"/>
     </resultMap>
 
-
+    <!--在线监测-->
     <resultMap type="com.flow.domain.moniStation.MoniOnline" id="moniOnline">
         <result property="stationName" column="STNMShow" jdbcType="VARCHAR"/>
         <result property="statioNameAll" column="STNM" jdbcType="VARCHAR"/>
@@ -41,7 +46,7 @@
         <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
         <result property="monitorPara" column="MonitorPara" jdbcType="VARCHAR"/>
     </resultMap>
-
+    <!-- 测站详情-->
     <resultMap type="com.flow.domain.moniStation.StationDetail" id="stationDetail">
         <result property="stationName" column="STNM" jdbcType="VARCHAR"/>
         <result property="stationAddress" column="STLC" jdbcType="VARCHAR"/>
@@ -65,11 +70,115 @@
         <result property="contactPhone" column="LinkPhoneCode" jdbcType="VARCHAR"/>
         <result property="projectNote" column="PJNoter" jdbcType="VARCHAR"/>
         <result property="qrCode" column="QRCodePosition" jdbcType="VARCHAR"/>
+        <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
+        <result property="basin" column="BSNM" jdbcType="VARCHAR"/>
+        <result property="baseTop" column="DTMEL" jdbcType="VARCHAR"/>
+        <result property="discharge" column="LeakProject"/>
+        <result property="convert" column="MainMonitorParaConverNM"/>
+        <result property="gb" column="GB" jdbcType="VARCHAR"/>
+        <result property="gbLevel" column="DesignGBLevel" jdbcType="VARCHAR"/>
+        <result property="ptIp" column="PT_WWIP" jdbcType="VARCHAR"/>
+        <result property="ptPort" column="PT_WWPort" jdbcType="VARCHAR"/>
+        <result property="ptChannel" column="PT_ChannelID" jdbcType="VARCHAR"/>
+        <result property="ptUser" column="PT_User" jdbcType="VARCHAR"/>
+        <result property="ptPassword" column="PT_Password" jdbcType="VARCHAR"/>
+        <result property="isOpen" column="Enabled" jdbcType="VARCHAR"/>
+        <result property="testMethod" column="MonitorResourceTP" jdbcType="VARCHAR"/>
+        <result property="format" column="COMMENTS" jdbcType="VARCHAR"/>
     </resultMap>
 
+
+    <!-- 测站管理-测站信息-->
+    <resultMap type="com.flow.domain.moniStation.StationMsg" id="stationMsg">
+        <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
+        <result property="stationName" column="STNM" jdbcType="VARCHAR"/>
+        <result property="scaleTypeId" column="ScaleTP" jdbcType="VARCHAR"/>
+        <result property="scaleTypeName" column="Scale" jdbcType="VARCHAR"/>
+        <result property="riverName" column="RVNM" jdbcType="VARCHAR"/>
+        <result property="basin" column="BSNM" jdbcType="VARCHAR"/>
+        <result property="lttd" column="LTTD" jdbcType="VARCHAR"/>
+        <result property="lgtd" column="LGTD" jdbcType="VARCHAR"/>
+        <result property="baseTop" column="DTMEL" jdbcType="VARCHAR"/>
+        <result property="discharge" column="LeakProject" jdbcType="VARCHAR"/>
+        <result property="monitorPara" column="MainMonitorPara" jdbcType="VARCHAR"/>
+        <result property="convert" column="MainMonitorParaConvert" jdbcType="VARCHAR"/>
+        <result property="qrCode" column="QRCodePosition" jdbcType="VARCHAR"/>
+        <result property="gb" column="GB" jdbcType="VARCHAR"/>
+        <result property="gbLevel" column="DesignGBLevel" jdbcType="VARCHAR"/>
+        <result property="contact" column="PersonInCharge" jdbcType="VARCHAR"/>
+        <result property="sl_zn" column="SL_ZN" jdbcType="VARCHAR"/>
+        <result property="sl_pd" column="SL_PD" jdbcType="VARCHAR"/>
+        <result property="sl_ym" column="SL_YM" jdbcType="VARCHAR"/>
+        <result property="sl_ss" column="SL_SS" jdbcType="VARCHAR"/>
+        <result property="sl_ll" column="SL_LL" jdbcType="VARCHAR"/>
+        <result property="stationNameShow" column="STNMShow" jdbcType="VARCHAR"/>
+        <result property="projectName" column="PJCD" jdbcType="VARCHAR"/>
+        <result property="stationType" column="STTP" jdbcType="VARCHAR"/>
+        <result property="sonStationType" column="SonSTTP" jdbcType="VARCHAR"/>
+        <result property="riverSystem" column="HNNM" jdbcType="VARCHAR"/>
+        <result property="addvcd" column="ADDVCD"/>
+        <result property="stationAddress" column="STLC"/>
+        <result property="depart" column="ADMAUTH" jdbcType="VARCHAR"/>
+        <result property="createTime" column="ESSTYM" jdbcType="VARCHAR"/>
+        <result property="ptIp" column="PT_WWIP" jdbcType="VARCHAR"/>
+        <result property="ptPort" column="PT_WWPort" jdbcType="VARCHAR"/>
+        <result property="ptChannel" column="PT_ChannelID" jdbcType="VARCHAR"/>
+        <result property="ptUser" column="PT_User" jdbcType="VARCHAR"/>
+        <result property="ptPassword" column="PT_Password" jdbcType="VARCHAR"/>
+        <result property="testMethod" column="MonitorResourceTP" jdbcType="VARCHAR"/>
+        <result property="contactPhone" column="MobilePhone" jdbcType="VARCHAR"/>
+        <result property="sl_w" column="SL_W" jdbcType="VARCHAR"/>
+        <result property="sl_h" column="SL_H" jdbcType="VARCHAR"/>
+        <result property="sl_gl" column="SL_GJ" jdbcType="VARCHAR"/>
+        <result property="sl_gc" column="SL_GC" jdbcType="VARCHAR"/>
+        <result property="enable" column="Enabled" jdbcType="VARCHAR"/>
+        <result property="remarks" column="COMMENTS" jdbcType="VARCHAR"/>
+        <result property="mppt" column="MPPTNN" jdbcType="VARCHAR"/>
+        <result property="mWater" column="MWATERN" jdbcType="VARCHAR"/>
+        <result property="mImage" column="MIMAGEN" jdbcType="VARCHAR"/>
+        <result property="mVideo" column="MVIDEON" jdbcType="VARCHAR"/>
+        <result property="mGate" column="MGATEN" jdbcType="VARCHAR"/>
+        <result property="designFlow" column="MQN" jdbcType="VARCHAR"/>
+        <result property="speed" column="MSPEEDN" jdbcType="VARCHAR"/>
+        <result property="waterTemperature" column="MWTN" jdbcType="VARCHAR"/>
+        <result property="ph" column="MPHN" jdbcType="VARCHAR"/>
+        <result property="mdon" column="MDON" jdbcType="VARCHAR"/>
+        <result property="mern" column="MERN" jdbcType="VARCHAR"/>
+        <result property="mtbn" column="MTBN" jdbcType="VARCHAR"/>
+        <result property="mpgn" column="MPGN" jdbcType="VARCHAR"/>
+        <result property="mann" column="MANN" jdbcType="VARCHAR"/>
+        <result property="mtpn" column="MTPN" jdbcType="VARCHAR"/>
+        <result property="mtnn" column="MTNN" jdbcType="VARCHAR"/>
+        <result property="matn" column="MATN" jdbcType="VARCHAR"/>
+        <result property="mhn" column="MHN" jdbcType="VARCHAR"/>
+        <result property="men" column="MEN" jdbcType="VARCHAR"/>
+        <result property="mwsn" column="MWSN" jdbcType="VARCHAR"/>
+        <result property="mwdn" column="MWDN" jdbcType="VARCHAR"/>
+        <result property="msmcn" column="MSMCN" jdbcType="VARCHAR"/>
+
+
+    </resultMap>
+
+    <!-- 测站类别方式-->
     <resultMap type="com.flow.domain.moniStation.StationType" id="stationType">
         <result property="sttp" column="STTP" jdbcType="VARCHAR"/>
         <result property="name" column="STTPNM" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="java.lang.String" id="returnMap">
+        <result property="totalCount" column="totalCount" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 换算方式-->
+    <resultMap type="com.flow.domain.moniStation.ConvertMethod" id="convertMethod">
+        <result property="monitorPara" column="MonitorPara" jdbcType="VARCHAR"/>
+        <result property="convertId" column="MonitorParaConvertCD" jdbcType="VARCHAR"/>
+        <result property="convert" column="MonitorParaConvertCDNN" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!-- 国标-->
+    <resultMap type="com.flow.domain.moniStation.GB" id="gb">
+        <result property="gb" column="GB" jdbcType="VARCHAR"/>
+        <result property="gbName" column="GBNM" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap type="java.lang.String" id="paramResult">
@@ -99,8 +208,121 @@
     <select id="findByGroupId" resultMap="stationMap">
        EXEC [SkyUni_DB_Moni].[dbo].[P_M_StationBasis] NULL,NULL,NULL,NULL,#{sttp},#{groupId},'V2.01'
     </select>
+    <!-- 根据视频分组获取站点详情-->
+    <select id="groupStation" resultMap="com.flow.dao.mapper.VideoDao.videoMap">
+       EXEC [SkyUni_DB_Moni].[dbo].[P_Q_VideoStation] NULL,NULL,#{groupId},#{key}
+    </select>
 
-    <select id="groupStation" resultMap="stationMap">
-       EXEC [SkyUni_DB_Moni].[dbo].[P_GetGroupStation] NULL,NULL,#{groupId},#{key}
+    <!-- 平台管理测站列表 -->
+    <select id="operationStations"
+            resultMap="com.flow.dao.mapper.MoniStationDao.stationMap,com.flow.dao.mapper.MoniStationDao.returnMap">
+     DECLARE @n_TotalCount INT
+     EXEC [SkyUni_DB_Moni].[DBO].[P_B_StationBasisList] NULL,NULL,NULL,#{sttp},#{groupId},#{key},#{count},#{index},@n_TotalCount OUT
+     SELECT @n_TotalCount as totalcount
+    </select>
+
+    <!-- 平台管理 测站详情 -->
+    <select id="operationDetail" resultMap="com.flow.dao.mapper.MoniStationDao.stationMsg">
+     EXEC [SkyUni_DB_Moni].[DBO].[P_B_StationBasisEdit] #{stcd}
+    </select>
+
+    <!-- 测站管理-计算方式 -->
+    <select id="getConvertMethod" resultMap="com.flow.dao.mapper.MoniStationDao.convertMethod">
+     EXEC [SkyUni_DB_Moni].[DBO].[P_GetMonitorParaConvert] NULL,NULL,NULL,#{monitorPara}
+    </select>
+
+    <!-- 测站管理-国标 -->
+    <select id="getGB" resultMap="com.flow.dao.mapper.MoniStationDao.gb">
+     EXEC [SkyUni_DB_Moni].[DBO].[P_GetGB] NULL,NULL,NULL
+    </select>
+
+    <!-- 测站管理-创建测站 -->
+    <select id="createStation"
+            resultMap="com.flow.dao.mapper.UserDao.baseReturnMap,com.flow.dao.mapper.UserDao.baseReturnMap">
+     DECLARE @c_STTP NVARCHAR(2)=#{monitorPara}
+     DECLARE @n_TotalCount INT
+     DECLARE @n_UpdateCount INT
+     DECLARE @c_Result  VARCHAR(200)
+     EXEC [SkyUni_DB_Moni].[DBO].[P_B_StationBasisAdd]
+     @c_STTP
+     ,@n_TotalCount OUT,@n_UpdateCount OUT,@c_Result OUT
+     SELECT @c_STTP as resultData,@n_TotalCount as totalCount,@n_UpdateCount as updateCount,@c_Result as result
+    </select>
+
+    <!-- 测站管理-保存测站信息 -->
+    <select id="saveStation" parameterType="com.flow.domain.moniStation.StationMsg"
+            resultMap="com.flow.dao.mapper.UserDao.baseReturnMap">
+     DECLARE @n_TotalCount INT
+     DECLARE @n_UpdateCount INT
+     DECLARE @c_Result  VARCHAR(200)
+     EXEC [SkyUni_DB_Moni].[DBO].[P_B_StationBasisSave]
+     #{beforeStcd}                     --@c_BeforeSTCD
+     ,#{stcd}                     --@c_AlterSTCD
+     ,#{stationName}                     --@c_STNM
+     ,#{scaleTypeName}                     --@c_ScaleTP
+     ,#{scaleTypeId}                    --@n_Scale
+     ,#{riverName}                     --@c_RVNM
+     ,#{basin}                     --@c_BSNM
+     ,#{lttd}                     --@n_LTTD
+     ,#{lgtd}                     --@n_LGTD
+     ,#{baseTop}                    --@n_DTMEL
+     ,#{discharge}                    --@c_LeakProject
+     ,#{monitorPara}                     --@c_MainMonitorPara
+     ,#{convert}                    --@c_MainMonitorParaConvert
+     ,#{qrCode}                    --@c_QRCodePosition
+     ,#{gb}                     --@c_GB
+     ,#{gbLevel}                    --@n_DesignGBLevel
+     ,#{contact}                     --@c_PersonInCharge
+     ,#{sl_zn}                     --@n_SL_ZN
+     ,#{sl_pd}                     --@n_SL_PD
+     ,#{sl_ym}                     --@n_SL_YM
+     ,#{sl_ss}                    --@n_SL_SS
+     ,#{sl_ll}                   --@n_SL_LL
+     ,#{stationNameShow}                     --@c_STNMShow
+     ,#{projectName}                     --@c_PJCD
+     ,#{stationType}                     --@c_STTP
+     ,#{sonStationType}                     --@c_SonSTTP
+     ,#{riverSystem}                     --@c_HNNM
+     ,#{addvcd}                     --@c_ADDVCD
+     ,#{stationAddress}                    --@c_STLC
+     ,#{depart}                    --@c_ADMAUTH
+     ,#{createTime}                     --@c_ESSTYM
+     ,#{ptIp}                     --@c_PT_WWIP
+     ,#{ptPort}                    --@n_PT_WWPort
+     ,#{ptChannel}                     --@n_PT_ChannelID
+     ,#{ptUser}                     --@c_PT_User
+     ,#{ptPassword}                     --@c_PT_Password
+     ,#{testMethod}                     --@c_MonitorResourceTP
+     ,#{contactPhone}                    --@c_MobilePhone
+     ,#{sl_w}                     --@n_SL_W
+     ,#{sl_h}                    --@n_SL_H
+     ,#{sl_gl}                     --@n_SL_GJ
+     ,#{sl_gc}                     --@n_SL_GC
+     ,#{enabled}                     --@n_Enabled
+     ,#{remarks}                    --@n_COMMENTS
+     ,#{mppt}                     --@n_MPPTNN
+     ,#{mWater}                     --@n_MWATERN
+     ,#{mImage}                     --@n_MIMAGEN
+     ,#{mVideo}                     --@n_MVIDEON
+     ,#{mGate}                     --@n_MGATEN
+     ,#{designFlow}                    --@n_MQN
+     ,#{speed}                     --@n_MSPEEDN
+     ,#{waterTemperature}                     --@n_MWTN
+     ,#{ph}                     --@n_MPHN
+     ,#{mdon}                     --@n_MDON
+     ,#{mern}                     --@n_MERN
+     ,#{mtbn}                     --@n_MTBN
+     ,#{mpgn}                    --@n_MPGN
+     ,#{mann}                     --@n_MANN
+     ,#{mtpn}                    --@n_MTPN
+     ,#{mtnn}                     --@n_MTNN
+     ,#{matn}                     --@n_MATN
+     ,#{mhn}                     --@n_MHN
+     ,#{men}                     --@n_MEN
+     ,#{mwsn}                     --@n_MWSN
+     ,#{mwdn}                     --@n_MWDN
+     ,#{msmcn}                     --@n_MSMCN
+     ,@n_TotalCount OUT,@n_UpdateCount OUT,@c_Result OUT
+     SELECT @n_TotalCount as totalCount,@n_UpdateCount as updateCount,@c_Result as result
     </select>
 </mapper>

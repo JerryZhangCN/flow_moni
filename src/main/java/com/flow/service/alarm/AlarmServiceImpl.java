@@ -1,11 +1,9 @@
 package com.flow.service.alarm;
 
 import com.flow.dao.mapper.AlarmDao;
-import com.flow.domain.alarm.Alarm;
-import com.flow.domain.alarm.AlarmInterval;
-import com.flow.domain.alarm.AlarmSetting;
-import com.flow.domain.alarm.CompareType;
+import com.flow.domain.alarm.*;
 import com.flow.domain.statistics.PageData;
+import com.flow.domain.tools.BaseReturnData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,6 +63,16 @@ public class AlarmServiceImpl implements AlarmService {
     @Override
     public List<CompareType> getCompareType() {
         return alarmDao.compareType();
+    }
+
+    @Override
+    public List<AlarmMsg> alarmMsg() {
+        return alarmDao.alarmMsg();
+    }
+
+    @Override
+    public BaseReturnData updateAlarmMsg(AlarmMsg alarmMsg) {
+       return alarmDao.updateAlarmMsg(alarmMsg);
     }
 
     @Override

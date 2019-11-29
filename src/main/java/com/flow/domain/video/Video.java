@@ -40,4 +40,8 @@ public class Video {
      * 通道
      */
     private String channelId;
+    /**
+     * 是否在线
+     */
+    private String isOnline;
 }

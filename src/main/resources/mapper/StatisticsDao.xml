@@ -91,7 +91,7 @@
 
     <select id="getFlowData" resultMap="flowMap,com.flow.dao.mapper.StatisticsDao.countMap">
       DECLARE @n_TotalCount INT
-      EXEC [SkyUni_DB_Moni].[dbo].[P_Q_Ecology] NULL,'TM',#{addvcd},#{scale},#{startTime},#{endTime},#{key},#{timeScale},#{alarmLevel},#{count},#{index},@n_TotalCount OUTPUT
+      EXEC [SkyUni_DB_Moni].[dbo].[P_Q_Ecology] NULL,'TM DESC',#{addvcd},#{scale},#{startTime},#{endTime},#{key},#{timeScale},#{alarmLevel},#{count},#{index},@n_TotalCount OUTPUT
       SELECT @n_TotalCount as totalCount
 </select>
 
@@ -110,13 +110,13 @@
 
     <select id="getUseFlowData" resultMap="getFlowMap,com.flow.dao.mapper.StatisticsDao.countMap">
       DECLARE @n_TotalCount INT
-      EXEC [SkyUni_DB_Moni].[dbo].[P_Q_WaterMeter]  NULL,'TM',#{addvcd},#{sttp},#{startTime},#{endTime},#{key},#{timeScale},#{alarmLevel},#{count},#{index},@n_TotalCount OUTPUT
+      EXEC [SkyUni_DB_Moni].[dbo].[P_Q_WaterMeter]  NULL,'TM DESC',#{addvcd},#{sttp},#{startTime},#{endTime},#{key},#{timeScale},#{alarmLevel},#{count},#{index},@n_TotalCount OUTPUT
       SELECT @n_TotalCount as totalCount
 </select>
 
     <select id="getWaterQualityData" resultMap="waterQualityMap,com.flow.dao.mapper.StatisticsDao.countMap">
       DECLARE @n_TotalCount INT
-      EXEC [SkyUni_DB_Moni].[dbo].[P_Q_WaterQuality] NULL,NULL,'WQHD',#{addvcd},#{qualityLevel},NULL,#{startTime},#{endTime},#{key},#{monitorType},#{alarmLevel},#{count},#{index},@n_TotalCount OUTPUT
+      EXEC [SkyUni_DB_Moni].[dbo].[P_Q_WaterQuality] NULL,'TM DESC','WQHD',#{addvcd},#{qualityLevel},NULL,#{startTime},#{endTime},#{key},#{monitorType},#{alarmLevel},#{count},#{index},@n_TotalCount OUTPUT
       SELECT @n_TotalCount as totalCount
 </select>
 

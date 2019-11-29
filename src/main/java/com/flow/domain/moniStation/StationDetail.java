@@ -14,6 +14,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StationDetail {
     /**
+     * 保存前测站编码
+     */
+    private String beforeStcd;
+    /**
      * 测站名称
      */
     private String stationName;
@@ -101,6 +105,65 @@ public class StationDetail {
      * 二维码
      */
     private String qrCode;
-
+    /**
+     * 测站编码
+     */
+    private String stcd;
+    /**
+     * 流域
+     */
+    private String basin;
+    /**
+     * 基面高层
+     */
+    private String baseTop;
+    /**
+     * 泄流方式
+     */
+    private String discharge;
+    /**
+     * 换算方式
+     */
+    private String convert;
+    /**
+     * 国标
+     */
+    private String gb;
+    /**
+     * 国标级别
+     */
+    private String gbLevel;
+    /**
+     * 平台IP
+     */
+    private String ptIp;
+    /**
+     * 平台端口
+     */
+    private String ptPort;
+    /**
+     * 平台通道
+     */
+    private String ptChannel;
+    /**
+     * 平台用户
+     */
+    private String ptUser;
+    /**
+     * 平台密码
+     */
+    private String ptPassword;
+    /**
+     * 是否启用
+     */
+    private String isOpen;
+    /**
+     * 检测方式
+     */
+    private String testMethod;
+    /**
+     * 备注
+     */
+    private String format;
 
 }

@@ -13,13 +13,30 @@ public class DataConstants {
     public static final String RESPONSE_ERROR = "服务器异常";
     public static final String RESPONSE_PARAM_ERROR = "参数错误";
     public static final String LOGIN_NAME1 = "admin";
-    public static final String LOGIN_PASSWORD1 = "admin";
     public static final String LOGIN_NAME2 = "XSLJ";
-    public static final String LOGIN_PASSWORD2 = "XSLJ";
+    //汉源
+    //public static final String LOGIN_PASSWORD1 = "admin";
+    //public static final String LOGIN_PASSWORD2 = "XSLJ";
+    //石棉
+//    public static final String LOGIN_PASSWORD1 = "pass@0rd!";
+//    public static final String LOGIN_PASSWORD2 = "xslj511824";
 
+    public static final String LOGIN_PASSWORD1 = "pass@0rd!";
+    public static final String LOGIN_PASSWORD2 = "msxslj511803";
 
+    /**
+     * 图片地址-汉源
+     */
     public static final String BASE_IMAGE_IP = "http://182.132.151.242:9090/img";
-
+    /**
+     * 图片地址-汉源
+     */
+    public static final String BASE_ICON_IP = "http://182.132.151.242:9090/icon";
+//    /**
+//     * 图片地址-石棉
+//     */
+//    public static final String BASE_IMAGE_IP = "http://182.132.138.230:9090/img";
+//    public static final String BASE_ICON_IP = "http://182.132.138.230:9090/icon";
 
     /**
      * 传递参数常量-行政区划号
@@ -109,9 +126,13 @@ public class DataConstants {
     /**
      * 组织ID
      */
-    public static final String REQUEST_PARAMS_ORGANIZATION_ID = "organizationId";
+    public static final String REQUEST_PARAMS_BEFORE_ORGANIZATION_ID = "beforeOrganizationId";
     /**
      * 组织ID
+     */
+    public static final String REQUEST_PARAMS_ORGANIZATION_ID = "organizationId";
+    /**
+     * 通讯录ID
      */
     public static final String REQUEST_PARAMS_ADDRESS_BOOK_ID = "addressbookId";
 

@@ -1,11 +1,9 @@
 package com.flow.service.alarm;
 
-import com.flow.domain.alarm.Alarm;
-import com.flow.domain.alarm.AlarmInterval;
-import com.flow.domain.alarm.AlarmSetting;
-import com.flow.domain.alarm.CompareType;
+import com.flow.domain.alarm.*;
 import com.flow.domain.statistics.MonitorPara;
 import com.flow.domain.statistics.PageData;
+import com.flow.domain.tools.BaseReturnData;
 
 import java.util.List;
 
@@ -42,5 +40,10 @@ public interface AlarmService {
     PageData getAlarmHistory(String sttp, String groupId, String key, String count, String index);
 
     List<CompareType> getCompareType();
+
+
+    List<AlarmMsg> alarmMsg();
+
+    BaseReturnData updateAlarmMsg(AlarmMsg alarmMsg);
 
 }

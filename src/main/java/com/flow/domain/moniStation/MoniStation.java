@@ -66,7 +66,6 @@ public class MoniStation {
      * 是否启动闪烁图标
      */
     private String enableIcoFlicker;
-
     /**
      * 闪烁图标位置
      */
@@ -140,5 +139,24 @@ public class MoniStation {
      */
     private String monitorPara;
 
-
+    /**
+     * 所在乡镇
+     */
+    private String address;
+    /**
+     * 所在河流
+     */
+    private String river;
+    /**
+     * 管理单位
+     */
+    private String administration;
+    /**
+     * 泄流措施
+     */
+    private String discharge;
+    /**
+     * 换算方式
+     */
+    private String convert;
 }

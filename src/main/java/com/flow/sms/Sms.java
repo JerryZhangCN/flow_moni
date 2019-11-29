@@ -1,6 +1,8 @@
 package com.flow.sms;
+
 import java.util.List;
 import java.util.UUID;
+
 import com.mascloud.sdkclient.Client;
 
 
@@ -12,8 +14,7 @@ public class Sms {
         client.login("http://mas.ecloud.10086.cn/app/sdk/login", "yasslj", "bymq*266", "雅安市水务局");
     }
 
-
-    public static String sendMsg(List<String> phones, String msg) {
+    public static Integer send(List<String> phones, String msg) {
         if (client == null) {
             client = Client.getInstance();
             client.login("http://mas.ecloud.10086.cn/app/sdk/login", "yasslj", "bymq*266", "雅安市水务局");
@@ -23,6 +24,12 @@ public class Sms {
             phone[i] = phones.get(i);
         }
         int resultCode = client.sendDSMS(phone, msg, "", 1, "UUihrPij", UUID.randomUUID().toString(), true);
+        return resultCode;
+    }
+
+
+    public static String sendMsg(List<String> phones, String msg) {
+        int resultCode = send(phones, msg);
         switch (resultCode) {
             case 1: {
                 return "短信发送成功";
@@ -51,12 +58,9 @@ public class Sms {
             case 108: {
                 return "短信发送失败，网络异常";
             }
-            case 109: {
+            case 109:
+            case 110:
                 return "短信发送失败，网络异常";
-            }
-            case 110: {
-                return "短信发送失败，网络异常";
-            }
             case 111: {
                 return "短信发送失败，扩展码错误";
             }

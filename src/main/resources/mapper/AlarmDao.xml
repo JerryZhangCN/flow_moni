@@ -3,7 +3,7 @@
 
 <mapper namespace="com.flow.dao.mapper.AlarmDao">
 
-    <!-- 可根据自己的需求，是否要使用 -->
+    <!-- 报警记录 -->
     <resultMap type="com.flow.domain.alarm.Alarm" id="alarmMap">
         <result property="riverName" column="RVNM" jdbcType="VARCHAR"/>
         <result property="name" column="STNMShow" jdbcType="VARCHAR"/>
@@ -14,8 +14,10 @@
         <result property="stationType" column="STTPNM" jdbcType="VARCHAR"/>
         <result property="stationName" column="STNM" jdbcType="VARCHAR"/>
         <result property="time" column="TM" jdbcType="VARCHAR"/>
-        <result property="monitorPara" column="MonitorParaNM" jdbcType="VARCHAR"/>
-        <result property="alarmInterval" column="AlarmIntervalNM" jdbcType="VARCHAR"/>
+        <result property="monitorParaName" column="MonitorParaNM" jdbcType="VARCHAR"/>
+        <result property="monitorPara" column="MonitorPara" jdbcType="VARCHAR"/>
+        <result property="alarmInterval" column="AlarmInterval" jdbcType="VARCHAR"/>
+        <result property="alarmIntervalName" column="AlarmIntervalNM" jdbcType="VARCHAR"/>
         <result property="alarmLevel" column="AlarmLevel" jdbcType="VARCHAR"/>
         <result property="levelValue" column="LevelValue" jdbcType="VARCHAR"/>
         <result property="realValue" column="RealValue" jdbcType="VARCHAR"/>
@@ -27,7 +29,7 @@
         <result property="operation" column="Operation" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <!-- 可根据自己的需求，是否要使用 -->
+    <!-- 报警设置 -->
     <resultMap type="com.flow.domain.alarm.AlarmSetting" id="alarmSettingMap">
         <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
         <result property="address" column="ADDVNM" jdbcType="VARCHAR"/>
@@ -50,7 +52,20 @@
     </resultMap>
 
 
-    <!-- 可根据自己的需求，是否要使用 -->
+    <!-- 自动短信报警 -->
+    <resultMap type="com.flow.domain.alarm.AlarmMsg" id="alarmMsgMap">
+        <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
+        <result property="monitorPara" column="MonitorPara" jdbcType="VARCHAR"/>
+        <result property="monitorInterval" column="AlarmInterval" jdbcType="VARCHAR"/>
+        <result property="alarmContent" column="AlarmContent" jdbcType="VARCHAR"/>
+        <result property="alarmTime" column="AlarmTM" jdbcType="VARCHAR"/>
+        <result property="addressBookId" column="AddressbookCD" jdbcType="VARCHAR"/>
+        <result property="phone" column="MobilePhone" jdbcType="VARCHAR"/>
+        <result property="errorMsg" column="ErrorMessage" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <!-- 报警时段 -->
     <resultMap type="com.flow.domain.alarm.AlarmInterval" id="alarmIntervalMap">
         <result property="alarmInterval" column="AlarmInterval" jdbcType="VARCHAR"/>
         <result property="alarmIntervalName" column="AlarmIntervalNM" jdbcType="VARCHAR"/>
@@ -58,7 +73,7 @@
         <result property="alarmMethodName" column="AlarmMethodNM" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <!-- 可根据自己的需求，是否要使用 -->
+    <!-- 比较方式 -->
     <resultMap type="com.flow.domain.alarm.CompareType" id="compareTypeMap">
         <result property="compareType" column="CompareType" jdbcType="VARCHAR"/>
         <result property="compareTypeName" column="CompareTypeNM" jdbcType="VARCHAR"/>
@@ -119,7 +134,7 @@
     DECLARE @n_TotalCount INT
     DECLARE @n_UpdateCount INT
     DECLARE @c_Result  VARCHAR(200)
-    EXEC [SkyUni_DB_Moni].[DBO].[P_A_StationMonitorparaAlarmintervalSave] #{stcd},#{beforeMonitorPara},#{beforeAlarmInterval},#{monitorPara},#{alarmInterval},#{compareType},#{oneLevelAlarmValue},#{twoLevelAlarmValue},#{alarmMethod},#{alarmForm},@n_TotalCount OUT,@n_UpdateCount OUT,@c_Result OUT
+    EXEC [SkyUni_DB_Moni].[DBO].[P_A_StationMonitorparaAlarmintervalSave] #{stcd},#{beforeMonitorPara},#{beforeAlarmInterval},#{monitorPara},#{alarmInterval},#{alarmMethod},#{compareType},#{oneLevelAlarmValue},#{twoLevelAlarmValue},#{alarmForm},@n_TotalCount OUT,@n_UpdateCount OUT,@c_Result OUT
     SELECT @n_TotalCount as totalCount,
     @n_UpdateCount as updateCount,
     @c_Result as result
@@ -134,6 +149,30 @@
 
     <select id="compareType" resultMap="compareTypeMap">
      EXEC [SkyUni_DB_Moni].[DBO].[P_GetAlarmCompareType] NULL,NULL,NULL
+    </select>
+
+
+    <select id="alarmMsg" resultMap="com.flow.dao.mapper.AlarmDao.alarmMsgMap">
+     DECLARE @n_TotalCount INT
+     EXEC [SkyUni_DB_Moni].[DBO].[P_A_StationAlarmReleaseAutoMessage] NULL,NULL,NULL,9999,1,@n_TotalCount OUT
+    </select>
+
+
+    <select id="updateAlarmMsg" parameterType="com.flow.domain.alarm.AlarmMsg"  resultMap="com.flow.dao.mapper.UserDao.baseReturnMap">
+DECLARE @n_ReleaseState INT=#{sendResult}       --
+DECLARE @c_STCD NVARCHAR(15)=#{stcd}
+DECLARE @c_MonitorPara NVARCHAR(20)=#{monitorPara}      --监测指标
+DECLARE @c_AlarmInterval NVARCHAR(50)=#{monitorInterval}      --监测时段
+DECLARE @c_AddressbookCD NVARCHAR(36)=#{addressBookId}     --通讯录编码
+DECLARE @c_AlarmTM DATETIME=#{alarmTime}       --报警时间
+DECLARE @c_ErrorMessage NVARCHAR(MAX)=#{errorMsg}
+DECLARE @n_TotalCount INT
+DECLARE @n_UpdateCount INT
+DECLARE @c_Result  VARCHAR(200)
+EXEC [SkyUni_DB_Moni].[DBO].[P_A_StationAlarmReleaseAutoMessageResultUpdate]
+@n_ReleaseState,@c_STCD,@c_MonitorPara,@c_AlarmInterval,@c_AddressbookCD,@c_AlarmTM,@c_ErrorMessage
+,@n_TotalCount OUT,@n_UpdateCount OUT,@c_Result OUT
+SELECT @n_TotalCount as totalCount,@n_UpdateCount as upDateCount,@c_Result as resultData
     </select>
 
 

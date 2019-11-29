@@ -12,6 +12,9 @@
         <result property="user" column="PT_User" jdbcType="VARCHAR"/>
         <result property="password" column="PT_Password" jdbcType="VARCHAR"/>
         <result property="channelId" column="PT_ChannelId" jdbcType="VARCHAR"/>
+        <result property="isOnline" column="ISLine" jdbcType="VARCHAR"/>
+        <result property="ip" column="PT_WWIP" jdbcType="VARCHAR"/>
+        <result property="port" column="PT_WWPort" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap type="com.flow.domain.video.VideoProperty" id="videoPropertyMap">

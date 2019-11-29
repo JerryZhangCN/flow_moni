@@ -17,13 +17,11 @@ package com.flow.controller;
 
 import com.flow.domain.BaseResponse;
 import com.flow.domain.tools.DataConstants;
+import com.flow.domain.user.ContactUser;
 import com.flow.service.moniStation.MoniStationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -144,7 +142,62 @@ public class UserController extends BaseController {
 
 
     /**
-     * 获取获取
+     * 获取通讯录分组
+     *
+     * @return
+     */
+    @RequestMapping(value = "/allOrganization", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse allOrganization(
+            @Nullable String count,
+            @Nullable String index) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setResultCode(200);
+            baseResponse.setData(userService.allOrganization(count, index));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+    /**
+     * 新增通讯录分组
+     *
+     * @return
+     */
+    @RequestMapping(value = "/addOrganization", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse addOrganization(@Nullable String organizationId) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(userService.addOrganization(organizationId));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+    /**
+     * 删除通讯录分组
+     *
+     * @return
+     */
+    @RequestMapping(value = "/delOrganization", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse delOrganization(@Nullable String organizationId) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(userService.delOrganization(organizationId));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 获取通讯录联系人
      *
      * @return
      */
@@ -163,5 +216,114 @@ public class UserController extends BaseController {
         }
     }
 
+    /**
+     * 移动通讯录人员到指定分组
+     *
+     * @return
+     */
+    @RequestMapping(value = "/moveToOrganization", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse moveToOrganization(@Nullable String beforeOrganizationId,
+                                           @Nullable String organizationId,
+                                           @Nullable String addressBookId) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(userService.moveToOrganization(beforeOrganizationId, organizationId, addressBookId));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+    /**
+     * 复制通讯录人员到指定分组
+     *
+     * @return
+     */
+    @RequestMapping(value = "/copyToOrganization", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse copyToOrganization(@Nullable String beforeOrganizationId,
+                                           @Nullable String organizationId,
+                                           @Nullable String addressBookId) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(userService.copyToOrganization(beforeOrganizationId, organizationId, addressBookId));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+    /**
+     * 删除联系人
+     *
+     * @return
+     */
+    @RequestMapping(value = "/del", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse delUser(@Nullable String organizationId,
+                                @Nullable String addressBookId) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(userService.delUser(organizationId, addressBookId));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 获取联系人详情
+     *
+     * @return
+     */
+    @RequestMapping(value = "/userDetail", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse userDetail(@Nullable String organizationId,
+                                   @Nullable String addressBookId) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(userService.userDetail(organizationId, addressBookId));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+    /**
+     * 保存联系人数据
+     *
+     * @return
+     */
+    @RequestMapping(value = "/saveUser", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResponse saveUser(@RequestBody ContactUser contactUser) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(userService.saveUser(contactUser));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 创建联系人
+     *
+     * @return
+     */
+    @RequestMapping(value = "/createUser", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse saveUser(@Nullable String organizationId) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setData(userService.createUser(organizationId));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
 
 }

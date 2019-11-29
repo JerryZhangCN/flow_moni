@@ -2,10 +2,12 @@ package com.flow.service.moniStation;
 
 
 import com.flow.dao.mapper.MoniStationDao;
-import com.flow.domain.moniStation.MoniOnline;
-import com.flow.domain.moniStation.MoniStation;
-import com.flow.domain.moniStation.StationDetail;
-import com.flow.domain.moniStation.StationType;
+import com.flow.domain.moniStation.*;
+import com.flow.domain.statistics.PageData;
+import com.flow.domain.tools.BaseReturnData;
+import com.flow.domain.tools.DataConstants;
+import com.flow.domain.video.Video;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,27 +31,58 @@ public class MoniStationServiceImpl implements MoniStationService {
 
     @Override
     public List<MoniStation> findByGroupId(String sttp, String groupId) {
-        return moniStationDao.findByGroupId(groupId,sttp);
+        return moniStationDao.findByGroupId(groupId, sttp);
 
     }
 
     @Override
     public List<MoniOnline> monitorOnline(String addvcd, String sttp, String groupId, String key) {
-        return moniStationDao.monitorOnline(addvcd,sttp,groupId,key);
+        return moniStationDao.monitorOnline(addvcd, sttp, groupId, key);
     }
 
     @Override
     public List<StationDetail> getStationDetail(String stcd, String monitorPara) {
-        return moniStationDao.getStationDetail(stcd,monitorPara);
+        return moniStationDao.getStationDetail(stcd, monitorPara);
     }
 
     @Override
-    public List<StationType> getStationType(String type,String sttp) {
-        return moniStationDao.getMonitorType(type,sttp);
+    public List<StationType> getStationType(String type, String sttp) {
+        return moniStationDao.getMonitorType(type, sttp);
     }
 
     @Override
-    public List<MoniStation> groupStation(String groupId, String key) {
+    public List<Video> groupStation(String groupId, String key) {
         return moniStationDao.groupStation(groupId, key);
+    }
+
+    @Override
+    public PageData operationStations(String sttp, String groupId, String key, String count, String index) {
+        List<List<Object>> ob = moniStationDao.operationStations(sttp, groupId, key, count, index);
+        return new PageData(ob.get(0), ob.get(1).get(0).toString());
+    }
+
+    @Override
+    public StationMsg operationDetail(String stcd) {
+        return moniStationDao.operationDetail(stcd);
+    }
+
+    @Override
+    public List<ConvertMethod> getConvertMethod(String monitorPara) {
+        return moniStationDao.getConvertMethod(monitorPara);
+    }
+
+    @Override
+    public List<GB> getGB() {
+        return moniStationDao.getGB();
+    }
+
+    @Override
+    public BaseReturnData createStation(String monitorPara) {
+        return (BaseReturnData) moniStationDao.createStation(monitorPara).get(1).get(0);
+    }
+
+    @Override
+    public BaseReturnData saveStation(StationMsg stationMsg) {
+        return moniStationDao.saveStation(stationMsg);
     }
 }

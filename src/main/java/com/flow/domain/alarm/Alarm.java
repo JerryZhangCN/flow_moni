@@ -3,6 +3,7 @@ package com.flow.domain.alarm;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author jerry
@@ -28,12 +29,10 @@ public class Alarm {
      * 报警值
      */
     private String alarmLevelValue;
-
     /**
      * 报警级别
      */
     private String orderLevel;
-
     /**
      * 测站编码
      */
@@ -42,6 +41,10 @@ public class Alarm {
      * 监测指标
      */
     private String monitorPara;
+    /**
+     * 监测指标ID
+     */
+    private String monitorParaName;
     /**
      * 测站名称
      */
@@ -67,6 +70,10 @@ public class Alarm {
      */
     private String alarmInterval;
     /**
+     * 报警时段ID
+     */
+    private String alarmIntervalName;
+    /**
      * 报警阈值
      */
     private String levelValue;
@@ -85,7 +92,7 @@ public class Alarm {
     /**
      * 已发送短信人数
      */
-    private String alreadyReleaseNumber;
+    private Integer alreadyReleaseNumber;
     /**
      * 共发布人数
      */

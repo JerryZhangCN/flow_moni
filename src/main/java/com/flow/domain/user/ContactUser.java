@@ -39,7 +39,7 @@ public class ContactUser {
      */
     private String stcd;
     /**
-     * 暂不明
+     * 通讯录ID
      */
     private String addressbookId;
     /**
@@ -66,6 +66,26 @@ public class ContactUser {
      * 操作
      */
     private String operation;
+    /**
+     * 用户类型
+     */
+    private String userType;
+    /**
+     * 座机
+     */
+    private String tel;
+    /**
+     * 邮件
+     */
+    private String email;
+    /**
+     * 备注
+     */
+    private String remarks;
+    /**
+     * 用户排序字段
+     */
+    private String index;
 
 
 }

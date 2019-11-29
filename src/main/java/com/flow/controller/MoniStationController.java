@@ -16,6 +16,8 @@
 package com.flow.controller;
 
 import com.flow.domain.BaseResponse;
+import com.flow.domain.moniStation.MoniStation;
+import com.flow.domain.moniStation.StationMsg;
 import com.flow.domain.moniStation.StationType;
 import com.flow.domain.scale.Scale;
 import com.flow.domain.tools.DataConstants;
@@ -42,26 +44,6 @@ public class MoniStationController extends BaseController {
     private MoniStationService moniStationService;
 
 
-//    /**
-//     * 根据行政区划获取监测站点信息（若不传递，则默认获取所有站点信息）
-//     *
-//     * @return
-//     */
-//    @RequestMapping(value = "/query", method = RequestMethod.GET)
-//    @ResponseBody
-//    public BaseResponse getMoniStation(@RequestParam(DataConstants.MONI_STATION_ADDVCD) String addvcd,
-//                                       @RequestParam(DataConstants.STATION_STATUS_TYPE) String sttp,
-//                                       @RequestParam(DataConstants.STATION_STATUS_TYPE) String scale) {
-//        BaseResponse baseResponse = new BaseResponse();
-//        try {
-//            baseResponse.setResultCode(RESPONSE_OK);
-//            baseResponse.setData(moniStationService.findByAddvcdAndScale(addvcd, sttp, scale));
-//            return baseResponse;
-//        } catch (Exception e) {
-//            return returnError(e.getMessage());
-//        }
-//    }
-
     /**
      * 根据行政区划获取监测站点信息（若不传递，则默认获取所有站点信息）
      *
@@ -74,7 +56,17 @@ public class MoniStationController extends BaseController {
         BaseResponse baseResponse = new BaseResponse();
         try {
             baseResponse.setResultCode(RESPONSE_OK);
-            baseResponse.setData(moniStationService.findByGroupId(sttp, groupId));
+            List<MoniStation> list = moniStationService.findByGroupId(sttp, groupId);
+            list.forEach(l -> {
+                if (l.getIcoPosition() != null && !l.getIcoPosition().equalsIgnoreCase("")) {
+                    l.setIcoPosition(DataConstants.BASE_ICON_IP + l.getIcoPosition());
+                }
+                if (l.getFlickerIcoPosition() != null && !l.getFlickerIcoPosition().equalsIgnoreCase("")) {
+                    l.setFlickerIcoPosition(DataConstants.BASE_ICON_IP + l.getFlickerIcoPosition());
+                }
+
+            });
+            baseResponse.setData(list);
             return baseResponse;
         } catch (Exception e) {
             return returnError(e.getMessage());
@@ -112,7 +104,7 @@ public class MoniStationController extends BaseController {
         BaseResponse baseResponse = new BaseResponse();
         try {
             baseResponse.setResultCode(RESPONSE_OK);
-            List<StationType> types = moniStationService.getStationType(type,sttp);
+            List<StationType> types = moniStationService.getStationType(type, sttp);
             List<Scale> scales = scaleService.findByType(null, null);
             for (StationType stationType : types) {
                 for (Scale scale : scales) {
@@ -169,4 +161,119 @@ public class MoniStationController extends BaseController {
         }
     }
 
+
+    /**
+     * 平台运维根据测站类别和分组进行获取测站列表
+     *
+     * @return
+     */
+    @RequestMapping(value = "/operationStations", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse operationStations(@Nullable String sttp,
+                                          @Nullable String groupId,
+                                          @Nullable String key,
+                                          @Nullable String count,
+                                          @Nullable String index) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setResultCode(RESPONSE_OK);
+            baseResponse.setData(moniStationService.operationStations(sttp, groupId, key, count, index));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 测站管理-测站详情
+     *
+     * @return
+     */
+    @RequestMapping(value = "/operationDetail", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse operationDetail(@Nullable String stcd) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setResultCode(RESPONSE_OK);
+            baseResponse.setData(moniStationService.operationDetail(stcd));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 测站管理-转换方式
+     *
+     * @return
+     */
+    @RequestMapping(value = "/convertMethod", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse convertMethod(@Nullable String monitorPara) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setResultCode(RESPONSE_OK);
+            baseResponse.setData(moniStationService.getConvertMethod(monitorPara));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+
+    /**
+     * 测站管理-国标
+     *
+     * @return
+     */
+    @RequestMapping(value = "/gb", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse gb() {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setResultCode(RESPONSE_OK);
+            baseResponse.setData(moniStationService.getGB());
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+    /**
+     * 测站管理-创建测站
+     *
+     * @return
+     */
+    @RequestMapping(value = "/createStation", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse createStation(@Nullable String monitorPara) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setResultCode(RESPONSE_OK);
+            baseResponse.setData(moniStationService.createStation(monitorPara));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+    /**
+     * 测站管理-编辑测站信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/saveStation", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResponse saveStation(@RequestBody StationMsg stationMsg) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setResultCode(RESPONSE_OK);
+            baseResponse.setData(moniStationService.saveStation(stationMsg));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
 }

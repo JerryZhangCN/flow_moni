@@ -8,9 +8,20 @@
         <result property="id" column="ID" jdbcType="VARCHAR"/>
         <result property="addvcd" column="ADDVCD" jdbcType="VARCHAR"/>
         <result property="pAddvcd" column="PADDVCD" jdbcType="VARCHAR"/>
-        <result property="name" column="ADDVNM" jdbcType="VARCHAR"/>
+        <result property="name" column="ADDVNMShow" jdbcType="VARCHAR"/>
         <result property="level" column="ADDVCDLevel" jdbcType="VARCHAR"/>
         <result property="levelName" column="ADDVCDLevelNM" jdbcType="VARCHAR"/>
+        <result property="allName" column="ADDVNM" jdbcType="VARCHAR"/>
+        <result property="area" column="Area" jdbcType="VARCHAR"/>
+        <result property="population" column="Population" jdbcType="VARCHAR"/>
+        <result property="households" column="Households" jdbcType="VARCHAR"/>
+        <result property="lttd" column="LTTD" jdbcType="VARCHAR"/>
+        <result property="lgtd" column="LGTD" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="ModiTime" jdbcType="VARCHAR"/>
+        <result property="length" column="ADDVCDValidLen" jdbcType="VARCHAR"/>
+        <result property="index" column="INDEX_F" jdbcType="VARCHAR"/>
+        <result property="enabled" column="Enabled" jdbcType="VARCHAR"/>
+        <result property="remarks" column="Comment" jdbcType="VARCHAR"/>
     </resultMap>
 
 
@@ -32,5 +43,52 @@
 
     <select id="getGroup" resultMap="groupMap">
        EXEC [SkyUni_DB_Moni].[dbo].[P_GetGroup] NULL,NULL,'GroupLevel',#{sttp},2
+    </select>
+
+    <!-- 根据行政区划获取子行政区 -->
+    <select id="getAreaByAddvcd" resultMap="com.flow.dao.mapper.AreaDao.areaMap,com.flow.dao.mapper.UserDao.countMap">
+       DECLARE @n_TotalCount INT
+       EXEC [SkyUni_DB_Busi].[dbo].[P_B_ADDVCD] NULL,NULL,#{addvcd},#{key},#{count},#{index},@n_TotalCount OUTPUT
+       SELECT @n_TotalCount as totalCount
+    </select>
+
+    <!-- 创建行政区划 -->
+    <select id="createArea" resultMap="com.flow.dao.mapper.AreaDao.areaMap,com.flow.dao.mapper.UserDao.baseReturnMap">
+       DECLARE @c_ADDVCDFromCD NVARCHAR(50)='Common'
+       DECLARE @c_FatherADDVCD  NVARCHAR(15)=#{addvcd}
+       DECLARE @c_AddADDVCD  NVARCHAR(15)=NULL
+       DECLARE @n_TotalCount INT
+       DECLARE @n_UpdateCount INT
+       DECLARE @c_Result  VARCHAR(200)
+       EXEC [SkyUni_DB_Busi].[DBO].[P_B_ADDVAdd]
+       @c_ADDVCDFromCD
+       ,@c_FatherADDVCD
+       ,@c_AddADDVCD  OUT
+       ,@n_TotalCount OUT,@n_UpdateCount OUT,@c_Result OUT
+       SELECT @c_AddADDVCD as resultData,@n_TotalCount as totalCount,@n_UpdateCount as updateCount,@c_Result as result
+    </select>
+
+    <!-- 保存行政区划 -->
+    <select id="saveArea" parameterType="com.flow.domain.area.Area"
+            resultMap="com.flow.dao.mapper.UserDao.baseReturnMap">
+      DECLARE @n_TotalCount INT
+      DECLARE @n_UpdateCount INT
+      DECLARE @c_Result  VARCHAR(200)
+      EXEC [SkyUni_DB_Busi].[DBO].[P_B_ADDVCDSave]
+      'Common'      --@c_ADDVCDFromCD
+      ,#{beforeAddvcd}           --@c_BeforeADDVCD
+      ,#{addvcd}          --@c_AlterADDVCD
+      ,#{allName}                     --@c_ADDVNM
+      ,#{name}                     --@c_ADDVNMShow
+      ,#{area}                    --@n_Area
+      ,#{population}                    --@n_Population
+      ,#{households}                     --@n_Households
+      ,#{lttd}      --@n_LTTD
+      ,#{lgtd}                     --@n_LGTD
+      ,#{index}                     --@n_INDEX_F
+      ,#{remarks}                     --@c_Comment
+      ,#{enabled}                     --@n_Enabled
+      ,@n_TotalCount OUT,@n_UpdateCount OUT,@c_Result OUT
+      SELECT @n_TotalCount as totalCount,@n_UpdateCount as updateCount,@c_Result as result
     </select>
 </mapper>
