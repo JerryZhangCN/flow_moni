@@ -24,8 +24,8 @@ public class StatisticsServiceImpl implements StatisticService {
     }
 
     @Override
-    public PageData getFlowData(String addvcd, String monitorPara, String start, String end, String key, String count, String index, String level, String timeScale) {
-        List<List<Object>> ob = statisticsDao.getFlowData(addvcd, monitorPara, start, end, key, count, index, level, timeScale);
+    public PageData getFlowData(String type,String addvcd, String monitorPara, String start, String end, String key, String count, String index, String level, String timeScale) {
+        List<List<Object>> ob = statisticsDao.getFlowData(type,addvcd, monitorPara, start, end, key, count, index, level, timeScale);
         return new PageData(ob.get(0), ob.get(1).get(0).toString());
     }
 

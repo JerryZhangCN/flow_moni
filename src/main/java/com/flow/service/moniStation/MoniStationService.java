@@ -77,4 +77,21 @@ public interface MoniStationService {
     BaseReturnData createStation(String monitorPara);
 
     BaseReturnData saveStation(StationMsg stationMsg);
+
+    List<StationType> getHomeType();
+
+    HomeStationDetail homeStationDetail(String stcd);
+
+    List<StationStatus> stationStatus(String sttp);
+
+
+    List<BaseBoxData> stationScaleType();
+
+    List<BaseBoxData> stationType();
+
+    List<BaseBoxData> stationSon(String sttp);
+
+    List<BaseBoxData> stationScale(String sttp, String scaleType);
+
+    List<BaseBoxData> gbLevel();
 }

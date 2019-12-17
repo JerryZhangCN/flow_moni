@@ -85,4 +85,44 @@ public class MoniStationServiceImpl implements MoniStationService {
     public BaseReturnData saveStation(StationMsg stationMsg) {
         return moniStationDao.saveStation(stationMsg);
     }
+
+    @Override
+    public List<StationType> getHomeType() {
+        return moniStationDao.getHomeType();
+    }
+
+    @Override
+    public HomeStationDetail homeStationDetail(String stcd) {
+        return moniStationDao.homeStationDetail(stcd);
+    }
+
+    @Override
+    public List<StationStatus> stationStatus(String sttp) {
+        return moniStationDao.stationStatus(sttp);
+    }
+
+    @Override
+    public List<BaseBoxData> stationScaleType() {
+        return moniStationDao.stationScaleType();
+    }
+
+    @Override
+    public List<BaseBoxData> stationType() {
+        return moniStationDao.stationType();
+    }
+
+    @Override
+    public List<BaseBoxData> stationSon(String sttp) {
+        return moniStationDao.stationSon(sttp);
+    }
+
+    @Override
+    public List<BaseBoxData> stationScale(String sttp, String scaleType) {
+        return moniStationDao.stationScale(sttp, scaleType);
+    }
+
+    @Override
+    public List<BaseBoxData> gbLevel() {
+        return moniStationDao.gbLevel();
+    }
 }

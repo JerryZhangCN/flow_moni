@@ -33,6 +33,10 @@ public class FlowData {
      */
     private String waterLevel;
     /**
+     * 水头
+     */
+    private String waterHeader;
+    /**
      * 流速
      */
     private String speed;
@@ -40,6 +44,10 @@ public class FlowData {
      * 下泄流量
      */
     private String leakFlow;
+    /**
+     * 下泄标准
+     */
+    private String leakStandard;
     /**
      * 总流量
      */
@@ -60,4 +68,8 @@ public class FlowData {
      * 保证阈值
      */
     private String oneLevelAlarm;
+    /**
+     * 闸位
+     */
+    private String gate;
 }

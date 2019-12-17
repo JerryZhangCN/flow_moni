@@ -19,13 +19,15 @@
         <result property="stationName" column="STNMShow" jdbcType="VARCHAR"/>
         <result property="time" column="TMShow" jdbcType="VARCHAR"/>
         <result property="waterLevel" column="Z" jdbcType="VARCHAR"/>
+        <result property="waterHeader" column="FZ" jdbcType="VARCHAR"/>
         <result property="speed" column="Speed" jdbcType="VARCHAR"/>
+        <result property="gate" column="Gate" jdbcType="VARCHAR"/>
         <result property="leakFlow" column="Q" jdbcType="VARCHAR"/>
         <result property="totalFlow" column="TotalQ" jdbcType="VARCHAR"/>
         <result property="preValue" column="PreValue" jdbcType="VARCHAR"/>
         <result property="contrast" column="WPTNNM" jdbcType="VARCHAR"/>
         <result property="twoLevelAlarm" column="TwoLevelAlarmValue" jdbcType="VARCHAR"/>
-        <result property="oneLevelAlarm" column="OneLevelAlarmValue" jdbcType="VARCHAR"/>
+        <result property="leakStandard" column="OneLevelAlarmValue" jdbcType="VARCHAR"/>
         <result property="stcd" column="STCD" jdbcType="VARCHAR"/>
     </resultMap>
 
@@ -89,11 +91,12 @@
     </select>
 
 
+    <!-- 获取生态流量 -->
     <select id="getFlowData" resultMap="flowMap,com.flow.dao.mapper.StatisticsDao.countMap">
       DECLARE @n_TotalCount INT
-      EXEC [SkyUni_DB_Moni].[dbo].[P_Q_Ecology] NULL,'TM DESC',#{addvcd},#{scale},#{startTime},#{endTime},#{key},#{timeScale},#{alarmLevel},#{count},#{index},@n_TotalCount OUTPUT
+      EXEC [SkyUni_DB_Moni].[dbo].[P_Q_Ecology] NULL,'TM DESC',#{type},#{addvcd},#{scale},#{startTime},#{endTime},#{key},#{timeScale},#{alarmLevel},#{count},#{index},@n_TotalCount OUTPUT
       SELECT @n_TotalCount as totalCount
-</select>
+    </select>
 
     <select id="monthData" resultMap="areaMap">
      EXEC [SkyUni_DB_Moni].[dbo].[P_M_DZMonthCount]  NULL,NULL,#{stcd},#{monitorPara}
@@ -107,6 +110,7 @@
     <select id="videoData" resultMap="areaMap">
       EXEC [SkyUni_DB_Moni].[dbo].[P_M_RealVideoCount] NULL,NULL,#{sttp},#{groupId}
     </select>
+
 
     <select id="getUseFlowData" resultMap="getFlowMap,com.flow.dao.mapper.StatisticsDao.countMap">
       DECLARE @n_TotalCount INT

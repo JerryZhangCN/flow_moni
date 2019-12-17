@@ -15,16 +15,22 @@ public class Sms {
     }
 
     public static Integer send(List<String> phones, String msg) {
-        if (client == null) {
-            client = Client.getInstance();
-            client.login("http://mas.ecloud.10086.cn/app/sdk/login", "yasslj", "bymq*266", "雅安市水务局");
+        try {
+            if (client == null) {
+                client = Client.getInstance();
+                client.login("http://mas.ecloud.10086.cn/app/sdk/login", "yasslj", "bymq*266", "雅安市水务局");
+            }
+            String[] phone = new String[phones.size()];
+            for (int i = 0; i < phones.size(); i++) {
+                phone[i] = phones.get(i);
+            }
+            int resultCode = client.sendDSMS(phone, msg, "", 1, "UUihrPij", UUID.randomUUID().toString(), true);
+            return resultCode;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         }
-        String[] phone = new String[phones.size()];
-        for (int i = 0; i < phones.size(); i++) {
-            phone[i] = phones.get(i);
-        }
-        int resultCode = client.sendDSMS(phone, msg, "", 1, "UUihrPij", UUID.randomUUID().toString(), true);
-        return resultCode;
+
     }
 
 

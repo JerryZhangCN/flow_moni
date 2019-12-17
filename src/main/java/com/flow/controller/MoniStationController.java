@@ -120,6 +120,25 @@ public class MoniStationController extends BaseController {
         }
     }
 
+    /**
+     * 获取检测站类型
+     *
+     * @return
+     */
+    @RequestMapping(value = "/homeType", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse homeType() {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setResultCode(RESPONSE_OK);
+            List<StationType> types = moniStationService.getHomeType();
+            baseResponse.setData(types);
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
 
     /**
      * 根据行政区划获取监测站点信息（若不传递，则默认获取所有站点信息）
@@ -184,6 +203,24 @@ public class MoniStationController extends BaseController {
         }
     }
 
+
+    /**
+     * 首页-视频监控-测站详情
+     *
+     * @return
+     */
+    @RequestMapping(value = "/homeStationDetail", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse homeStationDetail(@Nullable String stcd) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setResultCode(RESPONSE_OK);
+            baseResponse.setData(moniStationService.homeStationDetail(stcd));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
 
     /**
      * 测站管理-测站详情
@@ -276,4 +313,115 @@ public class MoniStationController extends BaseController {
             return returnError(e.getMessage());
         }
     }
+
+    /**
+     * 测站管理-测站状态
+     *
+     * @return
+     */
+    @RequestMapping(value = "/stationStatus", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse stationStatus(@Nullable String sttp) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setResultCode(RESPONSE_OK);
+            baseResponse.setData(moniStationService.stationStatus(sttp));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+    /**
+     * 测站管理-规模类别
+     *
+     * @return
+     */
+    @RequestMapping(value = "/stationScaleType", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse scaleType() {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setResultCode(RESPONSE_OK);
+            baseResponse.setData(moniStationService.stationScaleType());
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+    /**
+     * 测站管理-测站类别
+     *
+     * @return
+     */
+    @RequestMapping(value = "/stationType", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse stationType() {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setResultCode(RESPONSE_OK);
+            baseResponse.setData(moniStationService.stationType());
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+    /**
+     * 测站管理-测站规模
+     *
+     * @return
+     */
+    @RequestMapping(value = "/stationScale", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse stationScale(@Nullable String sttp,
+                                     @Nullable String scaleType) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setResultCode(RESPONSE_OK);
+            baseResponse.setData(moniStationService.stationScale(sttp, scaleType));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+    /**
+     * 测站管理-测站子列
+     *
+     * @return
+     */
+    @RequestMapping(value = "/stationSon", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse stationSon(@Nullable String sttp) {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setResultCode(RESPONSE_OK);
+            baseResponse.setData(moniStationService.stationSon(sttp));
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+    /**
+     * 测站管理-国标级别
+     *
+     * @return
+     */
+    @RequestMapping(value = "/gbLevel", method = RequestMethod.GET)
+    @ResponseBody
+    public BaseResponse gbLevel() {
+        BaseResponse baseResponse = new BaseResponse();
+        try {
+            baseResponse.setResultCode(RESPONSE_OK);
+            baseResponse.setData(moniStationService.gbLevel());
+            return baseResponse;
+        } catch (Exception e) {
+            return returnError(e.getMessage());
+        }
+    }
+
+
 }

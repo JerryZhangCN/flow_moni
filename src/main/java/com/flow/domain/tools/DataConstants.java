@@ -15,28 +15,28 @@ public class DataConstants {
     public static final String LOGIN_NAME1 = "admin";
     public static final String LOGIN_NAME2 = "XSLJ";
     //汉源
-    //public static final String LOGIN_PASSWORD1 = "admin";
-    //public static final String LOGIN_PASSWORD2 = "XSLJ";
+//    public static final String LOGIN_PASSWORD1 = "admin";
+//    public static final String LOGIN_PASSWORD2 = "XSLJ";
     //石棉
-//    public static final String LOGIN_PASSWORD1 = "pass@0rd!";
-//    public static final String LOGIN_PASSWORD2 = "xslj511824";
-
     public static final String LOGIN_PASSWORD1 = "pass@0rd!";
-    public static final String LOGIN_PASSWORD2 = "msxslj511803";
+    public static final String LOGIN_PASSWORD2 = "xslj511824";
 
-    /**
-     * 图片地址-汉源
-     */
-    public static final String BASE_IMAGE_IP = "http://182.132.151.242:9090/img";
-    /**
-     * 图片地址-汉源
-     */
-    public static final String BASE_ICON_IP = "http://182.132.151.242:9090/icon";
+//    public static final String LOGIN_PASSWORD1 = "pass@0rd!";
+//    public static final String LOGIN_PASSWORD2 = "msxslj511803";
+
 //    /**
-//     * 图片地址-石棉
+//     * 图片地址-汉源
 //     */
-//    public static final String BASE_IMAGE_IP = "http://182.132.138.230:9090/img";
-//    public static final String BASE_ICON_IP = "http://182.132.138.230:9090/icon";
+//    public static final String BASE_IMAGE_IP = "http://182.132.151.242:9090/img";
+//    /**
+//     * 图片地址-汉源
+//     */
+//    public static final String BASE_ICON_IP = "http://182.132.151.242:9090/icon";
+    /**
+     * 图片地址-石棉
+     */
+    public static final String BASE_IMAGE_IP = "http://182.132.138.230:9090/img";
+    public static final String BASE_ICON_IP = "http://182.132.138.230:9090/icon";
 
     /**
      * 传递参数常量-行政区划号

@@ -25,6 +25,10 @@ public class StationMsg {
      */
     private String stationName;
     /**
+     * 测站状态
+     */
+    private String stationStatus;
+    /**
      * 规模ID
      */
     private String scaleTypeId;
@@ -32,6 +36,13 @@ public class StationMsg {
      * 规模名称
      */
     private String scaleTypeName;
+
+    /**
+     * 测站规模
+     */
+    private String stationScale;
+
+
     /**
      * 河流名称
      */
@@ -56,6 +67,14 @@ public class StationMsg {
      * 泄流方式
      */
     private String discharge;
+    /**
+     * 设备厂家
+     */
+    private String equipmentManufacturers;
+    /**
+     * 工程措施
+     */
+    private String leakProject;
     /**
      * 监测指标
      */
@@ -164,6 +183,10 @@ public class StationMsg {
      * 联系电话
      */
     private String contactPhone;
+    /**
+     * 标准值
+     */
+    private String oneLevelAlarm;
     /**
      * 工程宽
      */
@@ -276,4 +299,8 @@ public class StationMsg {
      * 墒情
      */
     private String msmcn;
+    /**
+     * 水头
+     */
+    private String waterHeader;
 }

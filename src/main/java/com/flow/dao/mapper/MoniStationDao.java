@@ -5,6 +5,7 @@ import com.flow.domain.moniStation.*;
 import com.flow.domain.tools.BaseReturnData;
 import com.flow.domain.tools.DataConstants;
 import com.flow.domain.video.Video;
+import com.google.common.util.concurrent.ListenableFuture;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -33,8 +34,12 @@ public interface MoniStationDao {
     List<StationDetail> getStationDetail(@Param(DataConstants.REQUEST_PARAMS_STCD) String stcd,
                                          @Param(DataConstants.REQUEST_PARAMS_MONITOR_PARA) String monitorPara);
 
+    HomeStationDetail homeStationDetail(@Param(DataConstants.REQUEST_PARAMS_STCD) String stcd);
+
     List<StationType> getMonitorType(@Param(DataConstants.REQUEST_PARAMS_TYPE) String type,
                                      @Param(DataConstants.STATION_STATUS_TYPE) String sttp);
+
+    List<StationType> getHomeType();
 
 
     List<MoniStation> findByGroupId(@Param(DataConstants.REQUEST_PARAMS_GROUP_ID) String group,
@@ -52,6 +57,7 @@ public interface MoniStationDao {
 
     StationMsg operationDetail(@Param(DataConstants.REQUEST_PARAMS_STCD) String stcd);
 
+    List<StationStatus> stationStatus(@Param(DataConstants.STATION_STATUS_TYPE) String sttp);
 
     List<ConvertMethod> getConvertMethod(@Param(DataConstants.REQUEST_PARAMS_MONITOR_PARA) String monitorPara);
 
@@ -60,4 +66,16 @@ public interface MoniStationDao {
     List<List<Object>> createStation(@Param(DataConstants.REQUEST_PARAMS_MONITOR_PARA) String monitorPara);
 
     BaseReturnData saveStation(StationMsg stationMsg);
+
+
+    List<BaseBoxData> stationScaleType();
+
+    List<BaseBoxData> stationType();
+
+    List<BaseBoxData> stationSon(@Param(DataConstants.STATION_STATUS_TYPE) String sttp);
+
+    List<BaseBoxData> stationScale(@Param(DataConstants.STATION_STATUS_TYPE) String sttp,
+                                   @Param("scaleType") String scaleType);
+
+    List<BaseBoxData> gbLevel();
 }

@@ -46,10 +46,15 @@ public class SMSTask implements ApplicationRunner {
         alarmMsgList.forEach(alarmMsg -> {
             //发送短信：
             AlarmMsg back = alarmMsg;
-            int code = Sms.send(Collections.singletonList(alarmMsg.getPhone()), alarmMsg.getAlarmContent());
-            back.setSendResult(code);
-            alarmService.updateAlarmMsg(back);
-            log.info("发送报警短信到" + alarmMsg.getPhone() + "执行成功！结果为" + code);
+            if (alarmMsg.getPhone() == null) {
+                alarmService.updateAlarmMsg(back);
+                log.info("发送报警短信到" + alarmMsg.getPhone() + "执行失败！原因为用户手机为空");
+            } else {
+                int code = Sms.send(Collections.singletonList(alarmMsg.getPhone()), alarmMsg.getAlarmContent());
+                back.setSendResult(code);
+                alarmService.updateAlarmMsg(back);
+                log.info("发送报警短信到" + alarmMsg.getPhone() + "执行成功！结果为" + code);
+            }
         });
     }
 }

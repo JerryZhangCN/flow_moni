@@ -56,7 +56,8 @@ public class StatisticController extends BaseController {
      */
     @RequestMapping(value = "/getFlow", method = RequestMethod.GET)
     @ResponseBody
-    public BaseResponse getFlowData(@RequestParam(DataConstants.MONI_STATION_ADDVCD) String addvcd,
+    public BaseResponse getFlowData(@RequestParam("type") String type,
+                                    @RequestParam(DataConstants.MONI_STATION_ADDVCD) String addvcd,
                                     @RequestParam(DataConstants.REQUEST_PARAMS_SCALE) String scale,
                                     @RequestParam(DataConstants.REQUEST_PARAMS_START) String start,
                                     @RequestParam(DataConstants.REQUEST_PARAMS_END) String end,
@@ -67,7 +68,7 @@ public class StatisticController extends BaseController {
                                     @RequestParam(DataConstants.REQUEST_PARAMS_TIME_SCALE) String timeScale) {
         BaseResponse baseResponse = new BaseResponse();
         try {
-            baseResponse.setData(statisticService.getFlowData(addvcd, scale, start, end, key, count, index, level, timeScale));
+            baseResponse.setData(statisticService.getFlowData(type, addvcd, scale, start, end, key, count, index, level, timeScale));
             return baseResponse;
         } catch (Exception e) {
             return returnError(e.getMessage());
@@ -102,7 +103,7 @@ public class StatisticController extends BaseController {
     @RequestMapping(value = "/videoData", method = RequestMethod.GET)
     @ResponseBody
     public BaseResponse video(@RequestParam(DataConstants.STATION_STATUS_TYPE) String sttp,
-                                  @RequestParam(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId) {
+                              @RequestParam(DataConstants.REQUEST_PARAMS_GROUP_ID) String groupId) {
         BaseResponse baseResponse = new BaseResponse();
         try {
             baseResponse.setData(statisticService.videoStatistics(sttp, groupId));
@@ -114,21 +115,21 @@ public class StatisticController extends BaseController {
 
 
     /**
-     * 获取生态流量查询统计
+     * 获取取水计量查询统计
      *
      * @return
      */
     @RequestMapping(value = "/getUseFlowData", method = RequestMethod.GET)
     @ResponseBody
     public BaseResponse getUseFlowData(@RequestParam(DataConstants.MONI_STATION_ADDVCD) String addvcd,
-                                    @RequestParam(DataConstants.STATION_STATUS_TYPE) String sttp,
-                                    @RequestParam(DataConstants.REQUEST_PARAMS_START) String start,
-                                    @RequestParam(DataConstants.REQUEST_PARAMS_END) String end,
-                                    @RequestParam(DataConstants.REQUEST_PARAMS_KEYS) String key,
-                                    @RequestParam(DataConstants.REQUEST_PARAMS_PAGE_COUNT) String count,
-                                    @RequestParam(DataConstants.REQUEST_PARAMS_PAGE_INDEX) String index,
-                                    @RequestParam(DataConstants.REQUEST_PARAMS_ALARM_LEVEL) String level,
-                                    @RequestParam(DataConstants.REQUEST_PARAMS_TIME_SCALE) String timeScale) {
+                                       @RequestParam(DataConstants.STATION_STATUS_TYPE) String sttp,
+                                       @RequestParam(DataConstants.REQUEST_PARAMS_START) String start,
+                                       @RequestParam(DataConstants.REQUEST_PARAMS_END) String end,
+                                       @RequestParam(DataConstants.REQUEST_PARAMS_KEYS) String key,
+                                       @RequestParam(DataConstants.REQUEST_PARAMS_PAGE_COUNT) String count,
+                                       @RequestParam(DataConstants.REQUEST_PARAMS_PAGE_INDEX) String index,
+                                       @RequestParam(DataConstants.REQUEST_PARAMS_ALARM_LEVEL) String level,
+                                       @RequestParam(DataConstants.REQUEST_PARAMS_TIME_SCALE) String timeScale) {
         BaseResponse baseResponse = new BaseResponse();
         try {
             baseResponse.setData(statisticService.getUseFlowData(addvcd, sttp, start, end, key, count, index, level, timeScale));
@@ -146,14 +147,14 @@ public class StatisticController extends BaseController {
     @RequestMapping(value = "/getWaterQuality", method = RequestMethod.GET)
     @ResponseBody
     public BaseResponse getWaterQuality(@RequestParam(DataConstants.MONI_STATION_ADDVCD) String addvcd,
-                                       @RequestParam(DataConstants.REQUEST_PARAMS_QUALITY_LEVEL) String qualityLevel,
-                                       @RequestParam(DataConstants.REQUEST_PARAMS_START) String start,
-                                       @RequestParam(DataConstants.REQUEST_PARAMS_END) String end,
-                                       @RequestParam(DataConstants.REQUEST_PARAMS_KEYS) String key,
-                                       @RequestParam(DataConstants.REQUEST_PARAMS_PAGE_COUNT) String count,
-                                       @RequestParam(DataConstants.REQUEST_PARAMS_PAGE_INDEX) String index,
-                                       @RequestParam(DataConstants.REQUEST_PARAMS_ALARM_LEVEL) String level,
-                                       @RequestParam(value = DataConstants.REQUEST_PARAMS_MONITOR_TYPE,required = false) String monitorType) {
+                                        @RequestParam(DataConstants.REQUEST_PARAMS_QUALITY_LEVEL) String qualityLevel,
+                                        @RequestParam(DataConstants.REQUEST_PARAMS_START) String start,
+                                        @RequestParam(DataConstants.REQUEST_PARAMS_END) String end,
+                                        @RequestParam(DataConstants.REQUEST_PARAMS_KEYS) String key,
+                                        @RequestParam(DataConstants.REQUEST_PARAMS_PAGE_COUNT) String count,
+                                        @RequestParam(DataConstants.REQUEST_PARAMS_PAGE_INDEX) String index,
+                                        @RequestParam(DataConstants.REQUEST_PARAMS_ALARM_LEVEL) String level,
+                                        @RequestParam(value = DataConstants.REQUEST_PARAMS_MONITOR_TYPE, required = false) String monitorType) {
         BaseResponse baseResponse = new BaseResponse();
         try {
             baseResponse.setData(statisticService.getWaterQuality(addvcd, qualityLevel, start, end, key, count, index, level, monitorType));
